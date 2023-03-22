@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\JoyAdmin.Web.Entry.props" />
+</Project>

@@ -1,0 +1,52 @@
+﻿{
+  "SpecificationDocumentSettings": {
+    "DocumentTitle": "JoyAdmin | 规范化接口",
+    "GroupOpenApiInfos": [
+      {
+        "Group": "Default",
+        "Title": "规范化接口演示",
+        "Description": "让 .NET 开发更简单，更通用，更流行。",
+        "Version": "1.0.0",
+        "TermsOfService": "https://www.baidu.com",
+        "Contact": {
+          "Name": "joy",
+          "Url": "https://www.baidu.com",
+          "Email": "1063721800.com"
+        },
+        "License": {
+          "Name": "Apache-2.0",
+          "Url": "https://www.baidu.com"
+        }
+      }
+    ],
+    "EnableAuthorized": true,
+    "SecurityDefinitions": [
+      {
+        "Id": "Bearer",
+        "Type": "Http",
+        "Name": "Authorization",
+        "Description": "JWT Authorization header using the Bearer scheme.",
+        "BearerFormat": "JWT",
+        "Scheme": "bearer",
+        "In": "Header",
+        "Requirement": {
+          "Scheme": {
+            "Reference": {
+              "Id": "Bearer",
+              "Type": "SecurityScheme"
+            },
+            "Accesses": []
+          }
+        }
+      }
+    ]
+  },
+  "DynamicApiControllerSettings": {
+    "LowercaseRoute": false,
+    "KeepVerb": true,
+    "KeepName": true
+  },
+  "FriendlyExceptionSettings": {
+    "HideErrorCode": true
+  }
+}

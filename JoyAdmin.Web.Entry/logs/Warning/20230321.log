@@ -1,0 +1,288 @@
+﻿【时间】2023-03-21 08:05:00,656
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 09:03:35,273
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 09:05:06,677
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 09:05:16,777
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 09:05:16,778
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 09:05:16,781
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 09:51:49,988
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 09:52:27,057
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 09:52:27,057
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 09:52:27,060
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 11:01:41,972
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 11:07:03,475
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 11:07:03,501
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 11:07:03,509
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 11:07:03,846
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 11:07:03,846
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 11:07:45,458
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 11:07:45,487
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 11:07:45,494
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 11:09:00,403
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 11:11:05,673
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 11:13:42,752
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 11:13:42,753
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 11:13:42,756
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 11:16:33,086
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 11:16:33,118
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 11:16:33,126
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 11:17:15,565
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 12:34:04,898
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 12:34:47,411
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 12:34:47,411
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 12:34:47,414
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 12:37:11,581
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 12:37:34,776
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 12:37:34,776
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 12:37:34,779
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 12:37:35,976
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 12:37:35,977
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 12:44:26,259
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 12:44:37,748
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 12:44:37,749
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 12:44:37,751
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 12:44:38,655
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 12:44:38,655
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 12:57:00,654
+【等级】WRN
+【消息】Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+
+【时间】2023-03-21 12:57:06,178
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 12:57:06,178
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 14:44:45,269
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 14:47:43,910
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 15:39:45,910
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 15:39:45,911
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 15:39:45,913
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 15:39:46,482
+【等级】WRN
+【消息】Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+
+【时间】2023-03-21 15:40:18,258
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 15:40:18,259
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 16:16:54,708
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 16:18:47,012
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 16:25:33,833
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 16:25:33,833
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 16:25:33,836
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 16:25:34,840
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 16:25:34,841
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 19:03:08,462
+【等级】WRN
+【消息】Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+
+【时间】2023-03-21 19:55:40,045
+【等级】WRN
+【消息】Failed to determine the https port for redirect.
+
+【时间】2023-03-21 19:55:44,469
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'RoleSecurity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 19:55:44,470
+【等级】WRN
+【消息】Entity 'Role' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+
+【时间】2023-03-21 19:55:44,474
+【等级】WRN
+【消息】Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+
+【时间】2023-03-21 19:55:45,590
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 19:55:45,591
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 19:56:52,039
+【等级】WRN
+【消息】Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+
+【时间】2023-03-21 19:57:33,491
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
+【时间】2023-03-21 19:57:33,491
+【等级】WRN
+【消息】The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+
