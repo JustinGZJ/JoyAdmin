@@ -47,6 +47,8 @@ public class DefaultDbContext : AppDbContext<DefaultDbContext>, IModelBuilderFil
         // 获取所有新增和更新的实体
         var entities = dbContext.ChangeTracker.Entries().Where(u =>
             u.State == EntityState.Added || u.State == EntityState.Modified || u.State == EntityState.Deleted);
+        if(App.User==null)
+            return;
         var userId = App.User.FindFirst(ClaimConst.CLAINM_USERID)?.Value;
         var userName = App.User.FindFirst(ClaimConst.CLAINM_ACCOUNT)?.Value;
         foreach (var entity in entities)
@@ -57,11 +59,9 @@ public class DefaultDbContext : AppDbContext<DefaultDbContext>, IModelBuilderFil
             {
                 obj.Id = obj.Id == 0 ? YitIdHelper.NextId() : obj.Id;
                 obj.CreatedTime = DateTime.Now;
-                if (!string.IsNullOrEmpty(userId))
-                {
-                    obj.CreatedUserId = long.Parse(userId);
-                    obj.CreatedUser = userName;
-                }
+                if (string.IsNullOrEmpty(userId)) continue;
+                obj.CreatedUserId = long.Parse(userId);
+                obj.CreatedUser = userName;
             }
             else if (entity.State == EntityState.Modified)
             {
@@ -100,16 +100,15 @@ public class DefaultDbContext : AppDbContext<DefaultDbContext>, IModelBuilderFil
         Expression finialExpression = Expression.Constant(true);
         ParameterExpression parameterExpression = Expression.Parameter(metadata.ClrType, "u");
         // 假删除过滤器
-        if (metadata.FindProperty(isDeletedKey) != null)
+        if (metadata.FindProperty(isDeletedKey) == null)
+            return Expression.Lambda(finialExpression, parameterExpression);
+        ConstantExpression constantExpression = Expression.Constant(isDeletedKey);
+        ConstantExpression right = Expression.Constant(filterValue ?? false);
+        var fakeDeleteQueryExpression = Expression.Equal(Expression.Call(typeof(EF), "Property", new Type[1]
         {
-            ConstantExpression constantExpression = Expression.Constant(isDeletedKey);
-            ConstantExpression right = Expression.Constant(filterValue ?? false);
-            var fakeDeleteQueryExpression = Expression.Equal(Expression.Call(typeof(EF), "Property", new Type[1]
-            {
-                typeof(bool)
-            }, parameterExpression, constantExpression), right);
-            finialExpression = Expression.AndAlso(finialExpression, fakeDeleteQueryExpression);
-        }
+            typeof(bool)
+        }, parameterExpression, constantExpression), right);
+        finialExpression = Expression.AndAlso(finialExpression, fakeDeleteQueryExpression);
 
         return Expression.Lambda(finialExpression, parameterExpression);
     }

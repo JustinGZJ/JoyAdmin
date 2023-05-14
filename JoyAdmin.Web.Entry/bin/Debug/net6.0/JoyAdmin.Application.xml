@@ -4,6 +4,284 @@
         <name>JoyAdmin.Application</name>
     </assembly>
     <members>
+        <member name="M:JoyAdmin.Application.AlarmHistory.AlarmHistoryService.GetAlarmHistories(JoyAdmin.Application.AlarmHistory.Dtos.AlarmHistoryQueryDto)">
+            <summary>
+            查询报警信息，站位内容不指定则查询所有报警
+            </summary>
+            <param name="alarmHistoryQueryDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.AlarmHistory.AlarmHistoryService.GetAlarmFreq(JoyAdmin.Application.AlarmHistory.Dtos.AlarmFreqQueryDto)">
+            <summary>
+            按报警类型和次数topn统计，站位名为空则查询所有站位
+            </summary>
+            <param name="alarmCountQueryDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.AlarmHistory.AlarmHistoryService.GetAlarmCount(JoyAdmin.Application.AlarmHistory.Dtos.AlarmCountQueryDto)">
+            <summary>
+            时间段内各站位查询报警次数，站位名为空则查询总报警,
+            </summary>
+            <param name="alarmCountQueryDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.AlarmHistory.AlarmHistoryService.PostAlarm(JoyAdmin.Application.AlarmHistory.Dtos.AlarmHistoryCreateDto)">
+            <summary>
+            上传报警信息
+            </summary>
+            <param name="alarmHistoryCreateDto"></param>
+        </member>
+        <member name="P:JoyAdmin.Application.AlarmHistory.Dtos.AlarmFreqQueryDto.TopN">
+            <summary>
+            限制返回的top n
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Application.AlarmHistory.Dtos.AlarmFreqQueryDto.OrderMode">
+            <summary>
+            0 是按次数 1 是按报警时间
+            </summary>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Application.OPC.OpcUaClientWrapper.ConnectStatus">
+            <summary>
+            连接状态
+            </summary>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.OpenConnectOfAnonymous(System.String)">
+            <summary>
+            打开连接【匿名方式】
+            </summary>
+            <param name="serverUrl">服务器URL【格式：opc.tcp://服务器IP地址/服务名称】</param>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.OpenConnectOfAccount(System.String,System.String,System.String)">
+            <summary>
+            打开连接【账号方式】
+            </summary>
+            <param name="serverUrl">服务器URL【格式：opc.tcp://服务器IP地址/服务名称】</param>
+            <param name="userName">用户名称</param>
+            <param name="userPwd">用户密码</param>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.OpenConnectOfCertificate(System.String,System.String,System.String)">
+            <summary>
+            打开连接【证书方式】
+            </summary>
+            <param name="serverUrl">服务器URL【格式：opc.tcp://服务器IP地址/服务名称】</param>
+            <param name="certificatePath">证书路径</param>
+            <param name="secreKey">密钥</param>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.CloseConnect">
+            <summary>
+            关闭连接
+            </summary>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.GetCurrentNodeValue``1(System.String)">
+            <summary>
+            获取到当前节点的值【同步读取】
+            </summary>
+            <typeparam name="T">节点对应的数据类型</typeparam>
+            <param name="nodeId">节点</param>
+            <returns>返回当前节点的值</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.GetCurrentNodeValue(System.String)">
+            <summary>
+            获取到当前节点数据【同步读取】
+            </summary>
+            <typeparam name="T">节点对应的数据类型</typeparam>
+            <param name="nodeId">节点</param>
+            <returns>返回当前节点的值</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.GetBatchNodeDatasOfSync(System.Collections.Generic.List{Opc.Ua.NodeId})">
+            <summary>
+            获取到批量节点数据【同步读取】
+            </summary>
+            <param name="nodeIds">节点列表</param>
+            <returns>返回节点数据字典</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.GetCurrentNodeValueOfAsync``1(System.String)">
+            <summary>
+            获取到当前节点的值【异步读取】
+            </summary>
+            <typeparam name="T">节点对应的数据类型</typeparam>
+            <param name="nodeId">节点</param>
+            <returns>返回当前节点的值</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.GetBatchNodeDatasOfAsync(System.Collections.Generic.List{Opc.Ua.NodeId})">
+            <summary>
+            获取到批量节点数据【异步读取】
+            </summary>
+            <param name="nodeIds">节点列表</param>
+            <returns>返回节点数据字典</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.GetAllRelationNodeOfNodeId(System.String)">
+            <summary>
+            获取到当前节点的关联节点
+            </summary>
+            <param name="nodeId">当前节点</param>
+            <returns>返回当前节点的关联节点</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.GetAllRelationNodeValue(System.String)">
+            <summary>
+            获取到当前节点的关联节点
+            </summary>
+            <param name="nodeId">当前节点</param>
+            <returns>返回当前节点的关联节点</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.GetCurrentNodeAttributes(System.String)">
+            <summary>
+            获取到当前节点的所有属性
+            </summary>
+            <param name="nodeId">当前节点</param>
+            <returns>返回当前节点对应的所有属性</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.WriteSingleNodeIdOfSync``1(System.String,``0)">
+            <summary>
+            写入单个节点【同步方式】
+            </summary>
+            <typeparam name="T">写入节点值得数据类型</typeparam>
+            <param name="nodeId">节点</param>
+            <param name="value">节点对应的数据值(比如:(short)123）)</param>
+            <returns>返回写入结果（true:表示写入成功）</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.BatchWriteNodeIds(System.String[],System.Object[])">
+            <summary>
+            批量写入节点
+            </summary>
+            <param name="nodeIdArray">节点数组</param>
+            <param name="nodeIdValueArray">节点对应数据数组</param>
+            <returns>返回写入结果（true:表示写入成功）</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.WriteSingleNodeIdOfAsync``1(System.String,``0)">
+            <summary>
+            写入单个节点【异步方式】
+            </summary>
+            <typeparam name="T">写入节点值得数据类型</typeparam>
+            <param name="nodeId">节点</param>
+            <param name="value">节点对应的数据值</param>
+            <returns>返回写入结果（true:表示写入成功）</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.ReadSingleNodeIdHistoryDatas``1(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            读取单个节点的历史数据记录
+            </summary>
+            <typeparam name="T">节点的数据类型</typeparam>
+            <param name="nodeId">节点</param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <returns>返回该节点对应的历史数据记录</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.ReadSingleNodeIdHistoryDatas(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            读取单个节点的历史数据记录
+            </summary>
+            <typeparam name="T">节点的数据类型</typeparam>
+            <param name="nodeId">节点</param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <returns>返回该节点对应的历史数据记录</returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.SingleNodeIdDatasSubscription(System.String,System.String,System.Action{System.String,Opc.Ua.Client.MonitoredItem,Opc.Ua.Client.MonitoredItemNotificationEventArgs})">
+            <summary>
+            单节点数据订阅
+            </summary>
+            <param name="key">订阅的关键字（必须唯一）</param>
+            <param name="nodeId">节点</param>
+            <param name="callback">数据订阅的回调方法</param>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.CancelSingleNodeIdDatasSubscription(System.String)">
+            <summary>
+            取消单节点数据订阅
+            </summary>
+            <param name="key">订阅的关键字</param>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.BatchNodeIdDatasSubscription(System.String,System.String[],System.Action{System.String,Opc.Ua.Client.MonitoredItem,Opc.Ua.Client.MonitoredItemNotificationEventArgs})">
+            <summary>
+            批量节点数据订阅
+            </summary>
+            <param name="key">订阅的关键字（必须唯一）</param>
+            <param name="nodeIds">节点数组</param>
+            <param name="callback">数据订阅的回调方法</param>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.CancelAllNodeIdDatasSubscription">
+            <summary>
+            取消所有节点的数据订阅
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaClientWrapper.AddInfoToDic(System.Collections.Generic.Dictionary{System.String,Opc.Ua.DataValue},System.String,Opc.Ua.DataValue)">
+            <summary>
+            添加数据到字典中（相同键的则采用最后一个键对应的值）
+            </summary>
+            <param name="dic">字典</param>
+            <param name="key">键</param>
+            <param name="dataValue">值</param>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaService.OpenConnect(System.String)">
+            <summary>
+            连接OPC 服务器
+            </summary>
+            <param name="serverUrl"></param>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaService.ReadSingleNodeIdHistoryDatas(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            读取单节点历史记录
+            </summary>
+            <param name="nodeId"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaService.GetCurrentNodeValue(System.String)">
+            <summary>
+            读取当前节点的值
+            </summary>
+            <param name="nodeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaService.GetCurrentNodeAttributes(System.String)">
+            <summary>
+            读取当前节点的属性
+            </summary>
+            <param name="nodeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaService.GetAllRelationNodeValue(System.String)">
+            <summary>
+            读取目录下所有的节点的数据
+            </summary>
+            <param name="nodeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaService.GetAllRelationNodeOfNodeId(System.String)">
+            <summary>
+            浏览节点下的所有节点信息
+            </summary>
+            <param name="nodeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaService.WriteSingleNodeIdOfAsync(System.String,System.Object)">
+            <summary>
+            写入单个节点
+            </summary>
+            <param name="nodeId"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaService.MonitAllRelationNodeOfNodeId(System.String)">
+            <summary>
+            监听一个组
+            </summary>
+            <param name="nodeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.OPC.OpcUaService.GetCurrentAlarm">
+            <summary>
+            获取监听到的OPC数据
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:JoyAdmin.Application.LoginInput">
             <summary>
             登录输入参数
@@ -207,6 +485,66 @@
             </summary>
             <param name="userid"></param>
             <returns></returns>
+        </member>
+        <member name="P:JoyAdmin.Application.Statistic.Dtos.StatisticRate.Ok">
+            <summary>
+            合格品
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Application.Statistic.Dtos.StatisticRate.Ng">
+            <summary>
+            不良品
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Application.Statistic.Dtos.StatisticRate.FeedQuality">
+            <summary>
+            进料数
+            </summary>
+        </member>
+        <member name="M:JoyAdmin.Application.Statistic.StatisticService.Upload(JoyAdmin.Application.Statistic.Dtos.ProductionDto)">
+            <summary>
+            上传产量信息 
+            </summary>
+            <param name="production">ProductionType 0进料 1 OK  2 NG</param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.Statistic.StatisticService.GetRecentUpload(System.Int32,System.Int32)">
+            <summary>
+            获取获取
+            </summary>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.Statistic.StatisticService.GetPassRates(JoyAdmin.Application.Statistic.Dtos.PassRateQueryDTo)">
+            <summary>
+            根据站位和时间对合格率数据进行聚合 device=”“ 查询总合格率
+            </summary>
+            <param name="passRateQueryDTo"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:JoyAdmin.Application.Statistic.StatisticService.GetPassRateByDevice(System.DateTime,System.DateTime)">
+            <summary>
+            查询时间段内所有站位的合格率
+            </summary>
+            <param name="starttime"></param>
+            <param name="endtime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.Statistic.StatisticService.QueryNgCounts(JoyAdmin.Application.Statistic.Dtos.QueryNgCount)">
+            <summary>
+            获取各站的失效原因分布
+            </summary>
+            <param name="queryDTo">
+            AggregationType.Hour => 0,
+             AggregationType.Day =>1,
+             AggregationType.Week => 2,
+             AggregationType.Month => 3,
+             AggregationType.None=>4
+            </param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="M:JoyAdmin.Application.System.SystemService.GetTestError">
             <summary>

@@ -48,5 +48,27 @@
   },
   "FriendlyExceptionSettings": {
     "HideErrorCode": true
-  }
+  },
+  "PLCAlarmGroups":[
+    "ns=2;s=Channel4.Receiving1.组1",
+    "ns=2;s=keyence.定子2.报警",
+    "ns=2;s=keyence.定子2.报警",
+    "ns=2;s=keyence.定子3.报警",
+    "ns=2;s=keyence.定子4.报警",
+    "ns=2;s=keyence.定子5.报警",
+    "ns=2;s=keyence.定子6.报警",
+    "ns=2;s=keyence.定子7.报警",
+    "ns=2;s=keyence.总成1.报警",
+    "ns=2;s=keyence.总成2.报警",
+    "ns=2;s=keyence.总成3.报警",
+    "ns=2;s=keyence.转子1.报警",
+    "ns=2;s=keyence.转子2.报警",
+    "ns=2;s=keyence.转子3.报警",
+    "ns=2;s=keyence.转子4.报警"
+  ],
+  "PLCAlarmGroups2": [
+
+  ]
 }
+
+

@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyAdmin.Database.Migration
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoyAdmin.Web.Entry", "JoyAdmin.Web.Entry\JoyAdmin.Web.Entry.csproj", "{9826E365-EEE9-4721-A738-B02AB64D47E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPCTEST", "OPCTEST\OPCTEST.csproj", "{569D6256-E16F-41B1-98F2-755D817327D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{9826E365-EEE9-4721-A738-B02AB64D47E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9826E365-EEE9-4721-A738-B02AB64D47E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9826E365-EEE9-4721-A738-B02AB64D47E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{569D6256-E16F-41B1-98F2-755D817327D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{569D6256-E16F-41B1-98F2-755D817327D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{569D6256-E16F-41B1-98F2-755D817327D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{569D6256-E16F-41B1-98F2-755D817327D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

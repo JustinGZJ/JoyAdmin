@@ -91,7 +91,7 @@ namespace JoyAdmin.Core
             {
                 new User
                 {
-                    Id=1,CreatedTime=DateTime.Now,Account="admin",Password="c33367701511b4f6020ec61ded352059"
+                    Id=1,CreatedTime=DateTime.Now,Account="admin",Password="e10adc3949ba59abbe56e057f20f883e"
                 } 
                 
             };

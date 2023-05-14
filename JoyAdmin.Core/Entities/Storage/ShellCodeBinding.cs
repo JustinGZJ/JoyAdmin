@@ -15,6 +15,9 @@ public class ShellCodeBinding:EntityBase, IEntityTypeBuilder<ShellCodeBinding>
     public void Configure(EntityTypeBuilder<ShellCodeBinding> entityBuilder, DbContext dbContext, Type dbContextLocator)
     {
         entityBuilder.HasIndex(x => x.ShellCode);
+        entityBuilder.HasIndex(x => x.RotorCode);
+        entityBuilder.HasIndex(x => x.StatorCode);
         //   throw new NotImplementedException();
     }
+    public bool IsDeleted { get; set; }
 }

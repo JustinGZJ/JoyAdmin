@@ -17,10 +17,79 @@ namespace JoyAdmin.Database.Migrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Storage.AlarmHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Station")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EndTime");
+
+                    b.HasIndex("StartTime");
+
+                    b.HasIndex("Station");
+
+                    b.ToTable("AlarmHistory", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Storage.Production", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Device")
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProductionType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Device");
+
+                    b.HasIndex("ProductionType");
+
+                    b.ToTable("Production", (string)null);
+                });
 
             modelBuilder.Entity("JoyAdmin.Core.Entities.Storage.ShellCodeBinding", b =>
                 {
@@ -29,6 +98,9 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("RotorCode")
                         .HasColumnType("text");
@@ -41,7 +113,11 @@ namespace JoyAdmin.Database.Migrations.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RotorCode");
+
                     b.HasIndex("ShellCode");
+
+                    b.HasIndex("StatorCode");
 
                     b.ToTable("ShellCodeBinding", (string)null);
                 });
@@ -62,6 +138,9 @@ namespace JoyAdmin.Database.Migrations.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -190,7 +269,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedTime = new DateTime(2023, 3, 21, 11, 7, 3, 837, DateTimeKind.Local).AddTicks(4134),
+                            CreatedTime = new DateTime(2023, 4, 17, 16, 26, 57, 448, DateTimeKind.Local).AddTicks(8428),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -279,7 +358,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedTime = new DateTime(2023, 3, 21, 11, 7, 3, 837, DateTimeKind.Local).AddTicks(5727),
+                            CreatedTime = new DateTime(2023, 4, 17, 16, 26, 57, 448, DateTimeKind.Local).AddTicks(9781),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -290,7 +369,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedTime = new DateTime(2023, 3, 21, 11, 7, 3, 837, DateTimeKind.Local).AddTicks(5731),
+                            CreatedTime = new DateTime(2023, 4, 17, 16, 26, 57, 448, DateTimeKind.Local).AddTicks(9784),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -301,7 +380,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedTime = new DateTime(2023, 3, 21, 11, 7, 3, 837, DateTimeKind.Local).AddTicks(5733),
+                            CreatedTime = new DateTime(2023, 4, 17, 16, 26, 57, 448, DateTimeKind.Local).AddTicks(9786),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -372,11 +451,11 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         {
                             Id = 1L,
                             Account = "admin",
-                            CreatedTime = new DateTime(2023, 3, 21, 11, 7, 3, 838, DateTimeKind.Local).AddTicks(2369),
+                            CreatedTime = new DateTime(2023, 4, 17, 16, 26, 57, 449, DateTimeKind.Local).AddTicks(5701),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
-                            Password = "c33367701511b4f6020ec61ded352059"
+                            Password = "e10adc3949ba59abbe56e057f20f883e"
                         });
                 });
 

@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using JoyAdmin.Application.OPC;
 
 namespace JoyAdmin.Web.Core
 {
@@ -17,7 +18,8 @@ namespace JoyAdmin.Web.Core
         {
             services.AddJwt<JwtHandler>(enableGlobalAuthorize: true);
             services.AddRemoteRequest();
-            services.AddCorsAccessor(); 
+            services.AddCorsAccessor();
+           services.AddHostedService<OPCAlarmMonitor>();
             services.AddControllersWithViews()
                  .AddInjectWithUnifyResult<RstRProvider>()
                 .AddJsonOptions(options =>
