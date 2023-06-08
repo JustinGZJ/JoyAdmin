@@ -10723,40 +10723,36 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator.LAPTOP-7D6B2GK7\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/justin/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\BaiduYunDownload\\joy-admin-master\\joy-admin-master\\JoyAdminBackend\\JoyAdmin\\JoyAdmin.Web.Entry\\JoyAdmin.Web.Entry.csproj",
+      "projectUniqueName": "/Users/justin/RiderProjects/JoyAdmin/JoyAdmin.Web.Entry/JoyAdmin.Web.Entry.csproj",
       "projectName": "JoyAdmin.Web.Entry",
-      "projectPath": "D:\\BaiduYunDownload\\joy-admin-master\\joy-admin-master\\JoyAdminBackend\\JoyAdmin\\JoyAdmin.Web.Entry\\JoyAdmin.Web.Entry.csproj",
-      "packagesPath": "C:\\Users\\Administrator.LAPTOP-7D6B2GK7\\.nuget\\packages\\",
-      "outputPath": "D:\\BaiduYunDownload\\joy-admin-master\\joy-admin-master\\JoyAdminBackend\\JoyAdmin\\JoyAdmin.Web.Entry\\obj\\",
+      "projectPath": "/Users/justin/RiderProjects/JoyAdmin/JoyAdmin.Web.Entry/JoyAdmin.Web.Entry.csproj",
+      "packagesPath": "/Users/justin/.nuget/packages/",
+      "outputPath": "/Users/justin/RiderProjects/JoyAdmin/JoyAdmin.Web.Entry/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Administrator.LAPTOP-7D6B2GK7\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/justin/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\BaiduYunDownload\\joy-admin-master\\joy-admin-master\\JoyAdminBackend\\JoyAdmin\\JoyAdmin.Web.Core\\JoyAdmin.Web.Core.csproj": {
-              "projectPath": "D:\\BaiduYunDownload\\joy-admin-master\\joy-admin-master\\JoyAdminBackend\\JoyAdmin\\JoyAdmin.Web.Core\\JoyAdmin.Web.Core.csproj"
+            "/Users/justin/RiderProjects/JoyAdmin/JoyAdmin.Web.Core/JoyAdmin.Web.Core.csproj": {
+              "projectPath": "/Users/justin/RiderProjects/JoyAdmin/JoyAdmin.Web.Core/JoyAdmin.Web.Core.csproj"
             }
           }
         }
@@ -10784,29 +10780,10 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.12, 6.0.12]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[6.0.12, 6.0.12]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.12, 6.0.12]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[6.0.12, 6.0.12]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -10815,7 +10792,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.300/RuntimeIdentifierGraph.json"
       }
     }
   }

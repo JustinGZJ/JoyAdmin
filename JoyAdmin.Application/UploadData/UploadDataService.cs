@@ -64,7 +64,7 @@ public class MachineDataService : IDynamicApiController
 
 
     [AllowAnonymous]
-    public async Task<IEnumerable<ExpandoObject>> GetProductData([FromQuery] QueryDTo range)
+    public async Task<IEnumerable<Dictionary<string,object>>> GetProductData([FromQuery] QueryDTo range)
     {
         // 找出时间段内的所有数据
         var data = await _uploadDataRepository
@@ -122,9 +122,10 @@ public class MachineDataService : IDynamicApiController
             }
 
             var expano = new ExpandoObject();
-            expano.TryAdd("ShellCode", shellCode);
-            expano.TryAdd("RotorCode", rotorCode);
-            expano.TryAdd("StatorCode", statorCode);
+            expano.TryAdd("时间", uploadDatas.FirstOrDefault()?.Time);
+            expano.TryAdd("壳体二维码", shellCode);
+            expano.TryAdd("转子二维码", rotorCode);
+            expano.TryAdd("定子二维码", statorCode);
             foreach (var item in uploadDatas)
             {
                 expano.TryAdd(item.Name, item.Content);
@@ -133,7 +134,29 @@ public class MachineDataService : IDynamicApiController
             result.Add(expano);
         }
 
-        return result;
+        var keys = result.SelectMany(expando => ((IDictionary<string, object>)expando).Keys).Distinct();
+        List<Dictionary<string, object>> list = new List<Dictionary<string, object>>();
+       
+        foreach (var obj in result)
+        {   
+            var dictionary = new Dictionary<string, object>();
+            foreach (var key in keys)
+            { 
+                var d = ((IDictionary<string, object>)obj);
+                if (!d.ContainsKey(key))
+                {
+                    dictionary[key]="";
+                }
+                else
+                {
+                    dictionary[key]=((IDictionary<string, object>)obj)[key];
+                }
+            }
+            list.Add(dictionary);
+        }
+        
+
+        return list;
     }
 
     /// <summary>
