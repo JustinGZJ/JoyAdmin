@@ -76,13 +76,7 @@ namespace JoyAdmin.Application
           
             });
 
-            //NetInfo netinfo = HttpHelper.getNetInfo();
-            //var ipEntity = netinfo.Adapt<IPLog>();
-            //ipEntity.UserId = user.Id;
-            //ipEntity.UserAccount = user.Account;
-            //ipEntity.UserName = user.Name;
-            //_iplogRepository.InsertNow(ipEntity);
-            // 设置 Swagger 刷新自动授权
+
             _httpContextAccessor.HttpContext.Response.Headers["access-token"] = output.Token;
 
             return output;

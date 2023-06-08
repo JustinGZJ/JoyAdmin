@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -65,28 +66,74 @@ public class MachineDataService : IDynamicApiController
     [AllowAnonymous]
     public async Task<IEnumerable<ExpandoObject>> GetProductData([FromQuery] QueryDTo range)
     {
-        // 找出所有码
-        var codes = _uploadDataRepository
+        // 找出时间段内的所有数据
+        var data = await _uploadDataRepository
             .Where(x => x.Time > range.Start && x.Time < range.End)
-            .OrderByDescending(x => x.Time)
+            .ToListAsync();
+
+        // 找出所有码
+        var codes = data
             .Select(x => x.Code).Distinct().ToList();
-        var queryData = codes.AsEnumerable()
-            .Select(async x => await this.Get(x));
-        var data = await Task.WhenAll(queryData);
-        var dt = data.DistinctBy(x =>
-            (x.ShellCode ?? "") + (x.RotorCode ?? "") + (x.StatorCode ?? ""));
-     return   dt.Select(x =>
+        // 从codes中排除掉已绑定的码
+        var bindings = await _shellcodeBindingRepository
+            .Where(x => codes.Contains(x.ShellCode) || codes.Contains(x.StatorCode) || codes.Contains(x.RotorCode))
+            .ToListAsync();
+
+        //  var bindingShellCodes = bindings.Select(x => x.ShellCode).ToList();
+
+        // 从bingdings中排除掉已绑定的定子和转子码
+
+        var CodesToQuery = codes.Except(bindings.Select(x => x.StatorCode).ToList())
+            .Except(bindings.Select(x => x.RotorCode).ToList()).ToList();
+
+        List<ExpandoObject> result = new List<ExpandoObject>();
+
+        foreach (var code in CodesToQuery)
         {
+            List<Core.Entities.Storage.UploadData> uploadDatas = new List<Core.Entities.Storage.UploadData>();
+            var codeBinding = bindings.FirstOrDefault(x => x.ShellCode == code);
+            string shellCode = "";
+            string rotorCode = "";
+            string statorCode = "";
+            DateTime time;
+            if (codeBinding != null)
+            {
+                shellCode = codeBinding.ShellCode;
+                rotorCode = codeBinding.RotorCode;
+                statorCode = codeBinding.StatorCode;
+                uploadDatas = data.Where(x =>
+                        x.Code == codeBinding.ShellCode
+                        || x.Code == codeBinding.RotorCode
+                        || x.Code == codeBinding.StatorCode)
+                    .OrderBy(x => x.Order).ToList();
+            }
+            else
+            {
+                uploadDatas = data.Where(x => x.Code == code).OrderBy(x => x.Order).ToList();
+                var firstdata = uploadDatas.FirstOrDefault();
+                // 根据实体中的名称 得出二维码的类型
+
+                if (firstdata.Name is { } s1 && s1.Contains("定子"))
+                    statorCode = firstdata.Code;
+                else if (firstdata.Name is { } s2 && s2.Contains("转子"))
+                    rotorCode = firstdata.Code;
+                else if (firstdata.Name is { } s3 && s3.Contains("总成"))
+                    shellCode = firstdata.Code;
+            }
+
             var expano = new ExpandoObject();
-            expano.TryAdd("ShellCode", x.ShellCode??"");
-            expano.TryAdd("RotorCode", x.RotorCode ?? "");
-            expano.TryAdd("StatorCode", x.StatorCode ?? "");
-            foreach (var item in x.Items)
+            expano.TryAdd("ShellCode", shellCode);
+            expano.TryAdd("RotorCode", rotorCode);
+            expano.TryAdd("StatorCode", statorCode);
+            foreach (var item in uploadDatas)
             {
                 expano.TryAdd(item.Name, item.Content);
             }
-            return expano;
-        });
+
+            result.Add(expano);
+        }
+
+        return result;
     }
 
     /// <summary>
