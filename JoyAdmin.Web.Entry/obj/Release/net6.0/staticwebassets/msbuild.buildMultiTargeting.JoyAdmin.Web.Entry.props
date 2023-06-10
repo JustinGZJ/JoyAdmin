@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\JoyAdmin.Web.Entry.props" />
-</Project>
