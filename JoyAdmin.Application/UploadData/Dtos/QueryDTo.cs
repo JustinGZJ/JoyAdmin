@@ -14,3 +14,9 @@ public class QueryDTo
     public int size { get; set; } = 10;
     
 }
+
+public class TimeSpanDto
+{
+    public DateTime Start { get; set; }
+    public DateTime End { get; set; }
+}

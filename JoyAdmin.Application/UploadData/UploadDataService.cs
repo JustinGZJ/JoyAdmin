@@ -12,7 +12,6 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace JoyAdmin.Application.UploadData;
 
@@ -62,79 +61,103 @@ public class MachineDataService : IDynamicApiController
             .ToPagedListAsync(range.page, range.size);
     }
 
+public async Task<IEnumerable<IDictionary<string, object>>> GetProductData([FromQuery] TimeSpanDto range)
+{
+    // 找出时间段内的所有数据
+    var data = await _uploadDataRepository
+        .Where(x => x.Time > range.Start && x.Time < range.End)
+        .ToListAsync();
 
-    [AllowAnonymous]
-    public async Task<IEnumerable<ExpandoObject>> GetProductData([FromQuery] QueryDTo range)
+    // 找出所有码
+    var codes = data.Select(x => x.Code).Distinct();
+
+    // 从codes中排除掉已绑定的码
+    var bindings = await _shellcodeBindingRepository
+        .Where(x => codes.Contains(x.ShellCode) || codes.Contains(x.StatorCode) || codes.Contains(x.RotorCode))
+        .ToListAsync();
+    var boundRotorCodes = bindings.Select(x => x.RotorCode).ToList();
+    var boundStatorCodes = bindings.Select(x => x.StatorCode).ToList();
+    // 由于单条记录只绑定了壳体码与定子码和转子码的关系，所以要把信息聚合。
+    var relations =bindings.GroupBy(x => x.ShellCode).Select(x =>
     {
-        // 找出时间段内的所有数据
-        var data = await _uploadDataRepository
-            .Where(x => x.Time > range.Start && x.Time < range.End)
-            .ToListAsync();
+        var relation = new ShellCodeBinding();
+        relation.ShellCode = x.Key;
+        relation.RotorCode= x.LastOrDefault()?.RotorCode;
+        relation.StatorCode = x.LastOrDefault()?.StatorCode;
+        return relation;
+    }).ToDictionary(x=>x.ShellCode);
+    
 
-        // 找出所有码
-        var codes = data
-            .Select(x => x.Code).Distinct().ToList();
-        // 从codes中排除掉已绑定的码
-        var bindings = await _shellcodeBindingRepository
-            .Where(x => codes.Contains(x.ShellCode) || codes.Contains(x.StatorCode) || codes.Contains(x.RotorCode))
-            .ToListAsync();
+    // 从bingdings中排除掉已绑定的定子和转子码
+    var codesToQuery = codes
+        .Except(boundStatorCodes)
+        .Except(boundRotorCodes);
 
-        //  var bindingShellCodes = bindings.Select(x => x.ShellCode).ToList();
+    // 找出所有的关键词
+    var keys = data.Select(x => x.Name).Distinct();
 
-        // 从bingdings中排除掉已绑定的定子和转子码
-
-        var CodesToQuery = codes.Except(bindings.Select(x => x.StatorCode).ToList())
-            .Except(bindings.Select(x => x.RotorCode).ToList()).ToList();
-
-        List<ExpandoObject> result = new List<ExpandoObject>();
-
-        foreach (var code in CodesToQuery)
+    var result = codesToQuery.Select(code =>
+    {
+        var expano = new Dictionary<string,object>();
+        var uploadDatas = data.Where(x => x.Code == code)
+            .OrderBy(x => x.Order)
+            .ToList();
+        expano["时间"] = uploadDatas.LastOrDefault()?.Time ?? DateTime.Now;
+        if (relations.TryGetValue(code, out var codeBinding))
         {
-            List<Core.Entities.Storage.UploadData> uploadDatas = new List<Core.Entities.Storage.UploadData>();
-            var codeBinding = bindings.FirstOrDefault(x => x.ShellCode == code);
-            string shellCode = "";
-            string rotorCode = "";
-            string statorCode = "";
-            DateTime time;
-            if (codeBinding != null)
-            {
-                shellCode = codeBinding.ShellCode;
-                rotorCode = codeBinding.RotorCode;
-                statorCode = codeBinding.StatorCode;
-                uploadDatas = data.Where(x =>
-                        x.Code == codeBinding.ShellCode
-                        || x.Code == codeBinding.RotorCode
-                        || x.Code == codeBinding.StatorCode)
-                    .OrderBy(x => x.Order).ToList();
-            }
-            else
-            {
-                uploadDatas = data.Where(x => x.Code == code).OrderBy(x => x.Order).ToList();
-                var firstdata = uploadDatas.FirstOrDefault();
-                // 根据实体中的名称 得出二维码的类型
-
-                if (firstdata.Name is { } s1 && s1.Contains("定子"))
-                    statorCode = firstdata.Code;
-                else if (firstdata.Name is { } s2 && s2.Contains("转子"))
-                    rotorCode = firstdata.Code;
-                else if (firstdata.Name is { } s3 && s3.Contains("总成"))
-                    shellCode = firstdata.Code;
-            }
-
-            var expano = new ExpandoObject();
-            expano.TryAdd("ShellCode", shellCode);
-            expano.TryAdd("RotorCode", rotorCode);
-            expano.TryAdd("StatorCode", statorCode);
-            foreach (var item in uploadDatas)
-            {
-                expano.TryAdd(item.Name, item.Content);
-            }
-
-            result.Add(expano);
+            expano["壳体二维码"] = codeBinding.ShellCode;
+            expano["转子二维码"] = codeBinding.RotorCode;
+            expano["定子二维码"] = codeBinding.StatorCode;
+            uploadDatas = data
+                .Where(x => x.Code == codeBinding.ShellCode
+                            || x.Code == codeBinding.RotorCode
+                            || x.Code == codeBinding.StatorCode)
+                .OrderBy(x => x.Order).ToList();
         }
+        else
+        {
+            var firstData = uploadDatas.FirstOrDefault();
+            // 根据实体中的名称得出二维码的类型
+            if (firstData?.Name is { } s1 && s1.Contains("定子"))
+            {
+                expano["壳体二维码"] = "";
+                expano["定子二维码"] = firstData.Code;
+                expano["转子二维码"] = "";
+                
+            }
+            else if (firstData?.Name is { } s2 && s2.Contains("转子"))
+            {
+                expano["壳体二维码"] = "";
+                expano["定子二维码"] = "";
+                expano["转子二维码"] = firstData.Code;
+            }
+            else if (firstData?.Name is { } s3 && s3.Contains("总成"))
+            {
+                expano["壳体二维码"] = firstData.Code;
+                expano["定子二维码"] = "";
+                expano["转子二维码"] = "";
+            }         
+        }
+        
+     
+        var lookup = uploadDatas.ToLookup(x => x.Name, x => x.Content);
+        foreach (var item in keys)
+        {
+          var values=  lookup[item].ToArray();
+          if (values.Any())
+          {
+              expano[item] = values.LastOrDefault(); 
+          }
+          else
+          {
+              expano[item]= "";
+          }
+        }
+        return expano;
+    });
 
-        return result;
-    }
+    return await Task.FromResult(result);
+}
 
     /// <summary>
     /// 根据二维码获取所有测试数据
@@ -187,18 +210,18 @@ public class MachineDataService : IDynamicApiController
         }
         else
         {
-            var Datas = await _uploadDataRepository
+            var datas = await _uploadDataRepository
                 .Where(x => x.Code == code)
                 .OrderBy(x => x.Order)
                 .ToListAsync();
 
-            var filteredData = Datas
+            var filteredData = datas
                 .GroupBy(x => x.Order)
                 .Select(g => g.Last());
 
             var filteredOrderedData = filteredData
                 .OrderBy(x => x.Order).ToList();
-            var data = Datas.FirstOrDefault();
+            var data = datas.FirstOrDefault();
             var statorCode = "";
             var rotorCode = "";
             var shellCode = "";

@@ -1,2 +1,64 @@
-﻿/OPCTEST/*
+# ASP.NET Core
+bin/
+obj/
+Debug/
+Release/
 
+# build artifacts
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Visual Studio files
+.idea/
+.vs/
+*.user
+*.psess
+*.vsp
+*.suo
+*.cache
+*.dll
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.sbr
+*.tlb
+*.tlh
+*.ilk
+*.log
+*.tlog
+*.pdb
+*.obj
+*.pch
+*.idb
+*.exp
+*.res
+*.aps
+*.clw
+*.vcxproj.user
+*.vcxproj.*
+*ipch/
+*.dbmdl
+*.dbproj*
+*.sln.docstates
+*.scc
+
+# NuGet packages
+*.nupkg
+packages/
+*.nuget.props
+*.nuget.targets
+
+# MSTest test Results
+TestResults/
+
+# Build Results
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
+[Bb]in/
+[Oo]bj/
