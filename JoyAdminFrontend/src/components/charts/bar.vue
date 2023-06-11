@@ -36,7 +36,13 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: xAxisData
+          data: xAxisData,
+          axisLabel: {
+            interval: 0, // 设置为0，强制显示所有标签
+            rotate: 45, // 旋转45度，防止标签重叠
+            textStyle: {
+              fontSize: 10 // 调整字体大小
+            } }
         },
         yAxis: {
           type: 'value'

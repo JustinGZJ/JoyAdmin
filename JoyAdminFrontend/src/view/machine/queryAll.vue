@@ -2,8 +2,7 @@
   <div>
     <Card style="margin-bottom: 10px">
       <!--     <Date-picker type="daterange" :value="date_range"  placeholder="选择日期" style="width: 250px"></Date-picker>-->
-      <Date-picker type="datetimerange" v-model="date_range" format="yyyy-MM-dd HH:mm" placeholder="选择日期和时间"
-                   style="width: 300px"></Date-picker>
+      <Date-picker type="datetimerange" v-model="date_range" format="yyyy-MM-dd HH:mm" placeholder="选择日期和时间" style="width: 300px"></Date-picker>
       <Button type="primary" @click="query" icon="md-add" style="margin-left:10px ">查询</Button>
       <Button type="primary" @click="exportCsv" icon="ios-download-outline" :loading="exportLoading" style="margin-left:10px ">导出</Button>
     </Card>
@@ -23,6 +22,7 @@
 <script>
 import { GetProductData } from '@/api/machine_data'
 import excel from '@/libs/excel'
+import dayjs from 'dayjs'
 
 export default {
   name: 'data',
@@ -98,10 +98,7 @@ export default {
     }
   },
   mounted () {
-    let now = new Date()
-    let today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate()
-    let tomorrow = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + (now.getDate() + 1)
-    this.date_range = [today, tomorrow]
+    this.date_range = [dayjs().startOf('day').format(), dayjs().endOf('day').format()]
     this.tableHeight = window.innerHeight - 260
   }
 }

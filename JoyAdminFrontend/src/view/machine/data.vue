@@ -40,6 +40,7 @@
 
 <script>
 import { GetData } from '@/api/machine_data'
+import dayjs from 'dayjs'
 export default {
   name: 'data',
   data () {
@@ -101,8 +102,7 @@ export default {
     query () {
       let vm = this
       vm.loadingTable = true
-      new Date()
-      var reqData = {
+      const reqData = {
 
         Start: vm.date_range[0].toLocaleString(),
         End: vm.date_range[1].toLocaleString(),
@@ -124,11 +124,7 @@ export default {
     }
   },
   mounted () {
-    let now = new Date()
-
-    let today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate()
-    let tomorrow = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + (now.getDate() + 1)
-    this.date_range = [today, tomorrow]
+    this.date_range = [dayjs().startOf('day').format(), dayjs().endOf('day').format()]
     this.tableHeight = window.innerHeight - 260
   }
 }

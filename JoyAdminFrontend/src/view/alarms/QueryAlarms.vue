@@ -4,10 +4,11 @@
       <Select v-model="station" style="width:200px">
         <Option v-for="item in stations" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
-      <Date-picker type="datetimerange"  v-model="date_range" format="yyyy-MM-dd HH:mm" placeholder="选择日期和时间" style="width: 300px"></Date-picker>
+      <Date-picker type="datetimerange" v-model="date_range" format="yyyy-MM-dd HH:mm" placeholder="选择日期和时间"
+                   style="width: 300px"></Date-picker>
       <Button @click.prevent="query">查询</Button>
     </div>
-    <Table :loading="loading"  :columns="columns" :data="tableData" ></Table>
+    <Table :loading="loading" :columns="columns" :data="tableData"></Table>
     <Page
       :total="total"
       :current="page"
@@ -33,6 +34,8 @@
 </template>
 <script>
 import { GetAlarmHistories } from '@/api/alarm'
+import dayjs from 'dayjs'
+
 export default {
   data () {
     return {
@@ -114,8 +117,8 @@ export default {
           key: 'StartTime'
         },
         {
-          title: '结束时间',
-          key: 'EndTime'
+          title: '持续时间',
+          key: 'Duration'
         }
       ],
       Data: [],
@@ -154,7 +157,24 @@ export default {
 
   },
   mounted () {
+    this.date_range = [dayjs().startOf('day').format(), dayjs().endOf('day').format()]
     this.query()
+  },
+  computed: {
+    tableData () {
+      if (Array.isArray(this.Data) && this.Data.length > 0) {
+        return this.Data.map((item) => {
+          return {
+            Station: item.Station,
+            Message: item.Message,
+            StartTime: item.StartTime,
+            Duration: dayjs(item.EndTime).diff(item.StartTime, 'second') + '秒'
+          }
+        })
+      } else {
+        return []
+      }
+    }
   }
 }
 

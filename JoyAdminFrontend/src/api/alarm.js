@@ -26,9 +26,7 @@ export const GetAlarmHistories = (params) => {
 // }'
 
 export const GetAlarmFreq = (params) => {
-  return axios.get('api/AlarmHistory/GetAlarmFreq', {
-    params
-  })
+  return axios.post('api/AlarmHistory/GetAlarmFreq', params)
 }
 
 // curl -X 'POST' \
@@ -44,9 +42,7 @@ export const GetAlarmFreq = (params) => {
 // }'
 
 export const GetAlarmCount = (params) => {
-  return axios.get('api/AlarmHistory/GetAlarmCount', {
-    params
-  })
+  return axios.post('api/AlarmHistory/GetAlarmCount', params)
 }
 
 // curl -X 'POST' \

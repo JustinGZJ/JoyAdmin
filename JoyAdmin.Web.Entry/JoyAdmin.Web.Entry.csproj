@@ -15,5 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\JoyAdmin.Web.Core\JoyAdmin.Web.Core.csproj" />
   </ItemGroup>
+  
 
 </Project>

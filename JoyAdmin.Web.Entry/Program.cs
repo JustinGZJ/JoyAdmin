@@ -1,6 +1,9 @@
+using System;
 using Serilog;
 using Serilog.Events;
-using System.Text; 
+using System.Text;
+using Microsoft.Extensions.Hosting;
+
 Serve.Run(RunOptions.Default
     .ConfigureBuilder(builder =>
     {

@@ -95,7 +95,7 @@ export default [
     name: 'alarm',
     meta: {
       icon: 'ios-paper-outline',
-      title: '产品数据'
+      title: '报警数据'
     },
     component: Main,
     children: [
@@ -108,6 +108,15 @@ export default [
           access: ['role', 'auth', 'employee']
         },
         component: resolve => require(['@/view/alarms/QueryAlarms.vue'], resolve)
+      }, {
+        path: '/alarmStatistics',
+        name: 'alarmStatistics',
+        meta: {
+          icon: 'ios-paper',
+          title: '报警统计',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/alarms/AlarmStatistics.vue'], resolve)
       }]
   },
   {
