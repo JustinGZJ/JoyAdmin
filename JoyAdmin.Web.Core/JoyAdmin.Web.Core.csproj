@@ -8,11 +8,20 @@
 
   <ItemGroup>
     <None Remove="JoyAdmin.Web.Core.xml" />
+    <None Remove="obj\**" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\JoyAdmin.Application\JoyAdmin.Application.csproj" />
     <ProjectReference Include="..\JoyAdmin.Database.Migrations\JoyAdmin.Database.Migrations.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="obj\**" />
   </ItemGroup>
 
 </Project>
