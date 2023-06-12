@@ -3,12 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Furion.DatabaseAccessor;
 using Furion.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Opc.Ua;
 using Opc.Ua.Client;
 using OpcUaHelper;
@@ -549,7 +545,7 @@ public class OpcUaClientWrapper : IOpcUaClientWrapper,ISingleton
     public List<DataValue> ReadSingleNodeIdHistoryDatas(string nodeId, DateTime startTime, DateTime endTime)
     {
         List<DataValue> nodeIdDatas = null;
-        if (!string.IsNullOrEmpty(nodeId) && startTime != null && endTime != null && endTime > startTime)
+        if (!string.IsNullOrEmpty(nodeId) && endTime > startTime)
         {
             if (ConnectStatus)
             {

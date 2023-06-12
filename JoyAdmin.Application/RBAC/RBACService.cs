@@ -1,5 +1,4 @@
 ﻿using Furion;
-using Furion.Authorization; 
 using Furion.DatabaseAccessor;
 using Furion.DataEncryption;
 using Furion.DynamicApiController;

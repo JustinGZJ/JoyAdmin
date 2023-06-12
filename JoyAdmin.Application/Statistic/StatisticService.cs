@@ -10,6 +10,7 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace JoyAdmin.Application.Statistic;
 
@@ -29,11 +30,11 @@ public class StatisticService : IDynamicApiController
     /// <param name="production">ProductionType 0进料 1 OK  2 NG</param>
     /// <returns></returns>
     [AllowAnonymous]
-    public Task Upload(ProductionDto production)
+    public async Task<EntityEntry<Production>> Upload(ProductionDto production)
     {
         var upload = production.Adapt<Production>();
         upload.Time = DateTime.Now;
-        return _productionRepository.InsertNowAsync(upload);
+        return await _productionRepository.InsertNowAsync(upload);
     }
     /// <summary>
     /// 获取获取
@@ -195,7 +196,7 @@ public class StatisticService : IDynamicApiController
         }).OrderByDescending(x=>x.Count).Take(Limit).ToListAsync();
     }
     
-    private async Task<StatisticRate> GetPassRate(string device, DateTime starttime, DateTime endtime)
+    private Task<StatisticRate> GetPassRate(string device, DateTime starttime, DateTime endtime)
     {
         IQueryable<Production> datas;
         if (string.IsNullOrWhiteSpace(device))
@@ -209,13 +210,13 @@ public class StatisticService : IDynamicApiController
                 .Where(x => x.Device == device)
                 .Where(x => x.Time > starttime && x.Time <= endtime);
         }
-        return new StatisticRate
+        return Task.FromResult(new StatisticRate
         {
             Device = device,
             Ok = datas.Count(x=>x.ProductionType==ProductionType.OK),
             Ng =datas.Count(x=>x.ProductionType==ProductionType.NG),
             FeedQuality = datas.Count(x=>x.ProductionType==ProductionType.NG),
-        };
+        });
     }
     
 }

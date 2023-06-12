@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div>
     <div>
       <Select v-model="station" style="width:200px">
@@ -6,34 +6,15 @@
       </Select>
       <Date-picker type="datetimerange" v-model="date_range" format="yyyy-MM-dd HH:mm" placeholder="选择日期和时间"
                    style="width: 300px"></Date-picker>
+      <Select v-model="aggregation" style="width:200px">
+        <Option v-for="item in aggregationSet" :value="item.value" :key="item.value">{{ item.label }}</Option>
+      </Select>
       <Button @click.prevent="query">查询</Button>
     </div>
-    <Table :loading="loading" :columns="columns" :data="tableData" :height="tableHeight"></Table>
-    <Page
-      :total="total"
-      :current="page"
-      :page-size="size"
-      :page-size-opts="[10,20, 50, 100, 300, 500, 1000, 2000, 5000]"
-      @on-change="
-        (s) => {
-          page = s;
-          query();
-        }
-      "
-      @on-page-size-change="
-        (p) => {
-          size = p;
-          page = 1;
-          query();
-        }
-      "
-      show-total
-      show-sizer
-    />
   </div>
 </template>
 <script>
-import { GetAlarmHistories } from '@/api/alarm'
+import Production from '@/api/production'
 import dayjs from 'dayjs'
 
 export default {
@@ -102,31 +83,24 @@ export default {
           label: '合装3'
         }
       ],
+      aggregation: 0,
+      aggregationSet: [
+        {
+          value: 0,
+          label: 'NONE'
+        }, {
+          value: 1,
+          label: 'HOUR'
+        }, {
+          value: 2,
+          label: 'DAY'
+        }, {
+          value: 3,
+          label: 'MONTH'
+        }],
       date_range: ['2016-01-01', '2016-02-15'],
-      columns: [
-        {
-          title: '工站',
-          key: 'Station'
-        },
-        {
-          title: '信息',
-          key: 'Message'
-        },
-        {
-          title: '开始时间',
-          key: 'StartTime'
-        },
-        {
-          title: '持续时间',
-          key: 'Duration'
-        }
-      ],
       Data: [],
-      total: 0,
-      page: 1,
-      size: 20,
-      loading: false,
-      tableHeight:450
+      tableHeight: 450
     }
   },
   methods: {
@@ -136,12 +110,11 @@ export default {
         station = ''
       }
       this.loading = false
-      GetAlarmHistories({
-        Station: station,
+      Production.GetPassRates({
+        Device: station,
         Start: this.date_range[0].toLocaleString(),
         End: this.date_range[1].toLocaleString(),
-        page: this.page,
-        size: this.size
+        Aggregation: this.aggregation
       }).then((res) => {
         this.loading = false
         const data = res.data
@@ -159,22 +132,19 @@ export default {
   },
   mounted () {
     this.date_range = [dayjs().startOf('day').format(), dayjs().endOf('day').format()]
-    this.tableHeight= window.innerHeight - 200
+    this.tableHeight = window.innerHeight - 200
     this.query()
   },
-  computed: {
-    tableData () {
-      if (Array.isArray(this.Data) && this.Data.length > 0) {
-        return this.Data.map((item) => {
-          return {
-            Station: item.Station,
-            Message: item.Message,
-            StartTime: item.StartTime,
-            Duration: dayjs(item.EndTime).diff(item.StartTime, 'second') + '秒'
-          }
-        })
+  watch: {
+    date_range (val) {
+      console.log(val)
+      let diff = dayjs(val[1]).diff(dayjs(val[0]), 'day')
+      if (diff <= 1) {
+        this.aggregation = 1
+      } else if (diff < 31) {
+        this.aggregation = 2
       } else {
-        return []
+        this.aggregation = 3
       }
     }
   }

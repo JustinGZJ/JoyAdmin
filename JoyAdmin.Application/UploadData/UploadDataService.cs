@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Furion.DatabaseAccessor;
 using Furion.DynamicApiController;
 using JoyAdmin.Application.UploadData.Dtos;

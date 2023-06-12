@@ -120,6 +120,35 @@ export default [
       }]
   },
   {
+    path: '/report',
+    name: 'report',
+    meta: {
+      icon: 'ios-paper-outline',
+      title: '报表管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: '/reportData',
+        name: 'reportData',
+        meta: {
+          icon: 'ios-paper',
+          title: '上传数据',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/report/recentUpload.vue'], resolve)
+      }, {
+        path: '/reportStatistics',
+        name: 'reportStatistics',
+        meta: {
+          icon: 'ios-paper',
+          title: '良率统计',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/report/reportPassrate.vue'], resolve)
+      }]
+  },
+  {
     path: '/system',
     name: 'system',
     meta: {

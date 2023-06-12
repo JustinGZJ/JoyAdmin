@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Furion;
 using Furion.DatabaseAccessor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Opc.Ua;
-using System.Threading;
-using NotImplementedException = System.NotImplementedException;
 
 namespace JoyAdmin.Application.OPC;
 
@@ -20,7 +16,6 @@ public class OPCAlarmMonitor : BackgroundService
     private readonly IOpcUaClientWrapper _opcUaClient;
     private readonly IConfiguration _configuration;
     private readonly IOpcMonitorDataStorage _dataStorage = new OpcMonitorDataStorage();
-    private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly ILogger<OPCAlarmMonitor> _logger;
     private readonly IRepository<Core.Entities.Storage.AlarmHistory> _alarmHistoryRepository;
     private IRepository<Core.Entities.Storage.AlarmHistory> repository;
@@ -31,9 +26,8 @@ public class OPCAlarmMonitor : BackgroundService
         _opcUaClient = opcUaClient;
         _configuration = configuration;
 
-        _serviceScopeFactory = serviceScopeFactory;
         _logger = logger;
-        var scope = _serviceScopeFactory.CreateScope();
+        var scope = serviceScopeFactory.CreateScope();
         repository = Db.GetRepository<Core.Entities.Storage.AlarmHistory>(scope.ServiceProvider);
         _dataStorage = scope.ServiceProvider.GetService<IOpcMonitorDataStorage>();
         _opcUaClient.OpenConnectOfAnonymous("opc.tcp://127.0.0.1:49320");
