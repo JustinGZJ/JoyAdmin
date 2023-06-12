@@ -65,6 +65,8 @@ public class StatisticService : IDynamicApiController
         var currentStartDate = startDate;
         var aggregation = passRateQueryDTo.Aggregation;
         var device = passRateQueryDTo.Device;
+       var data =_productionRepository
+            .Where(x => x.Time > passRateQueryDTo.Start && x.Time <= passRateQueryDTo.End).ToList();
         while (currentStartDate < endDate)
         {
             var currentEndDate = aggregation switch
@@ -77,7 +79,7 @@ public class StatisticService : IDynamicApiController
                 _ => throw new ArgumentException("Invalid aggregation value"),
             };
 
-            var passRate = await GetPassRate(device, currentStartDate, currentEndDate);
+            var passRate = await GetPassRate(data,device, currentStartDate, currentEndDate);
             results.Add(passRate);
 
             currentStartDate = aggregation switch
@@ -196,26 +198,26 @@ public class StatisticService : IDynamicApiController
         }).OrderByDescending(x=>x.Count).Take(Limit).ToListAsync();
     }
     
-    private Task<StatisticRate> GetPassRate(string device, DateTime starttime, DateTime endtime)
+    private Task<StatisticRate> GetPassRate(List<Production> data,string device, DateTime starttime, DateTime endtime)
     {
-        IQueryable<Production> datas;
+        IEnumerable<Production> queryData;
         if (string.IsNullOrWhiteSpace(device))
         {
-            datas = _productionRepository
+            queryData = data
                 .Where(x => x.Time > starttime && x.Time <= endtime);
         }
         else
         {
-            datas = _productionRepository
+            queryData = _productionRepository
                 .Where(x => x.Device == device)
                 .Where(x => x.Time > starttime && x.Time <= endtime);
         }
         return Task.FromResult(new StatisticRate
         {
             Device = device,
-            Ok = datas.Count(x=>x.ProductionType==ProductionType.OK),
-            Ng =datas.Count(x=>x.ProductionType==ProductionType.NG),
-            FeedQuality = datas.Count(x=>x.ProductionType==ProductionType.NG),
+            Ok = queryData.Count(x=>x.ProductionType==ProductionType.OK),
+            Ng =queryData.Count(x=>x.ProductionType==ProductionType.NG),
+            FeedQuality = queryData.Count(x=>x.ProductionType==ProductionType.NG),
         });
     }
     
