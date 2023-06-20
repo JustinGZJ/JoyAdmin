@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import Alarm from '@/api/alarm'
 import { ChartBar } from '@/components/charts'
 import ChartPie from '_c/charts/pie.vue'
+
 export default {
   data () {
     return {
@@ -72,8 +73,8 @@ export default {
       date_range: ['2016-01-01', '2016-02-15'],
       alarmData: {},
       alarmCount: [],
-      text: '报警统计',
-      subtext: '次数统计'
+      text: '报警分布',
+      subtext: '次数'
     }
   },
   computed: {
@@ -97,12 +98,13 @@ export default {
       if (this.alarmCount.length === 0) {
         return []
       } else {
-        return this.alarmCount.map(item => {
+        const arr = this.alarmCount.map(item => {
           return {
             name: item['Station'],
             value: item['Count']
           }
         })
+        return [arr]
       }
     }
   },
@@ -141,15 +143,27 @@ export default {
                    style="width: 300px"></Date-picker>
       <Button @click.prevent="query">查询</Button>
     </div>
-    <div>
-      <ChartBar v-for="(value,key) in chartData" :text="key" style="height: 300px;width: 300px" :value="value" :key="key">
-
-      </ChartBar>
-      <ChartPie :text="text" :subtext="subtext" style="height: 300px;width: 300px"  :value="chartCount"></ChartPie>
+    <div class="chart-container">
+      <div class="left" v-if="station==='所有'">
+        <ChartPie v-for="pie  in chartCount" :key="pie" text="报警分布" subtext="报警次数"
+                  style="width: 100%;height: 400px" :value="pie"></ChartPie>
+      </div>
+      <div class="right">
+        <ChartBar v-for="(value,key) in chartData" :text="key" style="height: 300px;width: 100%" :value="value"
+                  :key="key"/>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="less">
-
+.chart-container {
+  display: flex;
+  .left {
+    flex: 3;
+  }
+  .right {
+    flex: 7;
+  }
+}
 </style>

@@ -25,30 +25,31 @@
   </div>
 </template>
 <script>
-import production from '@/api/production'
+import { GetBindingData } from '@/api/machine_data'
 
 export default {
   data () {
     return {
       columns: [
         {
-          title: '时间',
-          key: 'Time'
+          title: '编号',
+          key: 'Id'
         },
         {
-          title: '设备',
-          key: 'Device'
+          title: '壳体码',
+          key: 'ShellCode'
         },
         {
-          title: '类型',
-          key: 'ProductionType'
+          title: '定子码',
+          key: 'StatorCode'
         },
         {
-          title: '原因',
-          key: 'Reason'
-        }, {
-          title: '数量',
-          key: 'Quantity'
+          title: '转子码',
+          key: 'RotorCode'
+        },
+        {
+          title: '插入时间',
+          key: 'CreateTime'
         }
       ],
       Data: [],
@@ -62,7 +63,7 @@ export default {
   methods: {
     query () {
       this.loading = true
-      production.GetRecentUpload(this.page, this.size).then((res) => {
+      GetBindingData(this.page, this.size).then((res) => {
         this.loading = false
         const data = res.data
         if (data.StatusCode === 200) {
@@ -83,19 +84,11 @@ export default {
   },
   computed: {
     tableData () {
-      if (Array.isArray(this.Data) && this.Data.length > 0) {
-        return this.Data.map((item) => {
-          return {
-            Time: item.Time,
-            Device: item.Device,
-            ProductionType: item.ProductionType === 0 ? '上料' : item.ProductionType === 1 ? 'OK' : 'NG',
-            Reason: item.Reason,
-            Quantity: item.Quantity
-          }
-        })
-      } else {
-        return []
-      }
+      return this.Data.map((item, index) => {
+        return {
+          ...item
+        }
+      })
     }
   }
 }

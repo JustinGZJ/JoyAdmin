@@ -47,7 +47,20 @@ public class MachineDataService : IDynamicApiController
     public Task BindShellCode(ShellCodeBindingDto shellCodeBindingDto)
     {
         var shellCodeBinding = shellCodeBindingDto.Adapt<ShellCodeBinding>();
+        shellCodeBinding.CreateTime = DateTime.Now;
         return _shellcodeBindingRepository.InsertNowAsync(shellCodeBinding);
+    }
+    
+    /// <summary>
+    /// 查看绑定数据
+    /// </summary>
+    /// <param name="shellCodeBindingDto">绑定参数</param>
+    /// <returns></returns>
+    [AllowAnonymous]
+    public async Task<PagedList<ShellCodeBinding>> GetBindingData(int page,int size)
+    {
+        return await _shellcodeBindingRepository.Entities
+            .ToPagedListAsync(page, size);
     }
 
 
@@ -188,11 +201,11 @@ public async Task<IEnumerable<IDictionary<string, object>>> GetProductData([From
 
             var rotorCode = codeBindings.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.RotorCode))?.RotorCode;
             var statorCode = codeBindings.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.StatorCode))?.StatorCode;
-            var Datas = await _uploadDataRepository
+            var datas = await _uploadDataRepository
                 .Where(x => codes.Any(c => c == x.Code))
                 .ToListAsync();
 
-            var filteredData = Datas
+            var filteredData = datas
                 .GroupBy(x => x.Order)
                 .Select(g => g.Last());
 

@@ -20,12 +20,14 @@ import 'v-org-tree/dist/v-org-tree.css'
 /* eslint-disable */
 // if (process.env.NODE_ENV !== 'production') require('@/mock')
 import dayjs from 'dayjs'
+import dataV from '@jiaminghi/data-view'
 Vue.prototype.dayjs = dayjs
 Vue.use(ViewUI, {
   i18n: (key, value) => i18n.t(key, value)
 })
 Vue.use(TreeTable)
 Vue.use(VOrgTree)
+Vue.use(dataV)
 /**
  * @description 注册admin内置插件
  */

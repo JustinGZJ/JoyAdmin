@@ -6,9 +6,6 @@
       </Select>
       <Date-picker type="datetimerange" v-model="date_range" format="yyyy-MM-dd HH:mm" placeholder="选择日期和时间"
                    style="width: 300px"></Date-picker>
-      <Select v-model="aggregation" style="width:200px">
-        <Option v-for="item in aggregationSet" :value="item.value" :key="item.value">{{ item.label }}</Option>
-      </Select>
       <Button @click.prevent="query">查询</Button>
     </div>
     <div >
@@ -89,7 +86,7 @@ export default {
           label: '合装3'
         }
       ],
-      aggregation: 1,
+      aggregation: 0,
       aggregationSet: [
         {
           value: 0,
@@ -109,10 +106,15 @@ export default {
         }],
       date_range: ['2016-01-01', '2016-02-15'],
       Data: [],
-      chart: null
+      chart: undefined,
+      limit: 10
     }
   },
   computed: {
+    percent () {
+      let total = this.Data.reduce((sum, item) => sum + item.Count, 0)
+      return this.Data.map(_ => (total - _.Count) / total * 100)
+    },
     chartOptions () {
       return {
         tooltip: {
@@ -133,7 +135,7 @@ export default {
           }
         },
         legend: {
-          data: ['合格', '不合格', '合格率']
+          data: ['不良数量', '趋势']
         },
         xAxis: [
           {
@@ -147,7 +149,7 @@ export default {
               textStyle: {
                 fontSize: 10 // 调整字体大小
               } },
-            data: this.Data.map(item => item.Start)
+            data: this.Data.map(item => item.Device + item.Reason)
           }
         ],
         yAxis: [
@@ -178,14 +180,14 @@ export default {
         ],
         series: [
           {
-            name: '合格',
+            name: '不良数量',
             type: 'bar',
             tooltip: {
               valueFormatter: function (value) {
                 return value + '个'
               }
             },
-            data: this.Data.map(item => item.Ok),
+            data: this.Data.map(item => item.Count),
             barWidth: '30%',
             itemStyle: {
               normal: {
@@ -194,23 +196,7 @@ export default {
             }
           },
           {
-            name: '不合格',
-            type: 'bar',
-            tooltip: {
-              valueFormatter: function (value) {
-                return value + '个'
-              }
-            },
-            data: this.Data.map(item => item.Ng),
-            barWidth: '30%',
-            itemStyle: {
-              normal: {
-                barBorderRadius: 5
-              }
-            }
-          },
-          {
-            name: '合格率',
+            name: '趋势',
             type: 'line',
             yAxisIndex: 1,
             lineStyle: {
@@ -223,15 +209,14 @@ export default {
                 return value + '%'
               }
             },
-            data: this.Data.map(item => (item.Ok + item.Ng) === 0 ? 0 : item.Ok / (item.Ok + item.Ng) * 100)
+            data: this.percent
           }
         ]
       }
     },
     chartShow () {
-      return this.Data.length > 0
-    }
-  },
+      return this.Data !== undefined && this.Data !== null && this.Data.length > 0
+    } },
   methods: {
     query () {
       let station = this.station
@@ -239,17 +224,18 @@ export default {
         station = ''
       }
       this.loading = false
-      Production.GetPassRates({
+      Production.QueryNgCounts({
         Device: station,
-        Start: this.date_range[0].toLocaleString(),
-        End: this.date_range[1].toLocaleString(),
-        Aggregation: this.aggregation
+        Start: dayjs(this.date_range[0]).format('YYYY-MM-DD HH:mm:ss'),
+        End: dayjs(this.date_range[1]).format('YYYY-MM-DD HH:mm:ss'),
+        Aggregation: this.aggregation,
+        Limit: this.limit
       }).then((res) => {
         this.loading = false
         const data = res.data
         if (data.StatusCode === 200) {
-          console.log(data)
-          this.Data = data.Data
+          // console.log(data)
+          this.Data = data.Data[0] || []
         } else {
           this.$Notice.error({
             title: data.Errors
@@ -265,12 +251,12 @@ export default {
 
   },
   mounted () {
-    this.date_range = [dayjs().startOf('day').format(), dayjs().endOf('day').format()]
     this.chart = echarts.init(this.$refs.chart)
-    console.log(this.$refs.chart)
+    this.date_range = [dayjs().startOf('day').format(), dayjs().endOf('day').format()]
     this.query()
+
     this.$nextTick(() => {
-      this.chart.setOption(this.chartOptions)
+      // if (this.chartOption) { this.chart.setOption(this.chartOptions) }
       on(window, 'resize', this.resize)
     })
   },
@@ -281,22 +267,10 @@ export default {
     }
   },
   watch: {
-    date_range (val) {
-      console.log(val)
-      let diff = dayjs(val[1]).diff(dayjs(val[0]), 'day')
-      if (diff <= 2) {
-        this.aggregation = 1
-      } else if (diff < 31) {
-        this.aggregation = 2
-      } else {
-        this.aggregation = 3
-      }
-    },
     Data (val) {
-      if (val === undefined || val === null || val.length === 0) {
-        return
+      if (val !== undefined && val !== null && val.length > 0) {
+        this.chart.setOption(this.chartOptions)
       }
-      this.chart.setOption(this.chartOptions)
     }
   }
 }

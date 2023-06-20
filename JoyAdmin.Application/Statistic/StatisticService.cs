@@ -36,19 +36,20 @@ public class StatisticService : IDynamicApiController
         upload.Time = DateTime.Now;
         return await _productionRepository.InsertNowAsync(upload);
     }
+
     /// <summary>
     /// 获取获取
     /// </summary>
     /// <param name="pageIndex"></param>
     /// <param name="pageSize"></param>
     /// <returns></returns>
-  [AllowAnonymous]
-    public Task<PagedList<Production>> GetRecentUpload(int pageIndex=1,int pageSize=50)
+    [AllowAnonymous]
+    public Task<PagedList<Production>> GetRecentUpload(int pageIndex = 1, int pageSize = 50)
     {
-      return  _productionRepository.Entities.ToPagedListAsync(pageIndex,pageSize);
+        return _productionRepository.Entities.ToPagedListAsync(pageIndex, pageSize);
     }
 
-    
+
     /// <summary>
     /// 根据站位和时间对合格率数据进行聚合 device=”“ 查询总合格率
     /// </summary>
@@ -65,7 +66,7 @@ public class StatisticService : IDynamicApiController
         var currentStartDate = startDate;
         var aggregation = passRateQueryDTo.Aggregation;
         var device = passRateQueryDTo.Device;
-       var data =_productionRepository
+        var data = _productionRepository
             .Where(x => x.Time > passRateQueryDTo.Start && x.Time <= passRateQueryDTo.End).ToList();
         while (currentStartDate < endDate)
         {
@@ -75,11 +76,11 @@ public class StatisticService : IDynamicApiController
                 AggregationType.Day => currentStartDate.AddDays(1).AddTicks(-1),
                 AggregationType.Week => currentStartDate.AddDays(7).AddTicks(-1),
                 AggregationType.Month => currentStartDate.AddMonths(1).AddTicks(-1),
-                AggregationType.None=>endDate,
+                AggregationType.None => endDate,
                 _ => throw new ArgumentException("Invalid aggregation value"),
             };
 
-            var passRate = await GetPassRate(data,device, currentStartDate, currentEndDate);
+            var passRate = await GetPassRate(data, device, currentStartDate, currentEndDate);
             results.Add(passRate);
 
             currentStartDate = aggregation switch
@@ -88,7 +89,7 @@ public class StatisticService : IDynamicApiController
                 AggregationType.Day => currentStartDate.AddDays(1),
                 AggregationType.Week => currentStartDate.AddDays(7),
                 AggregationType.Month => currentStartDate.AddMonths(1),
-                AggregationType.None=>endDate,
+                AggregationType.None => endDate,
                 _ => throw new ArgumentException("Invalid aggregation value"),
             };
         }
@@ -96,42 +97,42 @@ public class StatisticService : IDynamicApiController
         return results;
     }
 
-  /// <summary>
-  /// 查询时间段内所有站位的合格率
-  /// </summary>
-  /// <param name="starttime"></param>
-  /// <param name="endtime"></param>
-  /// <returns></returns>
+    /// <summary>
+    /// 查询时间段内所有站位的合格率
+    /// </summary>
+    /// <param name="starttime"></param>
+    /// <param name="endtime"></param>
+    /// <returns></returns>
     public async Task<List<StatisticRate>> GetPassRateByDevice(DateTime starttime, DateTime endtime)
     {
         var statisticRates = _productionRepository
             .Where(x => x.Time > starttime && x.Time <= endtime)
-            .GroupBy(x=>x.Device)
-            .Select(x=>new StatisticRate
+            .GroupBy(x => x.Device)
+            .Select(x => new StatisticRate
             {
                 Device = x.Key,
-                Ok = x.Count(production=>production.ProductionType==ProductionType.OK),
-                Ng =x.Count(production=>production.ProductionType==ProductionType.NG),
-                FeedQuality = x.Count(production=>production.ProductionType==ProductionType.NG),
+                Ok = x.Count(production => production.ProductionType == ProductionType.OK),
+                Ng = x.Count(production => production.ProductionType == ProductionType.NG),
+                FeedQuality = x.Count(production => production.ProductionType == ProductionType.NG),
             });
         return await statisticRates.ToListAsync();
     }
 
 
-/// <summary>
-/// 获取各站的失效原因分布
-/// </summary>
-/// <param name="queryDTo">
-/// AggregationType.Hour => 0,
-///  AggregationType.Day =>1,
-///  AggregationType.Week => 2,
-///  AggregationType.Month => 3,
-///  AggregationType.None=>4
-/// </param>
-/// <returns></returns>
-/// <exception cref="ArgumentException"></exception>
-   [HttpPost]
-   [AllowAnonymous]
+    /// <summary>
+    /// 获取各站的失效原因分布
+    /// </summary>
+    /// <param name="queryDTo">
+    /// AggregationType.Hour => 0,
+    ///  AggregationType.Day =>1,
+    ///  AggregationType.Week => 2,
+    ///  AggregationType.Month => 3,
+    ///  AggregationType.None=>4
+    /// </param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    [HttpPost]
+    [AllowAnonymous]
     public async Task<List<List<NgReasonCount>>> QueryNgCounts(QueryNgCount queryDTo)
     {
         var results = new List<List<NgReasonCount>>();
@@ -141,6 +142,21 @@ public class StatisticService : IDynamicApiController
         var aggregation = queryDTo.Aggregation;
         var device = queryDTo.Device;
         var limit = queryDTo.Limit;
+        IEnumerable<Production> productions;
+        if (string.IsNullOrEmpty(device))
+        {
+            productions = await _productionRepository
+                .Where(x => x.ProductionType == ProductionType.NG &&
+                            x.Time > startDate && x.Time <= endDate).ToListAsync();
+        }
+        else
+        {
+            productions = await _productionRepository
+                .Where(x => x.ProductionType == ProductionType.NG &&
+                            x.Device == device &&
+                            x.Time > startDate && x.Time <= endDate).ToListAsync();
+        }
+
         while (currentStartDate < endDate)
         {
             var currentEndDate = aggregation switch
@@ -149,11 +165,11 @@ public class StatisticService : IDynamicApiController
                 AggregationType.Day => currentStartDate.AddDays(1).AddTicks(-1),
                 AggregationType.Week => currentStartDate.AddDays(7).AddTicks(-1),
                 AggregationType.Month => currentStartDate.AddMonths(1).AddTicks(-1),
-                AggregationType.None=>endDate,
+                AggregationType.None => endDate,
                 _ => throw new ArgumentException("Invalid aggregation value"),
             };
 
-            var ngReasonCounts = await GetNgCount( currentStartDate, currentEndDate,limit,device);
+            var ngReasonCounts = GetNgCount(productions, currentStartDate, currentEndDate, limit, device);
             results.Add(ngReasonCounts);
 
             currentStartDate = aggregation switch
@@ -162,7 +178,7 @@ public class StatisticService : IDynamicApiController
                 AggregationType.Day => currentStartDate.AddDays(1),
                 AggregationType.Week => currentStartDate.AddDays(7),
                 AggregationType.Month => currentStartDate.AddMonths(1),
-                AggregationType.None=>endDate,
+                AggregationType.None => endDate,
                 _ => throw new ArgumentException("Invalid aggregation value"),
             };
         }
@@ -170,35 +186,22 @@ public class StatisticService : IDynamicApiController
         return results;
     }
 
-    private async Task<List<NgReasonCount>> GetNgCount(DateTime starttime, DateTime endtime,int Limit=10,string device="")
+    private List<NgReasonCount> GetNgCount(IEnumerable<Production> productions, DateTime starttime, DateTime endtime,
+        int limit = 10, string device = "")
     {
-        IQueryable<Production> datas;
-        if (string.IsNullOrWhiteSpace(device))
-        {
-            datas = _productionRepository
-                .Where(x=>x.ProductionType==ProductionType.NG)
-                .Where(x => x.Time > starttime && x.Time <= endtime);
-        }
-        else
-        {
-            datas = _productionRepository
-                .Where(x=>x.ProductionType==ProductionType.NG)
-                .Where(x => x.Device == device)
-                .Where(x => x.Time > starttime && x.Time <= endtime);
-        }
-        return await datas
+        return productions.Where(x=>x.Time>starttime&&x.Time<=endtime)
             .GroupBy(x => x.Reason)
             .Select(g => new NgReasonCount()
-        {
-            From = starttime,
-            To = endtime,
-            Device = device,
-            Count = g.Sum(production =>production.Count),
-            Reason = g.Key
-        }).OrderByDescending(x=>x.Count).Take(Limit).ToListAsync();
+            {
+                From = starttime,
+                To = endtime,
+                Device = g.FirstOrDefault()?.Device??"",
+                Count = g.Sum(production => production.Count),
+                Reason = g.Key
+            }).OrderByDescending(x => x.Count).Take(limit).ToList();
     }
-    
-    private Task<StatisticRate> GetPassRate(List<Production> data,string device, DateTime starttime, DateTime endtime)
+
+    private Task<StatisticRate> GetPassRate(List<Production> data, string device, DateTime starttime, DateTime endtime)
     {
         IEnumerable<Production> queryData;
         if (string.IsNullOrWhiteSpace(device))
@@ -212,13 +215,15 @@ public class StatisticService : IDynamicApiController
                 .Where(x => x.Device == device)
                 .Where(x => x.Time > starttime && x.Time <= endtime);
         }
+
         return Task.FromResult(new StatisticRate
         {
             Device = device,
-            Ok = queryData.Count(x=>x.ProductionType==ProductionType.OK),
-            Ng =queryData.Count(x=>x.ProductionType==ProductionType.NG),
-            FeedQuality = queryData.Count(x=>x.ProductionType==ProductionType.NG),
+            Start = starttime,
+            End = endtime,
+            Ok = queryData.Count(x => x.ProductionType == ProductionType.OK),
+            Ng = queryData.Count(x => x.ProductionType == ProductionType.NG),
+            FeedQuality = queryData.Count(x => x.ProductionType == ProductionType.FEED),
         });
     }
-    
 }

@@ -54,4 +54,12 @@ export const GetProductData = (params) => {
     params
   })
 }
-export default { GetData, GetProductData, UploadData, BindShellCode, GetMachineDataByCode }
+
+/// curl -X 'GET' \
+//   'http://localhost:9001/api/MachineData/GetBindingData/1/50' \
+//   -H 'accept: text/plain' \
+//   -H 'request-from: swagger'
+export const GetBindingData = (page, size) => {
+  return axios.get(`api/MachineData/GetBindingData/${page}/${size}`)
+}
+export default { GetData, GetProductData, UploadData, BindShellCode, GetMachineDataByCode, GetBindingData }

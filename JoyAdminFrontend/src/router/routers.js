@@ -50,6 +50,36 @@ export default [
     ]
   },
   {
+    path: '/dataView',
+    name: 'dataView',
+    meta: {
+      icon: 'ios-paper-outline',
+      title: '数据可视化',
+      access: ['role', 'auth', 'employee']
+    },
+    component: Main,
+    children: [
+      {
+        path: '/kanban',
+        name: 'kanban',
+        meta: {
+          icon: 'ios-search',
+          title: '总览',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/datav/index.vue'], resolve)
+      }, {
+        path: '/status',
+        name: 'status',
+        meta: {
+          icon: 'ios-search',
+          title: '设备状态',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/datav/MachineStatus.vue'], resolve)
+      }]
+  },
+  {
     path: '/machine',
     name: 'machine',
     meta: {
@@ -59,16 +89,6 @@ export default [
     },
     component: Main,
     children: [
-      {
-        path: '/data',
-        name: 'data',
-        meta: {
-          icon: 'ios-paper',
-          title: '上传数据',
-          access: ['role', 'auth', 'employee']
-        },
-        component: resolve => require(['@/view/machine/data.vue'], resolve)
-      },
       {
         path: '/query',
         name: 'query',
@@ -129,24 +149,73 @@ export default [
     component: Main,
     children: [
       {
-        path: '/reportData',
-        name: 'reportData',
-        meta: {
-          icon: 'ios-paper',
-          title: '上传数据',
-          access: ['role', 'auth', 'employee']
-        },
-        component: resolve => require(['@/view/report/recentUpload.vue'], resolve)
-      }, {
         path: '/reportStatistics',
         name: 'reportStatistics',
         meta: {
           icon: 'ios-paper',
-          title: '良率统计',
+          title: '分时良率',
           access: ['role', 'auth', 'employee']
         },
         component: resolve => require(['@/view/report/reportPassrate.vue'], resolve)
+      }, {
+        path: '/stationPassRate',
+        name: 'stationPassRate',
+        meta: {
+          icon: 'ios-paper',
+          title: '工位良率',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/report/StationPassRate.vue'], resolve)
+      }, {
+        path: '/ngDistribution',
+        name: 'ngDistribution',
+        meta: {
+          icon: 'ios-paper',
+          title: '不良分布',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/report/NgDistribution.vue'], resolve)
       }]
+  },
+  {
+    name: '/upload',
+    path: 'upload',
+    meta: {
+      icon: 'ios-paper-outline',
+      title: '设备上传'
+    },
+    component: Main,
+    children: [ {
+      path: '/testdata',
+      name: 'testdata',
+      meta: {
+        icon: 'ios-paper',
+        title: '生产数据',
+        access: ['role', 'auth', 'employee']
+      },
+      component: resolve => require(['@/view/machine/data.vue'], resolve)
+    },
+    {
+      path: '/uploadBinding',
+      name: 'uploadBinding',
+      meta: {
+        icon: 'ios-paper',
+        title: '绑定信息',
+        access: ['role', 'auth', 'employee']
+      },
+      component: resolve => require(['@/view/machine/codeBinding.vue'], resolve)
+    },
+    {
+      path: '/reportData',
+      name: 'reportData',
+      meta: {
+        icon: 'ios-paper',
+        title: '统计数据',
+        access: ['role', 'auth', 'employee']
+      },
+      component: resolve => require(['@/view/report/recentUpload.vue'], resolve)
+    }
+    ]
   },
   {
     path: '/system',
@@ -191,6 +260,27 @@ export default [
     ]
   },
   {
+    name: 'maintenance',
+    path: '/maintenance',
+    meta: {
+      icon: 'ios-paper-outline',
+      title: '人工操作'
+    },
+    component: Main,
+    children: [
+      {
+        path: '/fault-handing',
+        name: 'fault-handing',
+        meta: {
+          icon: 'ios-paper',
+          title: '故障操作',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/Maintenance/FaultHandling.vue'], resolve)
+      }
+    ]
+  },
+  {
     path: '/updatepwd',
     name: 'updatepwd',
     meta: {
@@ -210,107 +300,6 @@ export default [
       }
     ]
   },
-  // {
-  //   path: '/error_store',
-  //   name: 'error_store',
-  //   meta: {
-  //     hideInBread: true
-  //   },
-  //   component: Main,
-  //   children: [
-  //     {
-  //       path: 'error_store_page',
-  //       name: 'error_store_page',
-  //       meta: {
-  //         icon: 'ios-bug',
-  //         title: '错误收集'
-  //       },
-  //       component: () => import('@/view/error-store/error-store.vue')
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/error_logger',
-  //   name: 'error_logger',
-  //   meta: {
-  //     hideInBread: true,
-  //     hideInMenu: true
-  //   },
-  //   component: Main,
-  //   children: [
-  //     {
-  //       path: 'error_logger_page',
-  //       name: 'error_logger_page',
-  //       meta: {
-  //         icon: 'ios-bug',
-  //         title: '错误收集'
-  //       },
-  //       component: () => import('@/view/single-page/error-logger.vue')
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/multilevel',
-  //   name: 'multilevel',
-  //   meta: {
-  //     icon: 'md-menu',
-  //     title: '多级菜单'
-  //   },
-  //   component: Main,
-  //   children: [
-
-  //     {
-  //       path: 'level_2_1',
-  //       name: 'level_2_1',
-  //       meta: {
-  //         icon: 'md-funnel',
-  //         title: '二级-1'
-  //       },
-  //       component: () => import('@/view/multilevel/level-2-1.vue')
-  //     },
-  //     {
-  //       path: 'level_2_2',
-  //       name: 'level_2_2',
-  //       meta: {
-  //         access: ['super_admin'],
-  //         icon: 'md-funnel',
-  //         showAlways: true,
-  //         title: '二级-2'
-  //       },
-  //       component: parentView,
-  //       children: [
-  //         {
-  //           path: 'level_2_2_1',
-  //           name: 'level_2_2_1',
-  //           meta: {
-  //             icon: 'md-funnel',
-  //             title: '三级'
-  //           },
-  //           component: () => import('@/view/multilevel/level-2-2/level-2-2-1.vue')
-  //         },
-  //         {
-  //           path: 'level_2_2_2',
-  //           name: 'level_2_2_2',
-  //           meta: {
-  //             icon: 'md-funnel',
-  //             title: '三级'
-  //           },
-  //           component: () => import('@/view/multilevel/level-2-2/level-2-2-2.vue')
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       path: 'level_2_3',
-  //       name: 'level_2_3',
-  //       meta: {
-  //         icon: 'md-funnel',
-  //         title: '二级-3'
-  //       },
-  //       component: () => import('@/view/multilevel/level-2-3.vue')
-  //     }
-  //   ]
-  // },
   {
     path: '/refresh',
     name: 'refresh',

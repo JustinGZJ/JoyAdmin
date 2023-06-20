@@ -16,6 +16,7 @@ namespace JoyAdmin.EntityFramework.Core
                 options.CustomizeMultiTenants();
                 options.AddDbPool<DefaultDbContext>(DbProvider.Npgsql);
             }, "JoyAdmin.Database.Migrations");
+            
         }
     }
 }

@@ -31,6 +31,33 @@
             </summary>
             <param name="alarmHistoryCreateDto"></param>
         </member>
+        <member name="M:JoyAdmin.Application.AlarmHistory.DeviceRequestService.GetUnHandledCount">
+            <summary>
+            未处理的请求
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.AlarmHistory.DeviceRequestService.PostDeviceRequest(JoyAdmin.Application.AlarmHistory.Dtos.DeviceRequestCreateDto)">
+            <summary>
+            增加未处理的请求
+            </summary>
+        </member>
+        <member name="M:JoyAdmin.Application.AlarmHistory.DeviceRequestService.GetUnHandled">
+            <summary>
+            未处理的请求
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.AlarmHistory.DeviceRequestService.GetDeviceRequests(JoyAdmin.Application.AlarmHistory.Dtos.DeviceRequestQueryDto)">
+            <summary>
+            历史请求查询
+            </summary>
+        </member>
+        <member name="M:JoyAdmin.Application.AlarmHistory.DeviceRequestService.UpdateDeviceRequest(JoyAdmin.Application.AlarmHistory.Dtos.DeviceRequestUpdateDto)">
+            <summary>
+            更新
+            </summary>
+        </member>
         <member name="P:JoyAdmin.Application.AlarmHistory.Dtos.AlarmFreqQueryDto.TopN">
             <summary>
             限制返回的top n
@@ -571,6 +598,13 @@
         <member name="M:JoyAdmin.Application.UploadData.MachineDataService.BindShellCode(JoyAdmin.Application.UploadData.Dtos.ShellCodeBindingDto)">
             <summary>
             绑定二维码
+            </summary>
+            <param name="shellCodeBindingDto">绑定参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetBindingData(System.Int32,System.Int32)">
+            <summary>
+            查看绑定数据
             </summary>
             <param name="shellCodeBindingDto">绑定参数</param>
             <returns></returns>

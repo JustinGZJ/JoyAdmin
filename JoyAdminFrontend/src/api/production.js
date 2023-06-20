@@ -13,8 +13,8 @@ import { axios } from '@/libs/api.request'
 //   "Count": 1
 // }'
 
-export const Upload=(data)=>{
-  return  axios.post('api/Statistic/Upload',data)
+export const Upload = (data) => {
+  return axios.post('api/Statistic/Upload', data)
 }
 
 // curl -X 'GET' \
@@ -22,7 +22,7 @@ export const Upload=(data)=>{
 //   -H 'accept: text/plain' \
 //   -H 'request-from: swagger'
 
-export const GetRecentUpload=(page,size)=>{
+export const GetRecentUpload = (page, size) => {
   return axios.get(`api/Statistic/GetRecentUpload/${page}/${size}`)
 }
 
@@ -37,21 +37,18 @@ export const GetRecentUpload=(page,size)=>{
 //   "Device": "string",
 //   "Aggregation": 0
 // }'
-export const GetPassRates=(data)=>{
-  return axios.post('api/Statistic/GetPassRates',data)
+export const GetPassRates = (data) => {
+  return axios.post('api/Statistic/GetPassRates', data)
 }
-
 
 // curl -X 'GET' \
 //   'http://localhost:9001/api/Statistic/GetPassRateByDevice/2021-01-01/2024-01-01' \
 //   -H 'accept: text/plain' \
 //   -H 'request-from: swagger'
 
-export const GetPassRateByDevice=(from,to)=>{
+export const GetPassRateByDevice = (from, to) => {
   return axios.get(`api/Statistic/GetPassRateByDevice/${from}/${to}`)
 }
-
-export default {Upload,GetRecentUpload,GetPassRates,GetPassRateByDevice}
 
 // curl -X 'POST' \
 //   'http://localhost:9001/api/Statistic/QueryNgCounts' \
@@ -65,17 +62,7 @@ export default {Upload,GetRecentUpload,GetPassRates,GetPassRateByDevice}
 //   "Aggregation": 0,
 //   "Limit": 0
 // }'
-
-const  QueryNgCounts=(data)=>{
-  return axios.post(`api/Statistic/QueryNgCounts`,data)
+const QueryNgCounts = (data) => {
+  return axios.post(`api/Statistic/QueryNgCounts`, data)
 }
-
-
-
-
-
-
-
-
-
-
+export default { Upload, GetRecentUpload, GetPassRates, GetPassRateByDevice, QueryNgCounts }

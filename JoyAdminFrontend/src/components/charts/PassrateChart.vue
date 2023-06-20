@@ -16,7 +16,8 @@ export default {
   },
   data () {
     return {
-      dom: null
+      dom: null,
+      option: null
     }
   },
   methods: {
@@ -24,15 +25,20 @@ export default {
       this.dom.resize()
     }
   },
+  watch: {
+    value (newValue, oldValue) {
+
+    }
+  },
   mounted () {
     this.$nextTick(() => {
-      let xAxisData = value.map(_ => _.name)
-      let bar1Data = value.map(_ => _.bar1)
-      let bar2Data = value.map(_ => _.bar2)
-      let lineData = value.map(_ => _.line)
+      let xAxisData = this.value.map(_ => _.Start)
+      let bar1Data = this.value.map(_ => _.Ok)
+      let bar2Data = this.value.map(_ => _.Ng)
+      let lineData = this.value.map(_ => (_.Ok / (_.Ok + _.Ng)))
 
       const colors = ['#5470C6', '#91CC75', '#EE6666']
-      let option = {
+      this.option = {
         color: colors,
         tooltip: {
           trigger: 'axis',
@@ -51,7 +57,7 @@ export default {
           }
         },
         legend: {
-          data: ['Evaporation', 'Precipitation', 'Temperature']
+          data: ['合格数', '不合格数', '合格率']
         },
         xAxis: [
           {
@@ -66,8 +72,8 @@ export default {
         yAxis: [
           {
             type: 'value',
-            name: 'Evaporation',
-            position: 'right',
+            name: '数量',
+            position: 'left',
             alignTicks: true,
             axisLine: {
               show: true,
@@ -82,7 +88,7 @@ export default {
           {
             type: 'value',
             name: '合格率',
-            position: 'left',
+            position: 'right',
             alignTicks: true,
             axisLine: {
               show: true,
@@ -97,12 +103,12 @@ export default {
         ],
         series: [
           {
-            name: '合格品',
+            name: '合格',
             type: 'bar',
             data: bar1Data
           },
           {
-            name: '不合格品',
+            name: '不合格',
             type: 'bar',
             data: bar2Data
           },
