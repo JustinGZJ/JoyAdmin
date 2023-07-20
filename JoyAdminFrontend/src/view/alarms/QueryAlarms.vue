@@ -34,74 +34,14 @@
 </template>
 <script>
 import { GetAlarmHistories } from '@/api/alarm'
+import { getStations } from '@/api/get_status'
 import dayjs from 'dayjs'
 
 export default {
   data () {
     return {
       station: '所有',
-      stations: [
-        {
-          value: '所有',
-          label: '所有'
-        },
-        {
-          value: '定子1',
-          label: '定子1'
-        },
-        {
-          value: '定子2',
-          label: '定子2'
-        },
-        {
-          value: '定子3',
-          label: '定子3'
-        },
-        {
-          value: '定子4',
-          label: '定子4'
-        },
-        {
-          value: '定子5',
-          label: '定子5'
-        },
-        {
-          value: '定子6',
-          label: '定子6'
-        },
-        {
-          value: '定子7',
-          label: '定子7'
-        },
-        {
-          value: '转子1',
-          label: '转子1'
-        },
-        {
-          value: '转子2',
-          label: '转子2'
-        },
-        {
-          value: '转子3',
-          label: '转子3'
-        },
-        {
-          value: '转子4',
-          label: '转子4'
-        },
-        {
-          value: '合装1',
-          label: '合装1'
-        },
-        {
-          value: '合装2',
-          label: '合装2'
-        },
-        {
-          value: '合装3',
-          label: '合装3'
-        }
-      ],
+      stations: [],
       date_range: ['2016-01-01', '2016-02-15'],
       columns: [
         {
@@ -126,7 +66,7 @@ export default {
       page: 1,
       size: 20,
       loading: false,
-      tableHeight:450
+      tableHeight: 450
     }
   },
   methods: {
@@ -154,12 +94,30 @@ export default {
           })
         }
       })
+    },
+    getStations () {
+      getStations().then((res) => {
+        const data = res.data
+        if (res.status === 200) {
+          this.stations = [{ value: '所有', label: '所有' }, ...(data.map((item) => {
+            return {
+              value: item,
+              label: item
+            }
+          }))]
+        } else {
+          this.$Notice.error({
+            title: data.Errors
+          })
+        }
+      })
     }
 
   },
   mounted () {
     this.date_range = [dayjs().startOf('day').format(), dayjs().endOf('day').format()]
-    this.tableHeight= window.innerHeight - 200
+    this.tableHeight = window.innerHeight - 200
+    this.getStations()
     this.query()
   },
   computed: {

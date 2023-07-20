@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-const baseUrl = process.env.NODE_ENV === 'development' ? 'http://36.134.23.53:11880' : 'http://192.168.1.180:1880'
+const baseUrl = process.env.NODE_ENV === 'development' ? 'http://43.143.217.150:11880' : 'http://192.168.1.180:1880'
 const axios = Axios.create({
   baseURL: baseUrl,
   timeout: 120000
@@ -17,11 +17,18 @@ export const getAlarms = (station) => {
     return axios.get(`/alarm/${station}`)
   }
 }
+export const getStations = () => {
+  return axios.get(`/stations`)
+}
+
 export const getStatus = (station) => {
   if (station === 'all') return axios.get(`/status`)
   else {
     return axios.get(`/status/${station}`)
   }
+}
+export const getProductByHours = () => {
+  return axios.get(`/productbyhours`)
 }
 
 export const groupValuesByStation = (data) => {
@@ -33,8 +40,14 @@ export const groupValuesByStation = (data) => {
     if (!valuesByStation[station]) {
       valuesByStation[station] = {}
     }
-    valuesByStation[station][prop] = data[key].value.value || '-'
+    const value = data[key].value.value
+    if (value === undefined) {
+      valuesByStation[station][prop] = '-'
+    } else {
+      valuesByStation[station][prop] = data[key].value.value
+    }
   })
   return valuesByStation
 }
-export default { getStatus, getByKey, getAlarms, groupValuesByStation }
+
+export default { getStatus, getStations, getByKey, getAlarms, groupValuesByStation }

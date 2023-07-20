@@ -595,6 +595,13 @@
             <param name="uploadData"></param>
             <returns></returns>
         </member>
+        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.BatchUploadData(System.Collections.Generic.List{JoyAdmin.Application.UploadData.Dtos.UploadDataDto})">
+            <summary>
+            批量上传数据
+            </summary>
+            <param name="uploadData"></param>
+            <returns></returns>
+        </member>
         <member name="M:JoyAdmin.Application.UploadData.MachineDataService.BindShellCode(JoyAdmin.Application.UploadData.Dtos.ShellCodeBindingDto)">
             <summary>
             绑定二维码
@@ -607,6 +614,33 @@
             查看绑定数据
             </summary>
             <param name="shellCodeBindingDto">绑定参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetData(JoyAdmin.Application.UploadData.Dtos.QueryDTo)">
+            <summary>
+            获取上传的原始数据
+            </summary>
+            <param name="range"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetUploadDataNames(JoyAdmin.Application.UploadData.Dtos.TimeSpanDto)">
+            <summary>
+            获取所有的上传数据名称
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetProductDataByName(JoyAdmin.Application.UploadData.Dtos.QueryDataByNameDto)">
+            <summary>
+             根据名称获取数据
+            </summary>
+            <param name="range"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetProductData(JoyAdmin.Application.UploadData.Dtos.TimeSpanDto)">
+            <summary>
+            获取所有生产数据
+            </summary>
+            <param name="range"></param>
             <returns></returns>
         </member>
         <member name="M:JoyAdmin.Application.UploadData.MachineDataService.Get(System.String)">

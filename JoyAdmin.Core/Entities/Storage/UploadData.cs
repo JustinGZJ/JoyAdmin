@@ -21,5 +21,6 @@ public class UploadData:EntityBase,IEntityTypeBuilder<UploadData>
     public void Configure(EntityTypeBuilder<UploadData> entityBuilder, DbContext dbContext, Type dbContextLocator)
     {
         entityBuilder.HasIndex(x => x.Code);
+        entityBuilder.HasIndex(x => x.Name);
     }
 }

@@ -55,10 +55,10 @@ export default {
     digitalFlopData () {
       let keys = ['预设数量', '进料数量', '出料数量', 'NG数量', '合格率', '运行时间', '停机时间', '报警时间', '平均周期']
       let data = {}
-      let tempData = this.groupValuesByStationData['总成3']
+      let tempData = this.groupValuesByStationData['总装锁螺丝测试']
       if (tempData !== undefined) {
         for (const key of keys) {
-          data[key] = this.groupValuesByStationData['总成3'][key] || '-'
+          data[key] = this.groupValuesByStationData['总装锁螺丝测试'][key] || '-'
         }
       }
       return data
@@ -107,8 +107,12 @@ export default {
         }
         return func(b[1]) - func(a[1])
       })
-      // 获取前 11 个元素
-      const topTen = sortedArray.slice(0, 11)
+      // 获取前 5 个元素
+      const top = sortedArray.slice(0, 5)
+      const other = sortedArray.slice(5).reduce((sum, item) => {
+        return sum + item[1]
+      }, 0)
+      const topTen = top.concat([['其他', other]])
       // 将结果转换回对象格式（如果需要）
       return Object.fromEntries(topTen)
     },
@@ -144,12 +148,7 @@ export default {
       }
       // console.log(obj)
       const sortedArray = dataList.sort((a, b) => {
-        const func = (value) => {
-          if (isNaN(value)) {
-            return -1
-          } else return value
-        }
-        return func(b.passRate) - func(a.passRate)
+        return b.num / b.total - a.num / a.total
       })
       // 获取前 5个元素
       return sortedArray.slice(0, 5)
@@ -162,7 +161,7 @@ export default {
           const objectField = parts[1]
           const alarmContent = parts[3]
           const time = json[key].sourceTimestamp
-          result.push({ objectField, alarmContent, time })
+          result.push({ 站位: objectField, 报警内容: alarmContent, 报警时间: time })
         }
         return result
       }
@@ -191,6 +190,8 @@ export default {
     }
   },
   mounted () {
+    this.getData()
+    this.getAlarms()
     this.tmrStatus = setInterval(() => this.getData(), 5000)
     this.tmrAlarm = setInterval(() => this.getAlarms(), 5000)
   },

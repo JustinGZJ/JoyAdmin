@@ -12,10 +12,8 @@ namespace JoyAdmin.Application.System
     {
         private readonly ILogger _logger; 
         public SystemService(ILogger logger)
-           
         {
             _logger = logger;
-          
         }
     
        

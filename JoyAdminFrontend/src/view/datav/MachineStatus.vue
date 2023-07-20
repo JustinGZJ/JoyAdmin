@@ -2,7 +2,8 @@
   <div id="status">
     <dv-full-screen-container>
       <TopHeader title="运行情况"/>
-      <dv-scroll-board :config="option" style="height: 500px"/>
+<!--      <product-by-hour/>-->
+      <dv-scroll-board :config="option" style="height: 75%"/>
     </dv-full-screen-container>
   </div>
 </template>
@@ -11,22 +12,25 @@
 // eslint-disable-next-line camelcase
 import Current_data from '@/api/get_status'
 import TopHeader from '@/view/datav/topHeader.vue'
+import ProductByHour from '@/view/datav/ProductByHour.vue'
 
 export default {
   name: 'MyScrollBoard',
-  components: { TopHeader },
+  components: { ProductByHour, TopHeader },
   data () {
     return {
+      Data: [],
       status: [],
-      timer: null
+      timer: null,
+      header: ['名称', '平均周期', '报警时间', '停机时间', '运行时间', '预设数量', '进料数量', '出料数量', 'NG数量', '合格率', '报警状态', '运行状态']
     }
   },
   computed: {
     option () {
       return {
-        'header': ['名称', '平均周期', '报警时间', '停机时间', '运行时间', '预设数量', '进料数量', '出料数量', 'NG数量', '合格率', '报警状态', '运行状态'],
+        'header': ['名称', '平均周期(s)', '报警时间(min)', '停机时间(min)', '运行时间(min)', '预设数量(个)', '进料数量(个)', '出料数量(个)', 'NG数量(个)', '合格率(%)', '报警状态', '运行状态'],
         'data': this.status,
-        'columnWidth': [100, 80, 120, 100, 100, 120, 100, 100, 100, 100, 100, 100, 120, 100, 100],
+        'columnWidth': [200, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120],
         'align': ['center'],
         'rowNum': 14,
         headerBGC: '#1981f6',
@@ -39,13 +43,33 @@ export default {
   methods: {
     getData () {
       try {
-        Current_data.get_by_key(`运行情况`).then(res => {
-          this.status = res.data
-          let groupValuesByStationData = Current_data.groupValuesByStation(this.status)
+        Current_data.getByKey(`运行情况`).then(res => {
+          this.Data = res.data
+          let groupValuesByStationData = Current_data.groupValuesByStation(this.Data)
           this.status = Object.entries(groupValuesByStationData).map(([key, value]) => {
             const row = [key]
-            this.option.header.slice(1).forEach(header => {
-              row.push(value[header] !== undefined ? value[header] : '-')
+            this.header.slice(1).forEach(header => {
+              if (typeof value[header] === 'number') {
+                row.push(value[header].toFixed(2))
+                return
+              }
+              if (header === '报警状态') {
+                if (value[header]) {
+                  row.push('报警')
+                } else {
+                  row.push('正常')
+                }
+                return
+              }
+              if (header === '运行状态') {
+                if (value[header]) {
+                  row.push('停止')
+                } else {
+                  row.push('工作')
+                }
+                return
+              }
+              row.push(value[header])
             })
             return row
           })
@@ -56,6 +80,7 @@ export default {
     }
   },
   mounted () {
+    this.getData()
     this.timer = setInterval(() => this.getData(), 5000)
   },
   destroyed () {

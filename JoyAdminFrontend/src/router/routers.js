@@ -77,6 +77,15 @@ export default [
           access: ['role', 'auth', 'employee']
         },
         component: resolve => require(['@/view/datav/MachineStatus.vue'], resolve)
+      }, {
+        path: '/product',
+        name: 'product',
+        meta: {
+          icon: 'ios-search',
+          title: '生产情况',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/datav/ProductView.vue'], resolve)
       }]
   },
   {
@@ -98,7 +107,18 @@ export default [
           access: ['role', 'auth', 'employee']
         },
         component: resolve => require(['@/view/machine/query.vue'], resolve)
-      }, {
+      },
+      {
+        path: '/queryByStation',
+        name: 'queryByStation',
+        meta: {
+          icon: 'ios-search',
+          title: '站位查询',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/TestData.vue'], resolve)
+      },
+      {
         path: '/queryData',
         name: 'queryData',
         meta: {

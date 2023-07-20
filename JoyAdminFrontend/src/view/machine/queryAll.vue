@@ -40,8 +40,8 @@ export default {
       let vm = this
       vm.loadingTable = true
       const reqData = {
-        Start: vm.date_range[0].toLocaleString(),
-        End: vm.date_range[1].toLocaleString()
+        Start: dayjs(vm.date_range[0]).format('YYYY-MM-DD HH:mm:ss'),
+        End: dayjs(vm.date_range[1]).format('YYYY-MM-DD HH:mm:ss')
       }
       GetProductData(reqData).then((res) => {
         vm.loadingTable = false
