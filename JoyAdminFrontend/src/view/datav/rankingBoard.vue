@@ -100,16 +100,16 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: rgba(6, 30, 93, 0.5);
-  border-top: 2px solid rgba(1, 153, 209, 0.5);
+  border-top: 1px solid rgba(1, 153, 209, 0.5);
   box-sizing: border-box;
-  padding: 0px 30px;
+  padding: 0 15px;
 
   .ranking-board-title {
     font-weight: bold;
-    height: 50px;
+    height: 25px;
     display: flex;
     align-items: center;
-    font-size: 20px;
+    font-size: 10px;
   }
 
   .dv-scroll-ranking-board {

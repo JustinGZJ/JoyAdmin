@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Furion.DatabaseAccessor;
@@ -11,6 +10,7 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Profiling.Internal;
 
 namespace JoyAdmin.Application.UploadData;
 
@@ -19,7 +19,8 @@ public class MachineDataService : IDynamicApiController
     private readonly IRepository<Core.Entities.Storage.UploadData> _uploadDataRepository;
     private readonly IRepository<ShellCodeBinding> _shellcodeBindingRepository;
 
-    public MachineDataService(IRepository<Core.Entities.Storage.UploadData> uploadDataRepository,
+    public MachineDataService(
+        IRepository<Core.Entities.Storage.UploadData> uploadDataRepository,
         IRepository<ShellCodeBinding> shellcodeBindingRepository)
     {
         _uploadDataRepository = uploadDataRepository;
@@ -118,6 +119,7 @@ public class MachineDataService : IDynamicApiController
                 .Where(x => x.Name == range.Name)
                 .OrderByDescending(x => x.Time)
                 .ToListAsync())
+            .Where(x=>!string.IsNullOrWhiteSpace( x.Code))
             .GroupBy(x => x.Code)
             .Select(x =>
             {
@@ -126,7 +128,7 @@ public class MachineDataService : IDynamicApiController
                 data.Add("日期", x.Last().Time.ToString("g"));
                 var lookup = x.ToLookup(
                     uploadData => uploadData.Description,
-                    uploadData => uploadData.Content);
+                    uploadData => uploadData.Content).OrderBy(group=>group.Key);
                 foreach (var item in lookup)
                 {
                     data.Add(item.Key, string.Join(",", item.ToList()));
@@ -150,7 +152,7 @@ public class MachineDataService : IDynamicApiController
             .ToListAsync();
 
         // 找出所有码
-        var codes = data.Select(x => x.Code).Distinct();
+        var codes = data.Select(x => x.Code).Distinct().Where(code=>!code.IsNullOrWhiteSpace());
 
         // 从codes中排除掉已绑定的码
         var bindings = await _shellcodeBindingRepository
@@ -161,10 +163,12 @@ public class MachineDataService : IDynamicApiController
         // 由于单条记录只绑定了壳体码与定子码和转子码的关系，所以要把信息聚合。
         var relations = bindings.GroupBy(x => x.ShellCode).Select(x =>
         {
-            var relation = new ShellCodeBinding();
-            relation.ShellCode = x.Key;
-            relation.RotorCode = x.LastOrDefault()?.RotorCode;
-            relation.StatorCode = x.LastOrDefault()?.StatorCode;
+            var relation = new ShellCodeBinding
+            {
+                ShellCode = x.Key,
+                RotorCode = x.LastOrDefault()?.RotorCode,
+                StatorCode = x.LastOrDefault()?.StatorCode
+            };
             return relation;
         }).ToDictionary(x => x.ShellCode);
 
@@ -220,18 +224,10 @@ public class MachineDataService : IDynamicApiController
             }
 
 
-            var lookup = uploadDatas.ToLookup(x => x.Name, x => x.Content);
-            foreach (var item in keys)
+            var lookup = uploadDatas.ToLookup(x => x.Description, x => x.Content);
+            foreach (var item in lookup)
             {
-                var values = lookup[item].ToArray();
-                if (values.Any())
-                {
-                    expano[item] = values.LastOrDefault();
-                }
-                else
-                {
-                    expano[item] = "";
-                }
+                expano[item.Key] = item.Last();
             }
 
             return expano;

@@ -26,11 +26,11 @@ export default {
           // ['2019-07-01 19:25:00', '上料报警', '5', 'xxxxxxx']
         ],
         index: true,
-        columnWidth: [43, 170, 200, 150],
+        columnWidth: [22, 85, 100],
         align: ['center'],
         rowNum: 7,
         headerBGC: '#1981f6',
-        headerHeight: 45,
+        headerHeight: 22,
         oddRowBGC: 'rgba(0, 44, 81, 0.8)',
         evenRowBGC: 'rgba(10, 29, 50, 0.8)'
       }
@@ -50,11 +50,11 @@ export default {
           // ['2019-07-01 19:25:00', '上料报警', '5', 'xxxxxxx']
         ],
         index: true,
-        columnWidth: [43, 170, 200, 150],
+        columnWidth: [22, 85, 100],
         align: ['center'],
         rowNum: 7,
         headerBGC: '#1981f6',
-        headerHeight: 45,
+        headerHeight: 22,
         oddRowBGC: 'rgba(0, 44, 81, 0.8)',
         evenRowBGC: 'rgba(10, 29, 50, 0.8)'
       }
@@ -86,7 +86,7 @@ export default {
 #scroll-board {
   width: 50%;
   box-sizing: border-box;
-  margin-left: 20px;
+  margin-left: 10px;
   height: 100%;
   overflow: hidden;
 }

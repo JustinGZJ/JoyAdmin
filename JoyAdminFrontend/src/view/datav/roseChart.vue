@@ -72,10 +72,10 @@ export default {
   box-sizing: border-box;
 
   .rose-chart-title {
-    height: 50px;
+    height: 25px;
     font-weight: bold;
-    text-indent: 20px;
-    font-size: 20px;
+    text-indent: 10px;
+    font-size: 10px;
     display: flex;
     align-items: center;
   }

@@ -10,16 +10,15 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace JoyAdmin.Application.Statistic;
 
 public class StatisticService : IDynamicApiController
 {
-    private readonly IRepository<Production> _productionRepository;
+    private readonly IRepository<Core.Entities.Storage.Production> _productionRepository;
 
 
-    public StatisticService(IRepository<Production> productionRepository)
+    public StatisticService(IRepository<Core.Entities.Storage.Production> productionRepository)
     {
         _productionRepository = productionRepository;
     }
@@ -30,11 +29,12 @@ public class StatisticService : IDynamicApiController
     /// <param name="production">ProductionType 0进料 1 OK  2 NG</param>
     /// <returns></returns>
     [AllowAnonymous]
-    public async Task<EntityEntry<Production>> Upload(ProductionDto production)
+    public async Task<bool> Upload([FromBody]ProductionDto production)
     {
-        var upload = production.Adapt<Production>();
-        upload.Time = DateTime.Now;
-        return await _productionRepository.InsertNowAsync(upload);
+        var upload = production.Adapt<Core.Entities.Storage.Production>();
+        upload.Time = DateTime.Now; 
+        await _productionRepository.InsertNowAsync(upload);
+        return true;
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class StatisticService : IDynamicApiController
     /// <param name="pageSize"></param>
     /// <returns></returns>
     [AllowAnonymous]
-    public Task<PagedList<Production>> GetRecentUpload(int pageIndex = 1, int pageSize = 50)
+    public Task<PagedList<Core.Entities.Storage.Production>> GetRecentUpload(int pageIndex = 1, int pageSize = 50)
     {
         return _productionRepository.Entities.ToPagedListAsync(pageIndex, pageSize);
     }
@@ -142,7 +142,7 @@ public class StatisticService : IDynamicApiController
         var aggregation = queryDTo.Aggregation;
         var device = queryDTo.Device;
         var limit = queryDTo.Limit;
-        IEnumerable<Production> productions;
+        IEnumerable<Core.Entities.Storage.Production> productions;
         if (string.IsNullOrEmpty(device))
         {
             productions = await _productionRepository
@@ -186,7 +186,7 @@ public class StatisticService : IDynamicApiController
         return results;
     }
 
-    private List<NgReasonCount> GetNgCount(IEnumerable<Production> productions, DateTime starttime, DateTime endtime,
+    private List<NgReasonCount> GetNgCount(IEnumerable<Core.Entities.Storage.Production> productions, DateTime starttime, DateTime endtime,
         int limit = 10, string device = "")
     {
         return productions.Where(x=>x.Time>starttime&&x.Time<=endtime)
@@ -201,19 +201,22 @@ public class StatisticService : IDynamicApiController
             }).OrderByDescending(x => x.Count).Take(limit).ToList();
     }
 
-    private Task<StatisticRate> GetPassRate(List<Production> data, string device, DateTime starttime, DateTime endtime)
+    private Task<StatisticRate> GetPassRate(List<Core.Entities.Storage.Production> data, string device, DateTime starttime, DateTime endtime)
     {
-        IEnumerable<Production> queryData;
+        IEnumerable<Core.Entities.Storage.Production> queryData;
         if (string.IsNullOrWhiteSpace(device))
         {
             queryData = data
-                .Where(x => x.Time > starttime && x.Time <= endtime);
+                .Where(x => 
+                    x.Time > starttime && 
+                    x.Time <= endtime);
         }
         else
         {
             queryData = _productionRepository
                 .Where(x => x.Device == device)
-                .Where(x => x.Time > starttime && x.Time <= endtime);
+                .Where(x => x.Time > starttime 
+                            && x.Time <= endtime);
         }
 
         return Task.FromResult(new StatisticRate

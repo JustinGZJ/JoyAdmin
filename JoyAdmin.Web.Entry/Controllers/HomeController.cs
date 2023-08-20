@@ -9,7 +9,7 @@ namespace JoyAdmin.Web.Entry.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Description = "JoyAdmin | 规范化接口";
+            ViewBag.Description = "规范化接口";
 
             return View();
         }

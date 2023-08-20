@@ -50,4 +50,4 @@ export const groupValuesByStation = (data) => {
   return valuesByStation
 }
 
-export default { getStatus, getStations, getByKey, getAlarms, groupValuesByStation }
+export default { getStations, getByKey, getAlarms, groupValuesByStation }

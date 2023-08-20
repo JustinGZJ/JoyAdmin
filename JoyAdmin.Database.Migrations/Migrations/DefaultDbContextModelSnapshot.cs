@@ -22,6 +22,795 @@ namespace JoyAdmin.Database.Migrations.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_DefectItem", b =>
+                {
+                    b.Property<int>("DefectItem_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DefectItem_Id"));
+
+                    b.Property<string>("Attachment")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DefectItemCode")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DefectItemName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Modifier")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("DefectItem_Id");
+
+                    b.ToTable("Base_DefectItem", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_DesktopMenu", b =>
+                {
+                    b.Property<int>("DesktopMenu_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DesktopMenu_Id"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<byte>("Enable")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("MenuId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MenuName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MenuUrl")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("DesktopMenu_Id");
+
+                    b.ToTable("Base_DesktopMenu", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_MaterialDetail", b =>
+                {
+                    b.Property<int>("MaterialDetail_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MaterialDetail_Id"));
+
+                    b.Property<int>("ChildProduct_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Modifier")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ParentProduct_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantityPer")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("text");
+
+                    b.HasKey("MaterialDetail_Id");
+
+                    b.ToTable("Base_MaterialDetail", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_MeritPay", b =>
+                {
+                    b.Property<int>("MeritPay_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MeritPay_Id"));
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Process_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Product_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StandardHour")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StandardMin")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StandardNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StandardSec")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("Unit_Id")
+                        .HasColumnType("integer");
+
+                    b.HasKey("MeritPay_Id");
+
+                    b.ToTable("Base_MeritPay", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_Notice", b =>
+                {
+                    b.Property<int>("Notice_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Notice_Id"));
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("NoticeContent")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<string>("NoticeTitle")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("NoticeType")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Notice_Id");
+
+                    b.ToTable("Base_Notice", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_NumberRule", b =>
+                {
+                    b.Property<int>("NumberRule_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NumberRule_Id"));
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("FormCode")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("GenerativeRule")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Prefix")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int>("SerialNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SubmitTime")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("NumberRule_Id");
+
+                    b.ToTable("Base_NumberRule", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_Process", b =>
+                {
+                    b.Property<int>("Process_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Process_Id"));
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("DefectItem")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProcessCode")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ProcessName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("SubmitWorkLimit")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<decimal>("SubmitWorkMatch")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Process_Id");
+
+                    b.ToTable("Base_Process", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_ProcessLine", b =>
+                {
+                    b.Property<int>("ProcessLine_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProcessLine_Id"));
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProcessLineCode")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ProcessLineName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("ProcessLine_Id");
+
+                    b.ToTable("Base_ProcessLine", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_ProcessLineList", b =>
+                {
+                    b.Property<int>("ProcessLineList_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProcessLineList_Id"));
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ProcessLineDown_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProcessLineType")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int>("ProcessLine_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Process_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Sequence")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal?>("SubmitWorkMatch")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("ProcessLineList_Id");
+
+                    b.HasIndex("ProcessLine_Id");
+
+                    b.ToTable("Base_ProcessLineList", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_ProcessList", b =>
+                {
+                    b.Property<int>("ProcessList_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProcessList_Id"));
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("DataPointName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("DataPointType")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Process_Id")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ProcessList_Id");
+
+                    b.HasIndex("Process_Id");
+
+                    b.ToTable("Base_ProcessList", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_Product", b =>
+                {
+                    b.Property<int>("Product_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Product_Id"));
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("FinishedProduct")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("InventoryQty")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MaxInventory")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MinInventory")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Process_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProductAttribute")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ProductCode")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ProductStandard")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("SafeInventory")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Unit_Id")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Product_Id");
+
+                    b.ToTable("Base_Product", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_WorkShop", b =>
+                {
+                    b.Property<Guid>("WorkShopId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("Area")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<int>("Enable")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MainPerson")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("WorkShopCode")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("WorkShopName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("WorkShopId");
+
+                    b.ToTable("Base_WorkShop", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Sys_Unit", b =>
+                {
+                    b.Property<int>("Unit_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Unit_Id"));
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("UnitName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Unit_Id");
+
+                    b.ToTable("Sys_Unit", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail", b =>
+                {
+                    b.Property<int>("MaterialDetail_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MaterialDetail_Id"));
+
+                    b.Property<string>("CProductCode")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("CProductName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("CProductStandard")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("CUnit_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ChildProduct_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreateID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Modifier")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ModifyID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PProductCode")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("PProductName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("PProductStandard")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("PUnit_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ParentProduct_Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantityPer")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.HasKey("MaterialDetail_Id");
+
+                    b.ToTable("View_Base_MaterialDetail", (string)null);
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Production.ProductionWorkOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ActualQuantity")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("FinishTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("PlanQuantity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProductNo")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("UpdatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("WorkOrderNo")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductionWorkOrder", (string)null);
+                });
+
             modelBuilder.Entity("JoyAdmin.Core.Entities.Storage.AlarmHistory", b =>
                 {
                     b.Property<int>("Id")
@@ -197,6 +986,8 @@ namespace JoyAdmin.Database.Migrations.Migrations
 
                     b.HasIndex("Code");
 
+                    b.HasIndex("Name");
+
                     b.ToTable("UploadData", (string)null);
                 });
 
@@ -308,7 +1099,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedTime = new DateTime(2023, 6, 19, 15, 57, 42, 336, DateTimeKind.Local).AddTicks(7980),
+                            CreatedTime = new DateTime(2023, 8, 18, 11, 4, 2, 198, DateTimeKind.Local).AddTicks(430),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -397,7 +1188,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedTime = new DateTime(2023, 6, 19, 15, 57, 42, 336, DateTimeKind.Local).AddTicks(9910),
+                            CreatedTime = new DateTime(2023, 8, 18, 11, 4, 2, 198, DateTimeKind.Local).AddTicks(1630),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -408,7 +1199,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedTime = new DateTime(2023, 6, 19, 15, 57, 42, 336, DateTimeKind.Local).AddTicks(9920),
+                            CreatedTime = new DateTime(2023, 8, 18, 11, 4, 2, 198, DateTimeKind.Local).AddTicks(1640),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -419,7 +1210,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedTime = new DateTime(2023, 6, 19, 15, 57, 42, 336, DateTimeKind.Local).AddTicks(9930),
+                            CreatedTime = new DateTime(2023, 8, 18, 11, 4, 2, 198, DateTimeKind.Local).AddTicks(1640),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -490,7 +1281,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         {
                             Id = 1L,
                             Account = "admin",
-                            CreatedTime = new DateTime(2023, 6, 19, 15, 57, 42, 337, DateTimeKind.Local).AddTicks(6590),
+                            CreatedTime = new DateTime(2023, 8, 18, 11, 4, 2, 198, DateTimeKind.Local).AddTicks(5610),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -518,6 +1309,24 @@ namespace JoyAdmin.Database.Migrations.Migrations
                             UserId = 1L,
                             RoleId = 1L
                         });
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_ProcessLineList", b =>
+                {
+                    b.HasOne("JoyAdmin.Core.Entities.Custom.Base_ProcessLine", null)
+                        .WithMany("Base_ProcessLineList")
+                        .HasForeignKey("ProcessLine_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_ProcessList", b =>
+                {
+                    b.HasOne("JoyAdmin.Core.Entities.Custom.Base_Process", null)
+                        .WithMany("Base_ProcessList")
+                        .HasForeignKey("Process_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("JoyAdmin.Core.RoleSecurity", b =>
@@ -556,6 +1365,16 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_Process", b =>
+                {
+                    b.Navigation("Base_ProcessList");
+                });
+
+            modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_ProcessLine", b =>
+                {
+                    b.Navigation("Base_ProcessLineList");
                 });
 
             modelBuilder.Entity("JoyAdmin.Core.Role", b =>

@@ -13,7 +13,7 @@
       </div>
       <layout>
       <sider span="auto" :style="{position: 'relative', height: '100%', left: 0}">
-        <Menu accordion  active-name:="siderParams.activeName"  @on-select="handleStationChanged" title="站位数据" style="height: 100px"  width="auto" >
+        <Menu   active-name:="siderParams.activeName"  @on-select="handleStationChanged" title="站位数据"   width="auto" >
           <Submenu v-for="(value,key) in siderParams.stations"  :key="key" :name="key">
             <template slot="title">
               <Icon type="ios-stats" />
@@ -124,7 +124,8 @@ export default {
                 title: key,
                 key: key,
                 align: 'center',
-                sortable: true
+                sortable: true,
+                minWidth: 150
               }
             })
           }

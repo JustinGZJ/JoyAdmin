@@ -1,10 +1,9 @@
-﻿namespace JoyAdmin.Application 
-{
-    public class UserRoleInput
-    {
-        
-        public long UserId { get; set; }
+﻿namespace JoyAdmin.Application.RBAC.Dtos;
 
-        public long[] RoleIds { get; set; }
-    }
+public class UserRoleInput
+{
+        
+    public long UserId { get; set; }
+
+    public long[] RoleIds { get; set; }
 }

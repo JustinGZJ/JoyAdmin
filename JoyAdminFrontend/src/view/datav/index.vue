@@ -55,10 +55,10 @@ export default {
     digitalFlopData () {
       let keys = ['预设数量', '进料数量', '出料数量', 'NG数量', '合格率', '运行时间', '停机时间', '报警时间', '平均周期']
       let data = {}
-      let tempData = this.groupValuesByStationData['总装锁螺丝测试']
+      let tempData = this.groupValuesByStationData['总成锁螺丝测试']
       if (tempData !== undefined) {
         for (const key of keys) {
-          data[key] = this.groupValuesByStationData['总装锁螺丝测试'][key] || '-'
+          data[key] = this.groupValuesByStationData['总成锁螺丝测试'][key] || '-'
         }
       }
       return data
@@ -212,7 +212,7 @@ export default {
   #dv-full-screen-container {
     background-image: url("./img/bg.png");
     background-size: 100% 100%;
-    box-shadow: 0 0 3px blue;
+    box-shadow: 0 0 2px blue;
     display: flex;
     flex-direction: column;
   }
@@ -226,7 +226,7 @@ export default {
   .block-left-right-content {
     flex: 1;
     display: flex;
-    margin-top: 20px;
+    margin-top: 10px;
   }
 
   .block-top-bottom-content {
@@ -234,7 +234,7 @@ export default {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding-left: 20px;
+    padding-left: 10px;
   }
 
   .block-top-content {
@@ -242,7 +242,7 @@ export default {
     display: flex;
     flex-grow: 0;
     box-sizing: border-box;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
 }
 </style>

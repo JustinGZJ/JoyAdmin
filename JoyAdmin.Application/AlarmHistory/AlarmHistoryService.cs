@@ -31,13 +31,13 @@ public class AlarmHistoryService : IDynamicApiController
         AlarmHistoryQueryDto alarmHistoryQueryDto)
     {
         var alarmHistories = _alarmHistoryRepo
-            .Where(x => x.StartTime > alarmHistoryQueryDto.Start
-                        && x.EndTime < alarmHistoryQueryDto.End);
+            .Where(x => 
+                x.StartTime > alarmHistoryQueryDto.Start
+                && x.EndTime < alarmHistoryQueryDto.End);
         if (!string.IsNullOrWhiteSpace(alarmHistoryQueryDto.Station))
         {
             alarmHistories = alarmHistories.Where(x => x.Station == alarmHistoryQueryDto.Station);
         }
-
         return alarmHistories.ToPagedListAsync(alarmHistoryQueryDto.page, alarmHistoryQueryDto.size);
     }
 

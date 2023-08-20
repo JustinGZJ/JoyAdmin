@@ -98,6 +98,15 @@ export default [
     },
     component: Main,
     children: [
+      { path: '/workOrder',
+        name: 'workOrder',
+        meta: {
+          icon: 'ios-search',
+          title: '工单查询',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/WorkOrder.vue'], resolve)
+      },
       {
         path: '/query',
         name: 'query',

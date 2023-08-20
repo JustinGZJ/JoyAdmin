@@ -15,6 +15,8 @@ import Production from '@/api/production'
 import dayjs from 'dayjs'
 import * as echarts from 'echarts'
 import { off, on } from '@/libs/tools'
+import tdTheme from '@/components/charts/theme.json'
+echarts.registerTheme('tdTheme', tdTheme)
 
 export default {
   data () {

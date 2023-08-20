@@ -98,7 +98,7 @@ export default {
   #dv-full-screen-container {
     background-image: url("./img/bg.png");
     background-size: 100% 100%;
-    box-shadow: 0 0 3px blue;
+    box-shadow: 0 0 2px blue;
     display: flex;
     flex-direction: column;
   }

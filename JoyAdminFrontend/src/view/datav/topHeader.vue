@@ -23,29 +23,29 @@ export default {
 #top-header {
   position: relative;
   width: 100%;
-  height: 100px;
+  height: 50px;
   display: flex;
   justify-content: space-between;
   flex-shrink: 0;
 
   .header-center-decoration {
     width: 40%;
-    height: 60px;
-    margin-top: 30px;
+    height: 30px;
+    margin-top: 15px;
   }
 
   .header-left-decoration,
   .header-right-decoration {
     width: 25%;
-    height: 60px;
+    height: 30px;
   }
 
   .center-title {
     position: absolute;
-    font-size: 30px;
+    font-size: 15px;
     font-weight: bold;
     left: 50%;
-    top: 15px;
+    top: 7px;
     transform: translateX(-50%);
   }
 }

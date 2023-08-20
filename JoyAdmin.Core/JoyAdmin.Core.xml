@@ -79,6 +79,876 @@
             删除标志
             </summary>
         </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.DefectItem_Id">
+             <summary>
+            不良品项表主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.DefectItemCode">
+             <summary>
+            不良品项编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.DefectItemName">
+             <summary>
+            不良品项名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.Attachment">
+             <summary>
+            附件
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.ImageUrl">
+             <summary>
+            图片
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.DesktopMenu_Id">
+             <summary>
+            主页菜单表主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.MenuId">
+             <summary>
+            菜单
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.MenuName">
+             <summary>
+            菜单名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.MenuUrl">
+             <summary>
+            路由地址
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.Color">
+             <summary>
+            背景颜色
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.Enable">
+             <summary>
+            是否启用
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_DesktopMenu.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MaterialDetail.MaterialDetail_Id">
+             <summary>
+            物料清单主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MaterialDetail.ParentProduct_Id">
+             <summary>
+            父项产品
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MaterialDetail.ChildProduct_Id">
+             <summary>
+            子项产品
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MaterialDetail.QuantityPer">
+             <summary>
+            单位用量
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MaterialDetail.Remark">
+             <summary>
+            备注
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MaterialDetail.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MaterialDetail.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MaterialDetail.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MaterialDetail.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MaterialDetail.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MaterialDetail.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.MeritPay_Id">
+             <summary>
+            绩效工资配置主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.Process_Id">
+             <summary>
+            工序名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.Unit_Id">
+             <summary>
+            报工单位
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.Product_Id">
+             <summary>
+            产品名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.UnitPrice">
+             <summary>
+            工资单价(元)
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.StandardNumber">
+             <summary>
+            标准效率
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.StandardHour">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.StandardMin">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.StandardSec">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_MeritPay.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Notice.Notice_Id">
+             <summary>
+            通知表主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Notice.NoticeType">
+             <summary>
+            通知类型
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Notice.NoticeTitle">
+             <summary>
+            标题
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Notice.NoticeContent">
+             <summary>
+            内容
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Notice.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Notice.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Notice.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Notice.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Notice.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Notice.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.NumberRule_Id">
+             <summary>
+            自定义编号规则主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.FormCode">
+             <summary>
+            目标表单
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.Prefix">
+             <summary>
+            编号前缀
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.SubmitTime">
+             <summary>
+            提交时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.SerialNumber">
+             <summary>
+            流水号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.GenerativeRule">
+             <summary>
+            编号生成规则
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.Process_Id">
+             <summary>
+            工序主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.ProcessCode">
+             <summary>
+            工序编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.ProcessName">
+             <summary>
+            工序名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.SubmitWorkLimit">
+             <summary>
+            报工权限
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.SubmitWorkMatch">
+             <summary>
+            报工数配比
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.DefectItem">
+             <summary>
+            不良品项列表
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Process.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLine.ProcessLine_Id">
+             <summary>
+            工艺路线表主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLine.ProcessLineCode">
+             <summary>
+            工艺路线编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLine.ProcessLineName">
+             <summary>
+            工艺路线名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLine.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLine.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLine.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLine.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLine.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLine.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ProcessLineList_Id">
+             <summary>
+            工艺路线工序列表主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ProcessLine_Id">
+             <summary>
+            工艺路线
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ProcessLineType">
+             <summary>
+            类型
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.Process_Id">
+             <summary>
+            工序
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ProcessLineDown_Id">
+             <summary>
+            工艺路线
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.Sequence">
+             <summary>
+            顺序
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.SubmitWorkMatch">
+             <summary>
+            报工数配比
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.ProcessList_Id">
+             <summary>
+            工序采集数据主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.Process_Id">
+             <summary>
+            工序ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.DataPointType">
+             <summary>
+            类型
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.DataPointName">
+             <summary>
+            名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.Product_Id">
+             <summary>
+            产品定义主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.ProductCode">
+             <summary>
+            产品编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.ProductName">
+             <summary>
+            产品名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.Unit_Id">
+             <summary>
+            库存单位
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.ProductStandard">
+             <summary>
+            产品规格
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.ProductAttribute">
+             <summary>
+            产品属性
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.Process_Id">
+             <summary>
+            工艺路线
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.MaxInventory">
+             <summary>
+            最大库存
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.MinInventory">
+             <summary>
+            最小库存
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.SafeInventory">
+             <summary>
+            安全库存
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.InventoryQty">
+             <summary>
+            库存数量
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.FinishedProduct">
+             <summary>
+            成品图
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.WorkShopId">
+             <summary>
+            车间主键
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.WorkShopName">
+             <summary>
+            车间名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.WorkShopCode">
+             <summary>
+            车间编码
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.MainPerson">
+             <summary>
+            负责人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.Area">
+             <summary>
+            面积
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.Enable">
+             <summary>
+            是否启用
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.Remark">
+             <summary>
+            备注
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_WorkShop.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Sys_Unit.Unit_Id">
+             <summary>
+            单位表主键ID
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Sys_Unit.UnitName">
+             <summary>
+            名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Sys_Unit.Remark">
+             <summary>
+            备注
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Sys_Unit.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Sys_Unit.CreateID">
+             <summary>
+            创建人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Sys_Unit.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Sys_Unit.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Sys_Unit.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Sys_Unit.ModifyID">
+             <summary>
+            修改人编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.MaterialDetail_Id">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.ParentProduct_Id">
+             <summary>
+            父项产品
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.PProductCode">
+             <summary>
+            父项产品编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.PProductName">
+             <summary>
+            父项产品名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.PProductStandard">
+             <summary>
+            父项产品规格
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.PUnit_Id">
+             <summary>
+            父项单位
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.ChildProduct_Id">
+             <summary>
+            子项产品
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.CProductCode">
+             <summary>
+            子项产品编号
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.CProductName">
+             <summary>
+            子项产品名称
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.CProductStandard">
+             <summary>
+            子项产品规格
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.CUnit_Id">
+             <summary>
+            子项单位
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.QuantityPer">
+             <summary>
+            单位用量
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.Remark">
+             <summary>
+            备注
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.CreateDate">
+             <summary>
+            创建时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.CreateID">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.Creator">
+             <summary>
+            创建人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.Modifier">
+             <summary>
+            修改人
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.ModifyDate">
+             <summary>
+            修改时间
+             </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.ModifyID">
+             <summary>
+            
+             </summary>
+        </member>
         <member name="T:JoyAdmin.Core.Role">
             <summary>
             角色表

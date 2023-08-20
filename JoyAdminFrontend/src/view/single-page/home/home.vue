@@ -1,29 +1,26 @@
 <template>
   <div>
-    <Row :gutter="20">
-      <i-col :xs="12" :md="8" :lg="4" v-for="(infor, i) in inforCardData" :key="`infor-${i}`" style="height: 120px;padding-bottom: 10px;">
-        <infor-card shadow :color="infor.color" :icon="infor.icon" :icon-size="36">
-          <count-to :end="infor.count" count-class="count-style"/>
-          <p>{{ infor.title }}</p>
-        </infor-card>
+    <Row :gutter="10">
+      <i-col :xs="12" :md="8" :lg="4" v-for="(pr, i) in passrate" :key="`infor-${i}`" style="height: 120px;padding-bottom: 10px;">
+        <card shadow  style="padding: 0" padding="0">
+          <div style="padding:2px 5px; white-space: nowrap;background: rgb(85, 206, 128);font-size: 20px;font-weight: bold;color: white">{{ pr.Device }}</div>
+          <div style="padding: 5px">
+            <div style="font-size: 14px">
+              <span >合格数:</span>
+              <span >{{ pr.Ok }}</span>
+            </div>
+            <div style="font-size: 14px">
+              <span >不合格:</span>
+              <span >{{ pr.Ng }}</span>
+            </div>
+            <div style="font-size: 14px">
+              <span >合格率:</span>
+              <span >{{ pr.OkRate }}</span>
+            </div>
+          </div>
+
+        </card>
       </i-col>
-    </Row>
-    <Row :gutter="20" style="margin-top: 10px;">
-      <i-col :md="24" :lg="8" style="margin-bottom: 20px;">
-        <Card shadow>
-          <chart-pie style="height: 300px;" :value="pieData" text="用户访问来源"></chart-pie>
-        </Card>
-      </i-col>
-      <i-col :md="24" :lg="16" style="margin-bottom: 20px;">
-        <Card shadow>
-          <chart-bar style="height: 300px;" :value="barData" text="每周用户活跃量"/>
-        </Card>
-      </i-col>
-    </Row>
-    <Row>
-      <Card shadow>
-        <example style="height: 310px;"/>
-      </Card>
     </Row>
   </div>
 </template>
@@ -33,6 +30,8 @@ import InforCard from '_c/info-card'
 import CountTo from '_c/count-to'
 import { ChartPie, ChartBar } from '_c/charts'
 import Example from './example.vue'
+import dayjs from 'dayjs'
+import production from '@/api/production'
 export default {
   name: 'home',
   components: {
@@ -67,17 +66,27 @@ export default {
         Fri: 24643,
         Sat: 1322,
         Sun: 1324
-      }
+      },
+      passrate: {}
     }
   },
+  computed () {
+
+  },
   mounted () {
-    //
+    production.GetPassRateByDevice(
+      dayjs().startOf('month').format(),
+      dayjs().endOf('month').format())
+      .then(res => {
+        console.log(res)
+        this.passrate = res.data.Data
+      })
   }
 }
 </script>
 
 <style lang="less">
 .count-style{
-  font-size: 50px;
+  font-size: 20px;
 }
 </style>

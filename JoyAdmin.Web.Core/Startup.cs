@@ -19,7 +19,6 @@ namespace JoyAdmin.Web.Core
             services.AddJwt<JwtHandler>(enableGlobalAuthorize: true);
             services.AddRemoteRequest();
             services.AddCorsAccessor();
-        //   services.AddHostedService<OPCAlarmMonitor>();
             services.AddControllersWithViews()
                  .AddInjectWithUnifyResult<RstRProvider>()
                 .AddJsonOptions(options =>

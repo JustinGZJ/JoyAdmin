@@ -64,13 +64,13 @@ public class DeviceRequestService : IDynamicApiController
         var deviceRequests = _deviceRequestRepository.Entities
             .Where(x =>
                 x.RequestTime > deviceRequestQueryDto.Start
-                        && x.RequestTime < deviceRequestQueryDto.End && x.IsHandled == deviceRequestQueryDto.Handled);
+                && x.RequestTime < deviceRequestQueryDto.End 
+                && x.IsHandled == deviceRequestQueryDto.Handled);
             
         if (!string.IsNullOrWhiteSpace(deviceRequestQueryDto.DeviceName))
         {
             deviceRequests = deviceRequests.Where(x => x.DeviceName == deviceRequestQueryDto.DeviceName);
         }
-
         return deviceRequests.ToPagedListAsync(deviceRequestQueryDto.Page, deviceRequestQueryDto.Size);
     }
 

@@ -12,12 +12,3 @@ public class UploadDataDto
     public string Content { get; set; }
     public DateTime Time { get; set; } = DateTime.Now;
 }
-
-public class ShellCodeBindingDto
-{
-    public string ShellCode { get; set; }
-
-    public string StatorCode { get; set; }
-
-    public string RotorCode { get; set; }
-}

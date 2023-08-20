@@ -51,7 +51,7 @@ export default {
 #water-level-chart {
   width: 20%;
   box-sizing: border-box;
-  margin-left: 20px;
+  margin-left: 10px;
   background-color: rgba(6, 30, 93, 0.5);
   border-top: 2px solid rgba(1, 153, 209, 0.5);
   display: flex;
@@ -59,10 +59,10 @@ export default {
 
   .water-level-chart-title {
     font-weight: bold;
-    height: 50px;
+    height: 25px;
     display: flex;
     align-items: center;
-    font-size: 20px;
+    font-size: 10px;
     justify-content: center;
   }
 
@@ -70,14 +70,14 @@ export default {
     height: 15%;
     display: flex;
     justify-content: center;
-    font-size: 17px;
+    font-size: 8px;
     align-items: flex-end;
 
     span {
-      font-size: 35px;
+      font-size: 17px;
       font-weight: bold;
       color: #58a1ff;
-      margin: 0 5px -5px;
+      margin: 0 2px -2px;
     }
   }
 
@@ -90,9 +90,9 @@ export default {
 
   .dv-water-pond-level {
     max-width: 90%;
-    width: 200px;
-    height: 200px;
-    border: 10px solid #19c3eb;
+    width: 100px;
+    height: 100px;
+    border: 5px solid #19c3eb;
     border-radius: 50%;
 
     ellipse {
@@ -100,7 +100,7 @@ export default {
     }
 
     text {
-      font-size: 40px;
+      font-size: 20px;
     }
   }
 }
