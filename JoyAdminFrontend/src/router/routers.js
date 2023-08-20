@@ -107,6 +107,15 @@ export default [
         },
         component: resolve => require(['@/view/machine/WorkOrder.vue'], resolve)
       },
+      { path: '/productList',
+        name: 'productList',
+        meta: {
+          icon: 'ios-search',
+          title: '产品信息',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/ProductList.vue'], resolve)
+      },
       {
         path: '/query',
         name: 'query',

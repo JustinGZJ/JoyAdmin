@@ -2,79 +2,80 @@
   <div>
     <div style="display:flex;justify-content: space-between">
       <div style="display: flex;align-items: center">
-        <Icon size="20" type="md-apps" />
+        <Icon size="20" type="md-apps"/>
         <h3>工单管理</h3>
       </div>
       <div>
         <Button type="primary" @click="addOrder">新增</Button>
-        <Button style="margin:5px" type="primary" @click="addOrder">新增</Button>
       </div>
 
     </div>
     <Table :columns="columns" :data="orders">
-      <template #operation="{ index,row }" >
-          <Button size="small"  v-if="row.Status!=='进行中'" @click="startOrder(row)" type="primary">开始</Button>
-          <Button size="small" v-if="row.Status==='进行中'" @click="endOrder(row)" type="warning">结束</Button>
-          <Button size="small" style="margin-left: 5px" @click="cancelOrder(row)" type="error">取消</Button>
+      <template #operation="{ index,row }">
+        <Button size="small" v-if="row.Status!=='进行中'" @click="startOrder(row)" type="primary">开始</Button>
+        <Button size="small" v-if="row.Status==='进行中'" @click="endOrder(row)" type="warning">结束</Button>
+        <Button size="small" style="margin-left: 5px" @click="cancelOrder(row)" type="error">撤回</Button>
       </template>
-      <template #status="{ index,row }" >
-        <Tag size="small"  v-if="row.Status==='已完成'" type="orange">{{row.Status}}</Tag>
-        <Tag size="small" v-else-if="row.Status==='未开始'" type="green">{{row.Status}}</Tag>
-        <Tag size="small" v-else type="blue">{{row.Status}}</Tag>
+      <template #status="{ index,row }">
+        <Tag size="small" v-if="row.Status==='已完成'" type="orange">{{ row.Status }}</Tag>
+        <Tag size="small" v-else-if="row.Status==='未开始'" type="green">{{ row.Status }}</Tag>
+        <Tag size="small" v-else-if="row.Status==='已撤回'" type="green">{{ row.Status }}</Tag>
+        <Tag size="small" v-else type="blue">{{ row.Status }}</Tag>
       </template>
     </Table>
-    <Page :total="TotalCount" :current="CurrentPage" :page-size="PageSize" @on-change="pageChange" @on-page-size-change="pageSizeChange" show-elevator show-sizer></Page>
+    <Page :total="TotalCount" :current="CurrentPage" :page-size="PageSize" @on-change="pageChange"
+          @on-page-size-change="pageSizeChange" show-elevator show-sizer></Page>
     <Modal v-model="modalVisible" title="确认操作" ok-text="确定" cancel-text="取消" @on-ok="confirmAction">
       {{ modalContent }}
     </Modal>
-    <Modal v-model="modalAddVisible" title="添加工单"  ok-text="确定" cancel-text="取消" @on-ok="confirmAddWorkOrder">
-        // 添加工单的表单
+    <Modal v-model="modalAddVisible" title="添加工单" ok-text="确定" cancel-text="取消" @on-ok="confirmAddWorkOrder">
+      // 添加工单的表单
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="120px">
         <Row gutter="10">
           <Col span="12">
             <FormItem label="工单号" prop="WorkOrderNo">
-              <Input v-model="formValidate.WorkOrderNo" placeholder="请输入工单号" />
+              <Input v-model="formValidate.WorkOrderNo" placeholder="请输入工单号"/>
             </FormItem>
           </Col>
           <Col span="12" gutter="10">
             <FormItem label="产品编号" prop="ProductNo">
-              <Input v-model="formValidate.ProductNo" placeholder="请输入产品编号" />
+              <Input v-model="formValidate.ProductNo" placeholder="请输入产品编号"/>
             </FormItem>
           </Col>
         </Row>
         <Row gutter="10">
           <Col span="12">
             <FormItem label="产品名称" prop="ProductName">
-              <Input v-model="formValidate.ProductName" placeholder="请输入产品名称" />
+              <Input v-model="formValidate.ProductName" placeholder="请输入产品名称"/>
             </FormItem>
           </Col>
           <Col span="12">
             <FormItem label="开始时间" prop="StartTime">
-              <DatePicker v-model="formValidate.StartTime" type="datetime" placeholder="请选择开始时间" />
+              <DatePicker v-model="formValidate.StartTime" type="datetime" placeholder="请选择开始时间"/>
             </FormItem>
           </Col>
         </Row>
         <Row gutter="10">
           <Col span="12">
             <FormItem label="实际数量" prop="ActualQuantity">
-              <InputNumber v-model="formValidate.ActualQuantity" placeholder="请输入实际数量" />
+              <InputNumber v-model="formValidate.ActualQuantity" placeholder="请输入实际数量"/>
             </FormItem>
           </Col>
           <Col span="12">
             <FormItem label="计划数量" prop="PlanQuanPlanQuantitytity">
-              <InputNumber v-model="formValidate.PlanQuantity" placeholder="请输入计划数量" />
+              <InputNumber v-model="formValidate.PlanQuantity" placeholder="请输入计划数量"/>
             </FormItem>
           </Col>
         </Row>
         <Row gutter="10">
           <Col span="12">
             <FormItem label="完成时间" prop="FinishTime">
-              <DatePicker v-model="formValidate.FinishTime" type="datetime" placeholder="请选择完成时间" />
+              <DatePicker v-model="formValidate.FinishTime" type="datetime" placeholder="请选择完成时间"/>
             </FormItem>
           </Col>
           <Col span="12">
             <FormItem label="状态" prop="Status">
-              <Input v-model="formValidate.Status" placeholder="请输入状态" />
+              <Input v-model="formValidate.Status" placeholder="请输入状态"/>
             </FormItem>
           </Col>
         </Row>
@@ -85,7 +86,7 @@
 
 <script>
 
-import { GetWorkOrders, UpdateWorkOrder } from '@/api/WorkOrder'
+import { AddWorkOrder, GetWorkOrders, UpdateWorkOrder } from '@/api/WorkOrder'
 import dayjs from 'dayjs'
 
 export default {
@@ -101,11 +102,11 @@ export default {
         WorkOrderNo: '',
         ProductNo: '',
         ProductName: '',
-        PlanQuantity: 0,
+        PlanQuantity: 1000,
         ActualQuantity: 0,
-        StartTime: '',
-        FinishTime: '',
-        Status: ''
+        StartTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        FinishTime: dayjs().add(1, 'day').format('YYYY-MM-DD HH:mm:ss'),
+        Status: '未开始'
       },
       ruleValidate: {
         WorkOrderNo: [
@@ -201,6 +202,19 @@ export default {
     },
     confirmAddWorkOrder () {
       this.modalAddVisible = false
+      AddWorkOrder(this.formValidate).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+        this.$Notice.error({
+          title: '错误',
+          desc: err
+        })
+      }).finally(() => {
+        this.modalAddVisible = false
+        this.CurrentPage = 1
+        this.getData()
+      })
     },
     startOrder (order) {
       console.log('start')
@@ -239,7 +253,7 @@ export default {
           this.CurrentPage.FinishTIme = dayjs().format('YYYY-MM-DD HH:mm:ss')
           break
         case 'cancel':
-          this.currentOrder.Status = '未开始'
+          this.currentOrder.Status = '已撤回'
           break
       }
       UpdateWorkOrder(this.currentOrder).then(res => {
