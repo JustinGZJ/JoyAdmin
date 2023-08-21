@@ -87,6 +87,5 @@ public partial class Base_DefectItem:IEntity
     /// </summary>
     [Display(Name ="修改人编号")]
     public int? ModifyID { get; set; }
-
-       
 }
+

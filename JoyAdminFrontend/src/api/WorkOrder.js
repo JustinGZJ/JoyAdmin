@@ -7,6 +7,7 @@ import { axios } from '@/libs/api.request'
 export const GetWorkOrders = (page, pageSize) => {
   return axios.get(`api/WorkOrder/GetWorkOrders/${page}/${pageSize}`)
 }
+
 // curl -X 'GET' \
 //   'http://localhost:9001/api/WorkOrder/GetWorkOrderById/1' \
 //   -H 'accept: text/plain' \

@@ -126,6 +126,5 @@ public partial class Base_WorkShop:IEntity
     
     [Editable(true)]
     public DateTime? ModifyDate { get; set; }
-
-       
+     
 }

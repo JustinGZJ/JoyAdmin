@@ -21,57 +21,103 @@
     </div>
     <Modal v-model="modalVisible" title="编辑产品信息">
       <Form :model="form" :rules="rules">
-        <FormItem label="产品编码" prop="ProductCode">
-          <Input v-model="form.ProductCode"></Input>
-        </FormItem>
-        <FormItem label="产品名称" prop="ProductName">
-          <Input v-model="form.ProductName"></Input>
-        </FormItem>
-        <FormItem label="单位" prop="Unit_Id">
-          <Input v-model="form.Unit_Id"></Input>
-        </FormItem>
-        <FormItem label="产品规格" prop="ProductStandard">
-          <Input v-model="form.ProductStandard"></Input>
-        </FormItem>
-        <FormItem label="产品属性" prop="ProductAttribute">
-          <Input v-model="form.ProductAttribute"></Input>
-        </FormItem>
-        <FormItem label="工序" prop="Process_Id">
-          <Input v-model="form.Process_Id"></Input>
-        </FormItem>
-        <FormItem label="最大库存量" prop="MaxInventory">
-          <Input v-model="form.MaxInventory"></Input>
-        </FormItem>
-        <FormItem label="最小库存量" prop="MinInventory">
-          <Input v-model="form.MinInventory"></Input>
-        </FormItem>
-        <FormItem label="安全库存量" prop="SafeInventory">
-          <Input v-model="form.SafeInventory"></Input>
-        </FormItem>
-        <FormItem label="当前库存量" prop="InventoryQty">
-          <Input v-model="form.InventoryQty"></Input>
-        </FormItem>
-        <FormItem label="是否成品" prop="FinishedProduct">
-          <Input v-model="form.FinishedProduct"></Input>
-        </FormItem>
-        <FormItem label="创建时间" prop="CreateDate">
-          <Input v-model="form.CreateDate"></Input>
-        </FormItem>
-        <FormItem label="创建人" prop="Creator">
-          <Input v-model="form.Creator"></Input>
-        </FormItem>
-        <FormItem label="修改时间" prop="ModifyDate">
-          <Input v-model="form.ModifyDate"></Input>
-        </FormItem>
-        <FormItem label="修改人" prop="Modifier">
-          <Input v-model="form.Modifier"></Input>
-        </FormItem>
+        <Row type="flex" justify="space-between" :gutter="20">
+          <i-col span="8">
+            <FormItem label="产品编码" prop="ProductCode">
+              <Input v-model="form.ProductCode"></Input>
+            </FormItem>
+          </i-col>
+          <i-col span="8">
+            <FormItem label="产品名称" prop="ProductName">
+              <Input v-model="form.ProductName"></Input>
+            </FormItem>
+          </i-col>
+          <i-col span="8">
+            <FormItem label="单位" prop="Unit_Id">
+              <Input v-model="form.Unit_Id"></Input>
+            </FormItem>
+          </i-col>
+        </Row>
+
+        <Row type="flex" justify="space-between" :gutter="20">
+          <i-col span="8">
+            <FormItem label="产品规格" prop="ProductStandard">
+              <Input v-model="form.ProductStandard"></Input>
+            </FormItem>
+          </i-col>
+          <i-col span="8">
+            <FormItem label="工序" prop="Process_Id">
+              <Input v-model="form.Process_Id"></Input>
+            </FormItem>
+          </i-col>
+          <i-col span="8">
+            <FormItem label="是否成品" prop="FinishedProduct">
+<!--              <ISwitch v-model="form.FinishedProduct"></ISwitch>-->
+              <i-switch v-model="form.FinishedProduct"></i-switch>
+            </FormItem>
+          </i-col>
+        </Row>
+
+        <Row type="flex" justify="space-between" :gutter="20">
+          <i-col span="8">
+            <FormItem label="最大库存量" prop="MaxInventory">
+              <Input v-model="form.MaxInventory"></Input>
+            </FormItem>
+          </i-col>
+          <i-col span="8">
+            <FormItem label="最小库存量" prop="MinInventory">
+              <Input v-model="form.MinInventory"></Input>
+            </FormItem>
+          </i-col>
+          <i-col span="8">
+            <FormItem label="安全库存量" prop="SafeInventory">
+              <Input v-model="form.SafeInventory"></Input>
+            </FormItem>
+          </i-col>
+        </Row>
+
+        <Row type="flex" justify="space-between" :gutter="20">
+          <i-col span="8">
+            <FormItem label="当前库存量" prop="InventoryQty">
+              <Input v-model="form.InventoryQty"></Input>
+            </FormItem>
+          </i-col>
+          <i-col span="8">
+            <FormItem label="创建时间" prop="CreateDate">
+              <Input v-model="form.CreateDate"></Input>
+            </FormItem>
+          </i-col>
+          <i-col span="8">
+            <FormItem label="创建人" prop="Creator">
+              <Input v-model="form.Creator"></Input>
+            </FormItem>
+          </i-col>
+        </Row>
+
+        <Row type="flex" justify="space-between" :gutter="20">
+          <i-col span="8">
+            <FormItem label="修改时间" prop="ModifyDate">
+              <Input v-model="form.ModifyDate"></Input>
+            </FormItem>
+          </i-col>
+          <i-col span="8">
+            <FormItem label="修改人" prop="Modifier">
+              <Input v-model="form.Modifier"></Input>
+            </FormItem>
+          </i-col>
+          <!-- Add an empty i-col to create space on the right -->
+          <i-col span="8"></i-col>
+        </Row>
+
+        <!-- Buttons for submitting or canceling the form -->
+        <div slot="footer">
+          <Button @click.native.prevent="modalVisible = false">取消</Button>
+          <Button type="primary" @click.native.prevent="submitForm">确定</Button>
+        </div>
+
       </Form>
-      <div slot="footer">
-        <Button type="primary" @click="submitForm">确定</Button>
-        <Button @click="cancelModal">取消</Button>
-      </div>
     </Modal>
+
   </div>
 </template>
 
@@ -229,6 +275,9 @@ export default {
         this.products = response.data.data
         this.total = response.data.total
       })
+    },
+    addProduct () {
+      this.modalVisible = true
     },
     handlePageChange (page) {
       this.currentPage = page

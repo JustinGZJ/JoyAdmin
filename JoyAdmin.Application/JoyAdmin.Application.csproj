@@ -26,8 +26,5 @@
   </ItemGroup>
 
 
-  <ItemGroup>
-    <Folder Include="Order\" />
-  </ItemGroup>
 
 </Project>
