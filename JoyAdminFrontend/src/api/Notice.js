@@ -1,5 +1,9 @@
 import { axios } from '@/libs/api.request'
 
+export const FilterNoticeList = (params) => {
+  return axios.post('api/Notice/FilterList', params)
+}
+
 // 获取Notice列表
 export function getNoticeList () {
   return axios.get('/api/Notice/GetList')

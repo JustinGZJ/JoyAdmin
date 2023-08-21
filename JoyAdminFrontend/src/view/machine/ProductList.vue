@@ -123,6 +123,8 @@
 
 <script>
 
+import {getProductList} from "@/api/Product";
+
 export default {
   data () {
     return {
@@ -270,11 +272,10 @@ export default {
   methods: {
     getProducts () {
       // 使用 $http 方法从后端获取数据
-      const url = `/api/products?page=${this.currentPage}&pageSize=${this.pageSize}`
-      this.$http.get(url).then(response => {
-        this.products = response.data.data
-        this.total = response.data.total
-      })
+        getProductList().then(res => {
+          this.products = res.data
+          this.total = res.data.length
+        })
     },
     addProduct () {
       this.modalVisible = true

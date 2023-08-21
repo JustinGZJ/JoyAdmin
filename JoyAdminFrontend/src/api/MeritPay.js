@@ -1,5 +1,9 @@
 import { axios } from '@/libs/api.request'
 
+export const FilterMeritPayList = (params) => {
+  return axios.post('api/MeritPay/FilterList', params)
+}
+
 // 获取MeritPay列表
 export function getMeritPayList () {
   return axios.get('/api/MeritPay/GetList')

@@ -1,5 +1,10 @@
 import { axios } from '@/libs/api.request'
 
+
+export const FilterMaterialDetailList = (params) => {
+  return axios.post('api/MaterialDetail/FilterList', params)
+}
+
 // 获取MaterialDetail列表
 export function getMaterialDetailList () {
   return axios.get('/api/MaterialDetail/GetList')
