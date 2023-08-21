@@ -28,3 +28,12 @@ export function deleteMeritPay (id) {
 export function addMeritPay (data) {
   return axios.post('/api/MeritPay/Add', data)
 }
+
+export default {
+  FilterMeritPayList,
+  getMeritPayList,
+  getMeritPay,
+  updateMeritPay,
+  deleteMeritPay,
+  addMeritPay
+}

@@ -28,3 +28,11 @@ export function deleteNotice (id) {
 export function addNotice (data) {
   return axios.post('/api/Notice/Add', data)
 }
+export default {
+  FilterNoticeList,
+  getNoticeList,
+  getNotice,
+  updateNotice,
+  deleteNotice,
+  addNotice
+}

@@ -12,15 +12,25 @@
     </div>
     <Table :columns="columns" :data="orders">
       <template #operation="{ index,row }">
-        <Button size="small" v-if="row.Status!=='进行中'" @click="startOrder(row)" type="primary">开始</Button>
-        <Button size="small" v-if="row.Status==='进行中'" @click="endOrder(row)" type="warning">结束</Button>
-        <Button size="small" style="margin-left: 5px" @click="cancelOrder(row)" type="error">撤回</Button>
+        <div>
+          <Button
+            v-for="btn in handleButtons(row)"
+            :key="btn.text"
+            :type="btn.type"
+            size="small"
+            @click="btn.handler(row)"
+          >
+            {{ btn.text }}
+          </Button>
+        </div>
       </template>
       <template #status="{ index,row }">
-        <Tag size="small" v-if="row.Status==='已完成'" type="orange">{{ row.Status }}</Tag>
-        <Tag size="small" v-else-if="row.Status==='未开始'" type="green">{{ row.Status }}</Tag>
-        <Tag size="small" v-else-if="row.Status==='已撤回'" type="green">{{ row.Status }}</Tag>
-        <Tag size="small" v-else type="blue">{{ row.Status }}</Tag>
+        <Tag
+          size="small"
+          :type="statusType(row.Status)"
+        >
+          {{ row.Status }}
+        </Tag>
       </template>
     </Table>
     <Page :total="TotalCount" :current="CurrentPage" :page-size="PageSize" @on-change="pageChange"
@@ -186,6 +196,9 @@ export default {
       actionType: ''
     }
   },
+  computed: {
+
+  },
   mounted () {
     this.getData()
   },
@@ -278,6 +291,26 @@ export default {
     pageSizeChange (pageSize) {
       this.PageSize = pageSize
       this.getData()
+    },
+    statusType (status) {
+      if (status === '已完成') return 'orange'
+      if (status === '未开始') return 'green'
+      if (status === '已撤回') return 'red'
+      return 'blue'
+    },
+    handleButtons (row) {
+      return [
+        {
+          text: row.status !== '进行中' ? '开始' : '结束',
+          type: row.status !== '进行中' ? 'primary' : 'warning',
+          handler: row.status !== '进行中' ? this.startOrder : this.endOrder
+        },
+        {
+          text: '撤回',
+          type: 'error',
+          handler: this.cancelOrder
+        }
+      ]
     }
   }
 }

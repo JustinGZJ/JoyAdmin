@@ -1,23 +1,20 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Furion.DatabaseAccessor;
 using Furion.DynamicApiController;
 using JoyAdmin.Application.Dto;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JoyAdmin.Application;
 
-public class CrudBaseService<T> : IDynamicApiController where T : class, IPrivateEntity, new()
+public class ServiceBase<T> : IDynamicApiController where T : class, IPrivateEntity, new()
 {
     private readonly IRepository<T> _repository;
 
 
-    public CrudBaseService(IRepository<T> repository)
+    public ServiceBase(IRepository<T> repository)
     {
         _repository = repository;
     }
@@ -66,14 +63,14 @@ public class CrudBaseService<T> : IDynamicApiController where T : class, IPrivat
     public async Task<T> Delete(int id)
     {
         var entity = await _repository.FindAsync(id);
-        await _repository.DeleteAsync(entity);
+        await _repository.DeleteNowAsync(entity);
         return entity;
     }
 
     // add
     public async Task<T> Add(T processLine)
     {
-        await _repository.InsertAsync(processLine);
+        await _repository.InsertNowAsync(processLine);
         return processLine;
     }
 }

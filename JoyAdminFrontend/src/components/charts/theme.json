@@ -1,7 +1,7 @@
 
 {
     "color": [
-      "#2d8cf0", "#19be6b", "#ff9900", "#E46CBB", "#9A66E4", "#ed3f14"
+      "#1abc9c", "#e74c3c", "#f1c40f", "#3498db", "#7f8c8d", "#ed3f14"
     ],
     "backgroundColor": "rgba(0,0,0,0)",
     "textStyle": {},
@@ -167,12 +167,7 @@
         "symbol": "emptyCircle",
         "smooth": true,
         "color": [
-            "#2d8cf0",
-            "#19be6b",
-            "#f5ae4a",
-            "#9189d5",
-            "#56cae2",
-            "#cbb0e3"
+          "#1abc9c", "#e74c3c", "#f1c40f", "#3498db", "#7f8c8d", "#ed3f14"
         ],
         "label": {
             "normal": {

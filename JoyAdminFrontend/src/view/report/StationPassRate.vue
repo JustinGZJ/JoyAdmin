@@ -170,12 +170,9 @@ export default {
   mounted () {
     this.date_range = [dayjs().startOf('day').format(), dayjs().endOf('day').format()]
     this.query()
-
-    this.$nextTick(() => {
-      this.chart = echarts.init(this.$refs.chart)
-      this.chart.setOption(this.chartOptions)
-      on(window, 'resize', this.resize)
-    })
+    this.chart = echarts.init(this.$refs.chart, 'tdTheme')
+    this.chart.setOption(this.chartOptions)
+    on(window, 'resize', this.resize)
   },
   beforeDestroy () {
     if (!this.chart) {

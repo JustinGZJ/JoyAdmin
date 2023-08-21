@@ -3,17 +3,14 @@ using System.Threading.Tasks;
 using Furion.DatabaseAccessor;
 using Furion.DynamicApiController;
 using JoyAdmin.Core.Entities.Custom;
-using Mapster;
-using MapsterMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JoyAdmin.Application.Custom;
 
 
-public class ProcessService : CrudBaseService<Base_Process>
+public class Product : ServiceBase<Base_Product>
 {
-    public ProcessService(IRepository<Base_Process> repository) : base(repository)
+    public Product(IRepository<Base_Product> repository) : base(repository)
     {
     }
 }

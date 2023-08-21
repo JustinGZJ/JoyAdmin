@@ -117,6 +117,26 @@ export default [
         component: resolve => require(['@/view/machine/ProductList.vue'], resolve)
       },
       {
+        path: '/processLine',
+        name: 'processLine',
+        meta: {
+          icon: 'ios-search',
+          title: '工艺路线',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/ProcessLine.vue'], resolve)
+      },
+      {
+        path: '/process',
+        name: 'process',
+        meta: {
+          icon: 'ios-search',
+          title: '工序',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/Process.vue'], resolve)
+      },
+      {
         path: '/query',
         name: 'query',
         meta: {
@@ -216,8 +236,8 @@ export default [
       }]
   },
   {
-    name: '/upload',
-    path: 'upload',
+    name: 'upload',
+    path: '/upload',
     meta: {
       icon: 'ios-paper-outline',
       title: '设备上传'

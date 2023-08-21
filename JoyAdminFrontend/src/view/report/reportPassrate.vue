@@ -225,7 +225,7 @@ export default {
   },
   mounted () {
     this.date_range = [dayjs().startOf('day').format(), dayjs().endOf('day').format()]
-    this.chart = echarts.init(this.$refs.chart)
+    this.chart = echarts.init(this.$refs.chart, 'tdTheme')
     console.log(this.$refs.chart)
     this.getStations()
     this.query()

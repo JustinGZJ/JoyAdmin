@@ -11,35 +11,34 @@ export default {
     avatarImgPath: '',
     token: getToken(),
     access: '',
-    hasGetInfo: false,
-
+    hasGetInfo: false
   },
   mutations: {
-    setAvatar(state, avatarPath) {
+    setAvatar (state, avatarPath) {
       state.avatarImgPath = avatarPath
     },
-    setUserId(state, id) {
+    setUserId (state, id) {
       state.userId = id
     },
-    setUserName(state, name) {
+    setUserName (state, name) {
       state.userName = name
     },
-    setAccess(state, access) {
+    setAccess (state, access) {
       state.access = access
     },
-    setToken(state, token) {
+    setToken (state, token) {
       state.token = token
       setToken(token)
     },
-    setHasGetInfo(state, status) {
+    setHasGetInfo (state, status) {
       state.hasGetInfo = status
-    },
+    }
 
   },
 
   actions: {
     // 登录
-    handleLogin({ commit }, { userName, password }) {
+    handleLogin ({ commit }, { userName, password }) {
       return new Promise((resolve, reject) => {
         var reqData = {
           Account: userName,
@@ -47,7 +46,7 @@ export default {
         }
         Login(reqData).then(res => {
           const data = res.data
-          if (data.StatusCode == 200) { 
+          if (data.StatusCode === 200) {
             commit('setToken', data.Data.Token)
             setAuthorization()
           }
@@ -58,7 +57,7 @@ export default {
       })
     },
     // 退出登录
-    handleLogOut({ state, commit }) {
+    handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
         // logout(state.token).then(() => {
         //   commit('setToken', '')
@@ -74,14 +73,14 @@ export default {
       })
     },
     // 获取用户相关信息
-    GetUserInfo({ commit }) {
+    GetUserInfo ({ commit }) {
       return new Promise((resolve, reject) => {
         try {
           GetUserInfo().then(res => {
             const data = res.data
-            if (data.StatusCode == 200) {
+            if (data.StatusCode === 200) {
               commit('setAvatar', '')
-              commit('setUserName', data.Data.Name)
+              commit('setUserName', data.Data.Account)
               commit('setUserId', data.Data.Id)
               commit('setAccess', data.Data.Access)
               commit('setHasGetInfo', true)
@@ -94,7 +93,7 @@ export default {
           reject(error)
         }
       })
-    },
+    }
 
   }
 }

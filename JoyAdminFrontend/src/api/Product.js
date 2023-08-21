@@ -1,6 +1,5 @@
 import { axios } from '@/libs/api.request'
 
-
 export const FilterProductList = (params) => {
   return axios.post('api/Product/FilterList', params)
 }
@@ -27,4 +26,13 @@ export function deleteProduct (id) {
 // 新增Product
 export function addProduct (data) {
   return axios.post('/api/Product/Add', data)
+}
+
+export default {
+  FilterProductList,
+  getProductList,
+  getProduct,
+  updateProduct,
+  deleteProduct,
+  addProduct
 }

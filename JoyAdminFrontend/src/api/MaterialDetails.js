@@ -1,6 +1,5 @@
 import { axios } from '@/libs/api.request'
 
-
 export const FilterMaterialDetailList = (params) => {
   return axios.post('api/MaterialDetail/FilterList', params)
 }
@@ -28,4 +27,13 @@ export function deleteMaterialDetail (id) {
 // 新增MaterialDetail
 export function addMaterialDetail (data) {
   return axios.post('/api/MaterialDetail/Add', data)
+}
+
+export default {
+  FilterMaterialDetailList,
+  getMaterialDetailList,
+  getMaterialDetail,
+  updateMaterialDetail,
+  deleteMaterialDetail,
+  addMaterialDetail
 }

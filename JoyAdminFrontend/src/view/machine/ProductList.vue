@@ -6,129 +6,101 @@
         <h3>产品信息</h3>
       </div>
       <div>
-        <Button type="primary" @click="addProduct">新增</Button>
+        <Button type="primary" @click="add">新增</Button>
       </div>
     </div>
-    <Table :columns="columns" :data="products"></Table>
+    <Table :columns="columns" :data="tableData"></Table>
     <div class="pagination">
       <Page
         :current="currentPage"
         :page-size="pageSize"
         :total="total"
         @on-change="handlePageChange"
-        show-total
+        @on-page-size-change="pageSizeChange"
+        show-sizer="true"
+        show-total="true"
       ></Page>
     </div>
-    <Modal v-model="modalVisible" title="编辑产品信息">
-      <Form :model="form" :rules="rules">
-        <Row type="flex" justify="space-between" :gutter="20">
-          <i-col span="8">
+    <Modal width="60%" v-model="modalVisible" :title="modalTitle" ok-text="确定" cancel-text="取消" @on-ok="submitForm"
+           @on-cancel="cancelModal">
+      <Form ref="form" :model="form" :rules="rules">
+        <Row type="flex" :gutter="10">
+          <Col span="6">
             <FormItem label="产品编码" prop="ProductCode">
-              <Input v-model="form.ProductCode"></Input>
+              <Input name="ProductCode" v-model="form.ProductCode"></Input>
             </FormItem>
-          </i-col>
-          <i-col span="8">
+          </Col>
+          <Col span="6">
             <FormItem label="产品名称" prop="ProductName">
-              <Input v-model="form.ProductName"></Input>
+              <Input name="ProductName" v-model="form.ProductName"></Input>
             </FormItem>
-          </i-col>
-          <i-col span="8">
+          </Col>
+          <Col span="6">
             <FormItem label="单位" prop="Unit_Id">
-              <Input v-model="form.Unit_Id"></Input>
+              <Input name="Unit_Id" v-model="form.Unit_Id"></Input>
             </FormItem>
-          </i-col>
-        </Row>
-
-        <Row type="flex" justify="space-between" :gutter="20">
-          <i-col span="8">
+          </Col>
+          <Col span="6">
             <FormItem label="产品规格" prop="ProductStandard">
-              <Input v-model="form.ProductStandard"></Input>
+              <Input name="ProductStandard" v-model="form.ProductStandard"></Input>
             </FormItem>
-          </i-col>
-          <i-col span="8">
-            <FormItem label="工序" prop="Process_Id">
-              <Input v-model="form.Process_Id"></Input>
+          </Col>
+          <Col span="6">
+            <FormItem label="产品属性" prop="ProductAttribute">
+              <Input name="ProductAttribute" v-model="form.ProductAttribute"></Input>
             </FormItem>
-          </i-col>
-          <i-col span="8">
+          </Col>
+          <Col span="6">
             <FormItem label="是否成品" prop="FinishedProduct">
-<!--              <ISwitch v-model="form.FinishedProduct"></ISwitch>-->
-              <i-switch v-model="form.FinishedProduct"></i-switch>
+              <Select name="FinishedProduct" v-model="form.FinishedProduct">
+                <Option value="是">是</Option>
+                <Option value="否">否</Option>
+              </Select>
             </FormItem>
-          </i-col>
+          </Col>
+          <Col span="6">
+            <FormItem label="工序" prop="Process_Id">
+              <Input name="Process_Id" v-model="form.Process_Id"></Input>
+            </FormItem>
+          </Col>
         </Row>
-
-        <Row type="flex" justify="space-between" :gutter="20">
-          <i-col span="8">
+        <Row type="flex" justify="space-between" :gutter="10">
+          <Col span="6">
             <FormItem label="最大库存量" prop="MaxInventory">
-              <Input v-model="form.MaxInventory"></Input>
+              <Input name="MaxInventory" v-model="form.MaxInventory"></Input>
             </FormItem>
-          </i-col>
-          <i-col span="8">
+          </Col>
+          <Col span="6">
             <FormItem label="最小库存量" prop="MinInventory">
-              <Input v-model="form.MinInventory"></Input>
+              <Input name="MinInventory" v-model="form.MinInventory"></Input>
             </FormItem>
-          </i-col>
-          <i-col span="8">
+          </Col>
+          <Col span="6">
             <FormItem label="安全库存量" prop="SafeInventory">
-              <Input v-model="form.SafeInventory"></Input>
+              <Input name="SafeInventory" v-model="form.SafeInventory"></Input>
             </FormItem>
-          </i-col>
-        </Row>
-
-        <Row type="flex" justify="space-between" :gutter="20">
-          <i-col span="8">
+          </Col>
+          <Col span="6">
             <FormItem label="当前库存量" prop="InventoryQty">
-              <Input v-model="form.InventoryQty"></Input>
+              <Input name="InventoryQty" v-model="form.InventoryQty"></Input>
             </FormItem>
-          </i-col>
-          <i-col span="8">
-            <FormItem label="创建时间" prop="CreateDate">
-              <Input v-model="form.CreateDate"></Input>
-            </FormItem>
-          </i-col>
-          <i-col span="8">
-            <FormItem label="创建人" prop="Creator">
-              <Input v-model="form.Creator"></Input>
-            </FormItem>
-          </i-col>
+          </Col>
         </Row>
-
-        <Row type="flex" justify="space-between" :gutter="20">
-          <i-col span="8">
-            <FormItem label="修改时间" prop="ModifyDate">
-              <Input v-model="form.ModifyDate"></Input>
-            </FormItem>
-          </i-col>
-          <i-col span="8">
-            <FormItem label="修改人" prop="Modifier">
-              <Input v-model="form.Modifier"></Input>
-            </FormItem>
-          </i-col>
-          <!-- Add an empty i-col to create space on the right -->
-          <i-col span="8"></i-col>
-        </Row>
-
-        <!-- Buttons for submitting or canceling the form -->
-        <div slot="footer">
-          <Button @click.native.prevent="modalVisible = false">取消</Button>
-          <Button type="primary" @click.native.prevent="submitForm">确定</Button>
-        </div>
-
       </Form>
-    </Modal>
 
+    </Modal>
   </div>
 </template>
 
 <script>
 
-import {getProductList} from "@/api/Product";
+import { addProduct, deleteProduct, FilterProductList, updateProduct } from '@/api/Product'
+import dayjs from 'dayjs'
 
 export default {
   data () {
     return {
-      products: [],
+      tableData: [],
       columns: [
         {
           title: '产品编码',
@@ -202,7 +174,7 @@ export default {
                   props: { type: 'primary', size: 'small' },
                   on: {
                     click: () => {
-                      this.editProduct(params.row)
+                      this.edit(params.row)
                     }
                   }
                 },
@@ -215,7 +187,7 @@ export default {
                   style: { marginLeft: '5px' },
                   on: {
                     click: () => {
-                      this.deleteProduct(params.row)
+                      this.delete(params.row)
                     }
                   }
                 },
@@ -228,7 +200,12 @@ export default {
       currentPage: 1,
       pageSize: 10,
       total: 0,
+      filterProperty: null,
+      filterValue: null,
+      sortProperty: null,
       modalVisible: false,
+      desc: true,
+      modalTitle: '新增',
       form: {
         Product_Id: 0,
         ProductCode: '',
@@ -258,7 +235,6 @@ export default {
         MinInventory: [{ required: true, message: '请输入最小库存量', trigger: 'blur' }],
         SafeInventory: [{ required: true, message: '请输入安全库存量', trigger: 'blur' }],
         InventoryQty: [{ required: true, message: '请输入当前库存量', trigger: 'blur' }],
-        FinishedProduct: [{ required: true, message: '请输入是否成品', trigger: 'blur' }],
         CreateDate: [{ required: true, message: '请输入创建时间', trigger: 'blur' }],
         Creator: [{ required: true, message: '请输入创建人', trigger: 'blur' }],
         ModifyDate: [{ required: true, message: '请输入修改时间', trigger: 'blur' }],
@@ -267,48 +243,121 @@ export default {
     }
   },
   mounted () {
-    this.getProducts()
+    this.getData()
   },
   methods: {
-    getProducts () {
-      // 使用 $http 方法从后端获取数据
-        getProductList().then(res => {
-          this.products = res.data
-          this.total = res.data.length
-        })
+    getData () {
+      // 从后端获取数据
+      FilterProductList({
+        'page': this.currentPage,
+        'size': this.pageSize,
+        'filterProperty': this.filterProperty,
+        'filterValue': this.filterValue,
+        'sortProperty': this.sortProperty,
+        'desc': this.desc
+      }).then(res => {
+        this.tableData = res.data.Data.Items
+        this.total = res.data.Data.TotalCount
+      })
     },
-    addProduct () {
+    add () {
       this.modalVisible = true
+      this.modalTitle = '新增'
+    },
+    edit (row) {
+      // 打开编辑模态框
+      this.modalVisible = true
+      this.modalTitle = '编辑'
+      // 将表单数据赋值为当前编辑的产品信息
+      this.form = { ...row }
     },
     handlePageChange (page) {
       this.currentPage = page
-      this.getProducts()
+      this.getData()
     },
-    editProduct (product) {
-      // 打开编辑模态框
-      this.modalVisible = true
-      // 将表单数据赋值为当前编辑的产品信息
-      this.form = { ...product }
+    pageSizeChange (pageSize) {
+      this.PageSize = pageSize
+      this.getData()
     },
-    deleteProduct (product) {
-      // 使用 $http 方法删除产品信息
-      const url = `/api/products/${product.Product_Id}`
-      this.$http.delete(url).then(() => {
-        // 删除成功后重新获取数据
-        this.getProducts()
+    delete (row) {
+      // 删除产品
+      this.$Modal.confirm({
+        title: '删除',
+        content: '确定删除该产品吗？',
+        onOk: () => {
+          deleteProduct(row.Product_Id).then(res => {
+            const { Succeeded, Errors } = res.data
+            if (Succeeded) {
+              this.$Notice.success({
+                title: '成功',
+                desc: '删除成功'
+              })
+            } else {
+              this.$Notice.error({
+                title: '错误',
+                desc: Errors
+              })
+            }
+          }).finally(() => {
+            this.getData()
+          })
+        }
       })
     },
     submitForm () {
+      console.log('submit')
       // 提交表单数据
-      const url = `/api/products/${this.form.Product_Id}`
-      const method = this.form.Product_Id ? 'put' : 'post'
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.$http[method](url, this.form).then(() => {
-            // 提交成功后关闭模态框并重新获取数据
-            this.modalVisible = false
-            this.getProducts()
-          })
+          if (this.modalTitle === '新增') {
+            this.form.Product_Id = 0
+            this.form.CreateID = this.userId
+            this.form.Creator = this.userName
+            this.form.ModifyID = this.userId
+            this.form.Modifier = this.userName
+            this.form.CreateDate = dayjs().format()
+            this.form.ModifyDate = dayjs().format()
+            addProduct(this.form).then(res => {
+              const { Succeeded, Errors } = res.data
+              if (Succeeded) {
+                this.$Notice.success({
+                  title: '成功',
+                  desc: '添加成功'
+                })
+              } else {
+                this.$Notice.error({
+                  title: '错误',
+                  desc: Errors
+                })
+              }
+            }).finally(() => {
+              this.modalVisible = false
+              this.currentPage = 1
+              this.getData()
+            })
+          } else {
+            this.form.ModifyID = this.userId
+            this.form.Modifier = this.userName
+            this.form.ModifyDate = dayjs().format()
+            updateProduct(this.form).then(res => {
+              const { Succeeded, Errors } = res.data
+              if (Succeeded) {
+                this.$Notice.success({
+                  title: '成功',
+                  desc: '编辑成功'
+                })
+              } else {
+                this.$Notice.error({
+                  title: '错误',
+                  desc: Errors
+                })
+              }
+            }).finally(() => {
+              this.modalVisible = false
+              this.currentPage = 1
+              this.getData()
+            })
+          }
         }
       })
     },
@@ -316,6 +365,18 @@ export default {
       // 取消编辑或添加操作，关闭模态框
       this.modalVisible = false
       this.$refs.form.resetFields()
+    }
+  },
+  computed: {
+    userName () {
+      return (
+        this.$store.state.user.userName
+      )
+    },
+    userId () {
+      return (
+        this.$store.state.user.userId
+      )
     }
   }
 }
