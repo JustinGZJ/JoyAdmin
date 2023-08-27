@@ -26,7 +26,7 @@ public class ServiceBase<T> : IDynamicApiController where T : class, IPrivateEnt
         if (filter.filterProperty != null)
         {
             string condition = $"{filter.filterProperty} == @0";
-            query = query.Where(condition, filter.filterValue);
+            query = query.Where(condition, filter.filterValue.ToString());
         }
 
         if (filter.sortProperty == null) return await query.ToPagedListAsync(filter.page, filter.size);
@@ -52,12 +52,7 @@ public class ServiceBase<T> : IDynamicApiController where T : class, IPrivateEnt
         return await _repository.FindAsync(id);
     }
 
-    // update
-    public async Task<T> Update(T processLine)
-    {
-        await _repository.UpdateAsync(processLine);
-        return processLine;
-    }
+
 
     // delete
     public async Task<T> Delete(int id)
@@ -68,9 +63,36 @@ public class ServiceBase<T> : IDynamicApiController where T : class, IPrivateEnt
     }
 
     // add
-    public async Task<T> Add(T processLine)
+    public async Task<T> Add(T entity)
     {
-        await _repository.InsertNowAsync(processLine);
-        return processLine;
+        await _repository.InsertNowAsync(entity);
+        return entity;
     }
+    
+    // Batch Add
+    public async Task<IEnumerable<T>> BatchAdd(T[] entities)
+    {
+        await _repository.InsertNowAsync(entities);
+        return entities;
+    }
+
+    
+    
+    
+    // update
+    public async Task<T> Update( T entity)
+    {
+        await _repository.UpdateAsync(entity);
+        return entity;
+    }
+    
+    // Batch update
+    public async Task<IEnumerable<T>> BatchUpdate(T[] entities)
+    {
+        await _repository.UpdateAsync(entities);
+        return entities;
+    }    
+    
+    
+    
 }

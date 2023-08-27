@@ -9,7 +9,7 @@
         <Button type="primary" @click="add">新增</Button>
       </div>
     </div>
-    <Table :columns="columns" :data="tableData"></Table>
+    <Table highlight-row :columns="columns" :data="tableData"></Table>
     <div class="pagination">
       <Page
         :current="currentPage"
@@ -124,7 +124,7 @@ export default {
         },
         {
           title: '工序',
-          key: 'Process_Id'
+          key: 'ProcessLine_Id'
         },
         {
           title: '最大库存量',

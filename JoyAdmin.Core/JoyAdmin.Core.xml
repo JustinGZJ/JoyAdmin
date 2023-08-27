@@ -684,7 +684,7 @@
             产品属性
              </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.Process_Id">
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_Product.ProcessLine_Id">
              <summary>
             工艺路线
              </summary>

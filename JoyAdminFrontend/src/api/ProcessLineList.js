@@ -15,6 +15,10 @@ export function updateProcessLineList (data) {
   return axios.post('/api/ProcessLineList/Update', data)
 }
 
+export function batchUpdateProcessLineList (data) {
+  return axios.post('/api/ProcessLineList/BatchUpdate', data)
+}
+
 export function deleteProcessLineList (id) {
   return axios.delete(`/api/ProcessLineList/Delete/${id}`)
 }

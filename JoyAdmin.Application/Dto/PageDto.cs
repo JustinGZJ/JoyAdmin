@@ -17,7 +17,7 @@ public  class FilterDto
     public int page { get; set; } = 1;
     public int size { get; set; } = 50;
     public string? filterProperty { get; set; }
-    public string? filterValue { get; set; }
+    public object filterValue { get; set; }
     public string? sortProperty { get; set; }
     public bool desc { get; set; }=false;
 }

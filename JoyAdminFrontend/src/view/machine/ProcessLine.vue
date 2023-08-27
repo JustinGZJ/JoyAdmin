@@ -11,7 +11,7 @@
             <Button type="primary" @click="add">新增</Button>
           </div>
         </div>
-        <Table highlight-row=true :columns="columns" :data="tableData" @on-current-change="handleCurrentRowChange"></Table>
+        <Table highlight-row=true  :columns="columns" :data="tableData" @on-current-change="handleCurrentRowChange"></Table>
         <div class="pagination">
           <Page
               :current="currentPage"
@@ -28,17 +28,18 @@
              @on-ok="submitForm"
              @on-cancel="cancelModal">
         <Form ref="form" :model="form" :rules="rules">
-          <FormItem label="流程线编码" prop="ProcessLineCode">
+          <FormItem label="工艺流程编码" prop="ProcessLineCode">
             <Input v-model="form.ProcessLineCode"/>
           </FormItem>
-          <FormItem label="流程线名称" prop="ProcessLineName">
+          <FormItem label="工艺流程名称" prop="ProcessLineName">
             <Input v-model="form.ProcessLineName"/>
           </FormItem>
         </Form>
 
       </Modal>
     </div>
-    <ProductLineList></ProductLineList>
+<!--    <ProductLineList :ProcessLine_Id="selectedRow.ProcessLine_Id"></ProductLineList>-->
+      <ProductLineList :ProcessLine_Id="selectedRow?selectedRow.ProcessLine_Id:0"></ProductLineList>
   </div>
 </template>
 
@@ -46,7 +47,6 @@
 
 import dayjs from 'dayjs'
 import { addProcessLine, deleteProcessLine, FilterProcessLineList, updateProcessLine } from '@/api/ProcessLine'
-import { FilterProcessLineListList } from '@/api/ProcessLineList'
 
 export default {
   data () {
@@ -64,11 +64,11 @@ export default {
           align: 'center'
         },
         {
-          title: '流程线编码',
+          title: '工艺流程编码',
           key: 'ProcessLineCode'
         },
         {
-          title: '流程线名称',
+          title: '工艺流程名称',
           key: 'ProcessLineName'
         },
         {
@@ -144,12 +144,13 @@ export default {
       },
       rules: {
         ProcessLineCode: [
-          { required: true, message: '请输入流程线编码', trigger: 'blur' }
+          { required: true, message: '请输入工艺流程编码', trigger: 'blur' }
         ],
         ProcessLineName: [
-          { required: true, message: '请输入流程线名称', trigger: 'blur' }
+          { required: true, message: '请输入工艺流程名称', trigger: 'blur' }
         ]
-      }
+      },
+      selectedRow: null
     }
   },
   mounted () {
@@ -182,20 +183,7 @@ export default {
       this.form = { ...row }
     },
     handleCurrentRowChange (row) {
-      // 获取当前行的工艺流程ID
-      const { ProcessLine_Id } = row
-      // 根据工艺流程ID获取工序列表
-      FilterProcessLineListList({
-        'page': this.currentPage,
-        'size': this.pageSize,
-        'filterProperty': 'ProcessLine_Id',
-        'filterValue': ProcessLine_Id,
-        'sortProperty': this.sortProperty,
-        'desc': this.desc
-      }).then(res => {
-        this.tableData = res.data.Data.Items
-        this.total = res.data.Data.TotalCount
-      })
+      this.selectedRow = row
     },
     handlePageChange (page) {
       this.currentPage = page
