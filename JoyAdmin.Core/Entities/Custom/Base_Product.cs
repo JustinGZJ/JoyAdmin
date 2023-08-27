@@ -75,7 +75,7 @@ public partial class Base_Product:IEntity
     [Display(Name ="工艺路线")]
     
     [Editable(true)]
-    public int? Process_Id { get; set; }
+    public int? ProcessLine_Id { get; set; }
 
     /// <summary>
     ///最大库存

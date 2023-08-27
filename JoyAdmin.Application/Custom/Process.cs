@@ -17,3 +17,10 @@ public class ProcessService : ServiceBase<Base_Process>
     {
     }
 }
+
+public class ProcessListService : ServiceBase<Base_ProcessList>
+{
+    public ProcessListService(IRepository<Base_ProcessList> repository) : base(repository)
+    {
+    }
+}

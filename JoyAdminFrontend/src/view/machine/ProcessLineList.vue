@@ -6,19 +6,19 @@
         <h3>工艺路线-工序</h3>
       </div>
       <div>
-        <Button type="primary" @click="add">新增</Button>
+        <Button v-if="ProcessLine_Id!==0" type="primary" @click="add">新增</Button>
       </div>
     </div>
-    <Table :columns="columns" :data="tableData"></Table>
+    <Table :columns="columns" :data="tableData" draggable @on-drag-drop="changeOrder"></Table>
     <div class="pagination">
       <Page
-        :current="currentPage"
-        :page-size="pageSize"
-        :total="total"
-        @on-change="handlePageChange"
-        @on-page-size-change="pageSizeChange"
-        show-sizer
-        show-total
+          :current="currentPage"
+          :page-size="pageSize"
+          :total="total"
+          @on-change="handlePageChange"
+          @on-page-size-change="pageSizeChange"
+          show-sizer
+          show-total
       ></Page>
     </div>
     <Modal width="60%" v-model="modalVisible" :title="modalTitle" ok-text="确定" cancel-text="取消" @on-ok="submitForm"
@@ -30,15 +30,16 @@
             <Option value="工艺路线">工艺路线</Option>
           </Select>
         </FormItem>
-        <FormItem label="工艺ID" prop="Process_Id">
+        <FormItem label="工艺" prop="Process_Id">
           <Select v-model="form.Process_Id">
             <Option v-for="item in Processes" :value="item.Process_Id" :key="item.Process_Id">{{ item.ProcessName }}
             </Option>
           </Select>
         </FormItem>
-        <FormItem label="下行工艺流程ID" prop="ProcessLineDown_Id">
+        <FormItem label="工艺流程" prop="ProcessLineDown_Id">
           <Select v-model="form.ProcessLineDown_Id">
-            <Option v-for="item in ProcessLines" :value="item.ProcessLine_Id" :key="item.ProcessLine_Id">{{ item.ProcessLineName }}
+            <Option v-for="item in ProcessLines" :value="item.ProcessLine_Id" :key="item.ProcessLine_Id">
+              {{ item.ProcessLineName }}
             </Option>
           </Select>
         </FormItem>
@@ -57,7 +58,7 @@
 
 import dayjs from 'dayjs'
 import {
-  addProcessLineList,
+  addProcessLineList, batchUpdateProcessLineList,
   FilterProcessLineListList,
   updateProcessLineList
 } from '@/api/ProcessLineList'
@@ -86,20 +87,26 @@ export default {
           align: 'center'
         },
         {
+          title: '工艺流程',
+          key: 'ProcessLineName'
+        },
+        {
           title: '工艺流程类型',
           key: 'ProcessLineType'
         },
         {
-          title: '工艺ID',
-          key: 'Process_Id'
+          title: '工艺',
+          key: 'ProcessName'
         },
         {
-          title: '下行工艺流程ID',
-          key: 'ProcessLineDown_Id'
+          title: '下行工艺流程',
+          key: 'ProcessLineDownName'
         },
         {
           title: '顺序',
-          key: 'Sequence'
+          key: 'Sequence',
+          sortable: true, // 开启排序
+          sortType: 'asc'// 初始化排序
         },
         {
           title: '提交工作匹配',
@@ -120,10 +127,44 @@ export default {
         {
           title: '修改日期',
           key: 'ModifyDate'
+        },
+        {
+          title: '操作',
+          key: 'action',
+          width: 150,
+          render: (h, params) => {
+            return h('div', [
+              h(
+                'Button',
+                {
+                  props: { type: 'primary', size: 'small' },
+                  on: {
+                    click: () => {
+                      this.edit(params.row)
+                    }
+                  }
+                },
+                '编辑'
+              ),
+              h(
+                'Button',
+                {
+                  props: { type: 'error', size: 'small' },
+                  style: { marginLeft: '5px' },
+                  on: {
+                    click: () => {
+                      this.delete(params.row)
+                    }
+                  }
+                },
+                '删除'
+              )
+            ])
+          }
         }
       ],
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 40,
       total: 0,
       filterProperty: null,
       filterValue: null,
@@ -149,18 +190,6 @@ export default {
       rules: {
         ProcessLineType: [
           { required: true, message: '请输入工艺流程类型', trigger: 'blur' }
-        ],
-        Process_Id: [
-          { required: true, message: '请输入工艺ID', trigger: 'blur' }
-        ],
-        ProcessLineDown_Id: [
-          { required: true, message: '请输入下行工艺流程ID', trigger: 'blur' }
-        ],
-        Sequence: [
-          { required: true, message: '请输入顺序', trigger: 'blur' }
-        ],
-        SubmitWorkMatch: [
-          { required: true, message: '请输入报工比例', trigger: 'blur' }
         ]
       },
       Processes: [],
@@ -183,7 +212,13 @@ export default {
         'sortProperty': this.sortProperty,
         'desc': this.desc
       }).then(res => {
-        this.tableData = res.data.Data.Items
+        this.tableData = res.data.Data.Items.map(item => {
+          //  item.ProcessLineType = item.ProcessLineType === 0 ? '工序' : '工艺路线'
+          item.ProcessLineName = item.ProcessLine_Id === 0 ? '' : this.ProcessLines.find(x => x.ProcessLine_Id === item.ProcessLine_Id).ProcessLineName
+          item.ProcessName = item.Process_Id === 0 ? '' : this.Processes.find(x => x.Process_Id === item.Process_Id).ProcessName
+          item.ProcessLineDownName = item.ProcessLineDown_Id === 0 ? '' : this.ProcessLines.find(x => x.ProcessLine_Id === item.ProcessLineDown_Id).ProcessLineName
+          return item
+        })
         this.total = res.data.Data.TotalCount
       })
     },
@@ -233,6 +268,7 @@ export default {
     },
     submitForm () {
       console.log('submit')
+      console.log(this.form)
       // 提交表单数据
       this.$refs.form.validate(valid => {
         if (valid) {
@@ -243,6 +279,7 @@ export default {
             this.form.ModifyDate = dayjs().format()
             this.form.Creator = this.userName
             this.form.CreateDate = dayjs().format()
+
             addProcessLineList(this.form).then(res => {
               const { Succeeded, Errors } = res.data
               if (Succeeded) {
@@ -259,7 +296,6 @@ export default {
             }).finally(() => {
               this.modalVisible = false
               this.currentPage = 1
-              this.$refs.form.resetFields()
               this.getData()
             })
           } else {
@@ -268,6 +304,7 @@ export default {
             this.form.ModifyDate = dayjs().format()
             updateProcessLineList(this.form).then(res => {
               const { Succeeded, Errors } = res.data
+
               if (Succeeded) {
                 this.$Notice.success({
                   title: '成功',
@@ -279,14 +316,15 @@ export default {
                   desc: Errors
                 })
               }
+              //  this.$refs.form.resetFields()
             }).finally(() => {
               this.modalVisible = false
               this.currentPage = 1
-              this.$refs.form.resetFields()
               this.getData()
             })
           }
         } else {
+          console.error('error submit!!', this.form)
           this.$Notice.error({
             title: '错误',
             desc: '表单验证失败' + JSON.stringify(this.form)
@@ -323,6 +361,31 @@ export default {
             desc: Errors
           })
         }
+      })
+    },
+    changeOrder (oldIndex, newIndex) {
+      // [this.tableData[oldIndex], this.tableData[newIndex]] = [this.tableData[newIndex], this.tableData[oldIndex]]
+
+      const oldItem = this.tableData[oldIndex]
+      const newItem = this.tableData[newIndex]
+      const oldSequence = oldItem.Sequence
+      oldItem.Sequence = newItem.Sequence
+      newItem.Sequence = oldSequence
+      batchUpdateProcessLineList([newItem, oldItem]).then(res => {
+        const { Succeeded, Errors } = res.data
+        if (Succeeded) {
+          this.$Notice.success({
+            title: '成功',
+            desc: '修改成功'
+          })
+        } else {
+          this.$Notice.error({
+            title: '错误',
+            desc: Errors
+          })
+        }
+      }).finally(() => {
+        this.getData()
       })
     }
   },

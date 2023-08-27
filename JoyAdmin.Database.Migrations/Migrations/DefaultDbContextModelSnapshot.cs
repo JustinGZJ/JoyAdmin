@@ -564,7 +564,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.Property<int?>("ModifyID")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Process_Id")
+                    b.Property<int?>("ProcessLine_Id")
                         .HasColumnType("integer");
 
                     b.Property<string>("ProductAttribute")
@@ -1099,7 +1099,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedTime = new DateTime(2023, 8, 18, 11, 4, 2, 198, DateTimeKind.Local).AddTicks(430),
+                            CreatedTime = new DateTime(2023, 8, 27, 21, 35, 20, 368, DateTimeKind.Local).AddTicks(2820),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1188,7 +1188,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedTime = new DateTime(2023, 8, 18, 11, 4, 2, 198, DateTimeKind.Local).AddTicks(1630),
+                            CreatedTime = new DateTime(2023, 8, 27, 21, 35, 20, 368, DateTimeKind.Local).AddTicks(4020),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1199,7 +1199,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedTime = new DateTime(2023, 8, 18, 11, 4, 2, 198, DateTimeKind.Local).AddTicks(1640),
+                            CreatedTime = new DateTime(2023, 8, 27, 21, 35, 20, 368, DateTimeKind.Local).AddTicks(4030),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1210,7 +1210,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedTime = new DateTime(2023, 8, 18, 11, 4, 2, 198, DateTimeKind.Local).AddTicks(1640),
+                            CreatedTime = new DateTime(2023, 8, 27, 21, 35, 20, 368, DateTimeKind.Local).AddTicks(4030),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1281,7 +1281,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         {
                             Id = 1L,
                             Account = "admin",
-                            CreatedTime = new DateTime(2023, 8, 18, 11, 4, 2, 198, DateTimeKind.Local).AddTicks(5610),
+                            CreatedTime = new DateTime(2023, 8, 27, 21, 35, 20, 368, DateTimeKind.Local).AddTicks(8010),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
