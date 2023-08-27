@@ -10,7 +10,7 @@
           <Button type="primary" @click="add">新增</Button>
         </div>
       </div>
-      <Table :columns="columns" :data="tableData"></Table>
+      <Table highlight-row=true  :columns="columns" :data="tableData" @on-current-change="handleCurrentRowChange"></Table>
       <div class="pagination">
         <Page
             :current="currentPage"
@@ -30,10 +30,10 @@
           <FormItem label="工序名称" prop="ProcessName">
             <Input v-model="form.ProcessName"></Input>
           </FormItem>
-          <FormItem label="交工时限" prop="SubmitWorkLimit">
+          <FormItem label="报工权限" prop="SubmitWorkLimit">
             <Input v-model="form.SubmitWorkLimit"></Input>
           </FormItem>
-          <FormItem label="交工配比" prop="SubmitWorkMatch">
+          <FormItem label="报工配比" prop="SubmitWorkMatch">
             <Input v-model="form.SubmitWorkMatch"></Input>
           </FormItem>
           <FormItem label="缺陷项目" prop="DefectItem">
@@ -43,7 +43,7 @@
 
       </Modal>
     </div>
-    <ProcessList></ProcessList>
+    <ProcessList :Process_Id="selectedRow?selectedRow.Process_Id:0"></ProcessList>
   </div>
 </template>
 
@@ -66,11 +66,11 @@ export default {
           key: 'ProcessName'
         },
         {
-          title: '交工时限',
+          title: '报工权限',
           key: 'SubmitWorkLimit'
         },
         {
-          title: '交工配比',
+          title: '报工配比',
           key: 'SubmitWorkMatch'
         },
         {
@@ -139,11 +139,11 @@ export default {
       modalTitle: '新增',
       form: {
         'Process_Id': 0,
-        'ProcessCode': 'string',
-        'ProcessName': 'string',
-        'SubmitWorkLimit': 'string',
+        'ProcessCode': '',
+        'ProcessName': '',
+        'SubmitWorkLimit': '',
         'SubmitWorkMatch': 0,
-        'DefectItem': 'string',
+        'DefectItem': '',
         'CreateDate': '2023-08-25T01:19:16.843Z',
         'CreateID': 0,
         'Creator': 'string',
@@ -159,7 +159,7 @@ export default {
           { required: true, message: '请输入工序名称', trigger: 'blur' }
         ],
         'SubmitWorkLimit': [
-          { required: true, message: '请输入交工时限', trigger: 'blur' }
+          { required: true, message: '请输入报工权限', trigger: 'blur' }
         ],
         'SubmitWorkMatch': [
           { required: true, message: '请输入交工配比', trigger: 'blur' }
@@ -167,7 +167,8 @@ export default {
         'DefectItem': [
           { required: true, message: '请输入缺陷项目', trigger: 'blur' }
         ]
-      }
+      },
+      selectedRow: null
     }
   },
   mounted () {
@@ -191,6 +192,7 @@ export default {
     add () {
       this.modalVisible = true
       this.modalTitle = '新增'
+      this.$refs.form.resetFields()
     },
     edit (row) {
       // 打开编辑模态框
@@ -293,6 +295,9 @@ export default {
       // 取消编辑或添加操作，关闭模态框
       this.modalVisible = false
       this.$refs.form.resetFields()
+    },
+    handleCurrentRowChange (row) {
+      this.selectedRow = row
     }
   },
   computed: {

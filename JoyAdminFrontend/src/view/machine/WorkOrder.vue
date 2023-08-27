@@ -41,49 +41,49 @@
     <Modal v-model="modalAddVisible" title="添加工单" ok-text="确定" cancel-text="取消" @on-ok="confirmAddWorkOrder">
       // 添加工单的表单
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="120px">
-        <Row gutter="10">
-          <Col span="12">
+        <Row gutter=10>
+          <Col span=12>
             <FormItem label="工单号" prop="WorkOrderNo">
               <Input v-model="formValidate.WorkOrderNo" placeholder="请输入工单号"/>
             </FormItem>
           </Col>
-          <Col span="12" gutter="10">
+          <Col span=12 gutter="10">
             <FormItem label="产品编号" prop="ProductNo">
               <Input v-model="formValidate.ProductNo" placeholder="请输入产品编号"/>
             </FormItem>
           </Col>
         </Row>
-        <Row gutter="10">
-          <Col span="12">
+        <Row gutter=10>
+          <Col span=12>
             <FormItem label="产品名称" prop="ProductName">
               <Input v-model="formValidate.ProductName" placeholder="请输入产品名称"/>
             </FormItem>
           </Col>
-          <Col span="12">
+          <Col span=12>
             <FormItem label="开始时间" prop="StartTime">
               <DatePicker v-model="formValidate.StartTime" type="datetime" placeholder="请选择开始时间"/>
             </FormItem>
           </Col>
         </Row>
-        <Row gutter="10">
-          <Col span="12">
+        <Row gutter=10>
+          <Col span=12>
             <FormItem label="实际数量" prop="ActualQuantity">
               <InputNumber v-model="formValidate.ActualQuantity" placeholder="请输入实际数量"/>
             </FormItem>
           </Col>
-          <Col span="12">
+          <Col span=12>
             <FormItem label="计划数量" prop="PlanQuanPlanQuantitytity">
               <InputNumber v-model="formValidate.PlanQuantity" placeholder="请输入计划数量"/>
             </FormItem>
           </Col>
         </Row>
-        <Row gutter="10">
-          <Col span="12">
+        <Row gutter=10>
+          <Col span=12>
             <FormItem label="完成时间" prop="FinishTime">
               <DatePicker v-model="formValidate.FinishTime" type="datetime" placeholder="请选择完成时间"/>
             </FormItem>
           </Col>
-          <Col span="12">
+          <Col span=12>
             <FormItem label="状态" prop="Status">
               <Input v-model="formValidate.Status" placeholder="请输入状态"/>
             </FormItem>
@@ -96,8 +96,8 @@
 
 <script>
 
-import { AddWorkOrder, GetWorkOrders, UpdateWorkOrder } from '@/api/WorkOrder'
 import dayjs from 'dayjs'
+import { addWorkOrder, FilterWorkOrderList, updateWorkOrder } from '@/api/WorkOrder'
 
 export default {
   data () {
@@ -146,6 +146,10 @@ export default {
       },
       columns: [
         {
+          title: 'ID',
+          key: 'Id'
+        },
+        {
           title: '工单编号',
           key: 'WorkOrderNo'
         },
@@ -183,7 +187,9 @@ export default {
         },
         {
           title: '更新时间',
-          key: 'UpdatedTime'
+          key: 'UpdatedTime',
+          sortable: true,
+          sortType: 'desc'
         },
         {
           title: '操作',
@@ -204,7 +210,14 @@ export default {
   },
   methods: {
     getData () {
-      GetWorkOrders(this.CurrentPage, this.PageSize).then(res => {
+      FilterWorkOrderList({
+        'page': this.CurrentPage,
+        'size': this.PageSize,
+        'filterProperty': undefined,
+        'filterValue': undefined,
+        'sortProperty': undefined,
+        'desc': false
+      }).then(res => {
         this.orders = res.data.Data.Items
         this.TotalCount = res.data.Data.TotalCount
         this.TotalPages = res.data.Data.TotalPages
@@ -215,8 +228,20 @@ export default {
     },
     confirmAddWorkOrder () {
       this.modalAddVisible = false
-      AddWorkOrder(this.formValidate).then(res => {
-        console.log(res)
+      addWorkOrder(this.formValidate).then(res => {
+        const { Data, Success } = res.data
+        if (Success) {
+          this.$Notice.success({
+            title: '成功',
+            desc: '添加成功'
+          })
+        } else {
+          this.$Notice.error({
+            title: '错误',
+            desc: Data
+          })
+        }
+        this.getData()
       }).catch(err => {
         console.log(err)
         this.$Notice.error({
@@ -226,7 +251,6 @@ export default {
       }).finally(() => {
         this.modalAddVisible = false
         this.CurrentPage = 1
-        this.getData()
       })
     },
     startOrder (order) {
@@ -259,18 +283,31 @@ export default {
       switch (this.actionType) {
         case 'start':
           this.currentOrder.Status = '进行中'
-          this.CurrentPage.StartTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
+          this.currentOrder.StartTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
           break
         case 'end':
           this.currentOrder.Status = '已完成'
-          this.CurrentPage.FinishTIme = dayjs().format('YYYY-MM-DD HH:mm:ss')
+          this.currentOrder.FinishTIme = dayjs().format('YYYY-MM-DD HH:mm:ss')
           break
         case 'cancel':
           this.currentOrder.Status = '已撤回'
           break
       }
-      UpdateWorkOrder(this.currentOrder).then(res => {
-        console.log(res)
+      this.currentOrder.UpdatedTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
+      updateWorkOrder(this.currentOrder).then(res => {
+        const { Data, Succeeded } = res.data
+        if (Succeeded) {
+          this.$Notice.success({
+            title: '成功',
+            desc: '操作成功'
+          })
+          this.getData()
+        } else {
+          this.$Notice.error({
+            title: '错误',
+            desc: JSON.stringify(Data)
+          })
+        }
       }).catch(err => {
         console.log(err)
         this.$Notice.error({
@@ -281,7 +318,6 @@ export default {
         this.currentOrder = null
         this.modalVisible = false
         this.CurrentPage = 1
-        this.getData()
       })
     },
     pageChange (page) {
@@ -301,9 +337,9 @@ export default {
     handleButtons (row) {
       return [
         {
-          text: row.status !== '进行中' ? '开始' : '结束',
-          type: row.status !== '进行中' ? 'primary' : 'warning',
-          handler: row.status !== '进行中' ? this.startOrder : this.endOrder
+          text: row.Status !== '进行中' ? '开始' : '结束',
+          type: row.Status !== '进行中' ? 'primary' : 'warning',
+          handler: row.Status !== '进行中' ? this.startOrder : this.endOrder
         },
         {
           text: '撤回',

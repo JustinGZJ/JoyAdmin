@@ -6,7 +6,7 @@
         <h3>工序采集数据</h3>
       </div>
       <div>
-        <Button type="primary" @click="add">新增</Button>
+        <Button v-if="Process_Id!==0" type="primary" @click="add">新增</Button>
       </div>
     </div>
     <Table :columns="columns" :data="tableData"></Table>
@@ -24,14 +24,19 @@
     <Modal width="60%" v-model="modalVisible" :title="modalTitle" ok-text="确定" cancel-text="取消" @on-ok="submitForm"
            @on-cancel="cancelModal">
       <Form ref="form" :model="form" :rules="rules">
-        <FormItem label="工序列表ID" prop="ProcessList_Id">
-          <Input v-model="form.ProcessList_Id"/>
-        </FormItem>
-        <FormItem label="工序ID" prop="Process_Id">
-          <Input v-model="form.Process_Id"/>
-        </FormItem>
+<!--        <FormItem label="工序列表ID" prop="ProcessList_Id">-->
+<!--          <Input v-model="form.ProcessList_Id"/>-->
+<!--        </FormItem>-->
+<!--        <FormItem label="工序ID" prop="Process_Id">-->
+<!--          <Input v-model="form.Process_Id"/>-->
+<!--        </FormItem>-->
         <FormItem label="数据点类型" prop="DataPointType">
-          <Input v-model="form.DataPointType"/>
+          <Select v-model="form.DataPointType">
+            <Option value="string">文本</Option>
+            <Option value="number">数字</Option>
+            <Option value="bool">布尔</Option>
+            <Option value="datetime">时间</Option>
+          </Select>
         </FormItem>
         <FormItem label="数据点名称" prop="DataPointName">
           <Input v-model="form.DataPointName"/>
@@ -47,6 +52,12 @@ import dayjs from 'dayjs'
 import { addProcessList, deleteProcessList, FilterProcessListList, updateProcessList } from '@/api/ProcessList'
 
 export default {
+  props: {
+    Process_Id: {
+      type: Number,
+      default: 0
+    }
+  },
   data () {
     return {
       tableData: [],
@@ -82,12 +93,47 @@ export default {
         {
           key: 'ModifyDate',
           title: '修改日期'
+        },
+        {
+          title: '操作',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: (h, params) => {
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.edit(params.row)
+                  }
+                }
+              }, '编辑'),
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.delete(params.row)
+                  }
+                }
+              }, '删除')
+            ])
+          }
         }
       ],
       currentPage: 1,
       pageSize: 10,
       total: 0,
-      filterProperty: null,
+      filterProperty: 'Process_Id',
       filterValue: null,
       sortProperty: null,
       modalVisible: false,
@@ -127,6 +173,7 @@ export default {
   methods: {
     getData () {
       // 从后端获取数据
+      // this.filterValue = this.Process_Id
       FilterProcessListList({
         'page': this.currentPage,
         'size': this.pageSize,
@@ -142,6 +189,8 @@ export default {
     add () {
       this.modalVisible = true
       this.modalTitle = '新增'
+      this.$refs.form.resetFields()
+      this.form.Process_Id = this.Process_Id
     },
     edit (row) {
       // 打开编辑模态框
@@ -189,7 +238,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           if (this.modalTitle === '新增') {
-            this.form.Product_Id = 0
+            this.form.ProcessList_Id = 0
             this.form.CreateID = this.userId
             this.form.Creator = this.userName
             this.form.ModifyID = this.userId
@@ -256,6 +305,13 @@ export default {
       return (
         this.$store.state.user.userId
       )
+    }
+  },
+  watch: {
+    Process_Id (newValue, oldValue) {
+      this.filterProperty = 'Process_Id'
+      this.filterValue = newValue
+      this.getData()
     }
   }
 }

@@ -12,13 +12,13 @@
     <Table highlight-row :columns="columns" :data="tableData"></Table>
     <div class="pagination">
       <Page
-        :current="currentPage"
-        :page-size="pageSize"
-        :total="total"
-        @on-change="handlePageChange"
-        @on-page-size-change="pageSizeChange"
-        show-sizer="true"
-        show-total="true"
+          :current="currentPage"
+          :page-size="pageSize"
+          :total="total"
+          @on-change="handlePageChange"
+          @on-page-size-change="pageSizeChange"
+          show-sizer
+          show-total
       ></Page>
     </div>
     <Modal width="60%" v-model="modalVisible" :title="modalTitle" ok-text="确定" cancel-text="取消" @on-ok="submitForm"
@@ -59,8 +59,13 @@
             </FormItem>
           </Col>
           <Col span="6">
-            <FormItem label="工序" prop="Process_Id">
-              <Input name="Process_Id" v-model="form.Process_Id"></Input>
+            <FormItem label="工艺流程" prop="Process_Id">
+              <!--           <Input name="ProcessLine_Id" v-model="form.ProcessLine_Id"></Input>-->
+              <Select name="ProcessLine_Id" v-model="form.ProcessLine_Id">
+                <Option v-for="item in ProcessLines" :value="item.ProcessLine_Id" :key="item.ProcessLine_Id">
+                  {{ item.ProcessLineName }}
+                </Option>
+              </Select>
             </FormItem>
           </Col>
         </Row>
@@ -96,11 +101,12 @@
 
 import { addProduct, deleteProduct, FilterProductList, updateProduct } from '@/api/Product'
 import dayjs from 'dayjs'
+import { getProcessLineList } from '@/api/ProcessLine'
 
 export default {
   data () {
     return {
-      tableData: [],
+      filterData: [],
       columns: [
         {
           title: '产品编码',
@@ -123,8 +129,8 @@ export default {
           key: 'ProductAttribute'
         },
         {
-          title: '工序',
-          key: 'ProcessLine_Id'
+          title: '工艺流程',
+          key: 'ProcessLineName'
         },
         {
           title: '最大库存量',
@@ -213,7 +219,7 @@ export default {
         Unit_Id: 0,
         ProductStandard: '',
         ProductAttribute: '',
-        Process_Id: 0,
+        ProcessLine_Id: 0,
         MaxInventory: 0,
         MinInventory: 0,
         SafeInventory: 0,
@@ -229,21 +235,16 @@ export default {
       rules: {
         ProductCode: [{ required: true, message: '请输入产品编码', trigger: 'blur' }],
         ProductName: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
-        ProductStandard: [{ required: true, message: '请输入产品规格', trigger: 'blur' }],
-        ProductAttribute: [{ required: true, message: '请输入产品属性', trigger: 'blur' }],
-        MaxInventory: [{ required: true, message: '请输入最大库存量', trigger: 'blur' }],
-        MinInventory: [{ required: true, message: '请输入最小库存量', trigger: 'blur' }],
-        SafeInventory: [{ required: true, message: '请输入安全库存量', trigger: 'blur' }],
-        InventoryQty: [{ required: true, message: '请输入当前库存量', trigger: 'blur' }],
-        CreateDate: [{ required: true, message: '请输入创建时间', trigger: 'blur' }],
-        Creator: [{ required: true, message: '请输入创建人', trigger: 'blur' }],
-        ModifyDate: [{ required: true, message: '请输入修改时间', trigger: 'blur' }],
-        Modifier: [{ required: true, message: '请输入修改人', trigger: 'blur' }]
-      }
+        ProductStandard: [{ required: true, message: '请输入产品规格', trigger: 'blur' }]
+      },
+      ProcessLines: []
     }
   },
   mounted () {
-    this.getData()
+    this.getProcessLines()
+    this.$nextTick(() => {
+      this.getData()
+    })
   },
   methods: {
     getData () {
@@ -256,13 +257,22 @@ export default {
         'sortProperty': this.sortProperty,
         'desc': this.desc
       }).then(res => {
-        this.tableData = res.data.Data.Items
-        this.total = res.data.Data.TotalCount
+        const { Succeeded, Errors, Data } = res.data
+        if (Succeeded) {
+          this.filterData = Data.Items
+          this.total = Data.TotalCount
+        } else {
+          this.$Notice.error({
+            title: '错误',
+            desc: Errors
+          })
+        }
       })
     },
     add () {
       this.modalVisible = true
       this.modalTitle = '新增'
+      this.$refs.form.resetFields()
     },
     edit (row) {
       // 打开编辑模态框
@@ -334,6 +344,7 @@ export default {
               this.modalVisible = false
               this.currentPage = 1
               this.getData()
+              this.form.resetFields()
             })
           } else {
             this.form.ModifyID = this.userId
@@ -356,6 +367,7 @@ export default {
               this.modalVisible = false
               this.currentPage = 1
               this.getData()
+              this.form.resetFields()
             })
           }
         }
@@ -365,6 +377,19 @@ export default {
       // 取消编辑或添加操作，关闭模态框
       this.modalVisible = false
       this.$refs.form.resetFields()
+    },
+    getProcessLines () {
+      getProcessLineList().then(res => {
+        const { Succeeded, Errors, Data } = res.data
+        if (Succeeded) {
+          this.ProcessLines = Data
+        } else {
+          this.$Notice.error({
+            title: '错误',
+            desc: Errors
+          })
+        }
+      })
     }
   },
   computed: {
@@ -377,6 +402,15 @@ export default {
       return (
         this.$store.state.user.userId
       )
+    },
+    tableData () {
+      return this.filterData.map(item => {
+        const data = this.ProcessLines.find(p => p.ProcessLine_Id === item.ProcessLine_Id)
+        if (data) {
+          item.ProcessLineName = data.ProcessLineName
+        }
+        return item
+      })
     }
   }
 }
