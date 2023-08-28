@@ -225,14 +225,14 @@ export default {
     justify-content: space-between;
 
     .card-header-left {
-      font-size: 9px;
+      font-size: 18px;
       font-weight: bold;
-      padding-left: 10px;
+      padding-left: 20px;
     }
 
     .card-header-right {
-      padding-right: 10px;
-      font-size: 20px;
+      padding-right: 20px;
+      font-size: 40px;
       color: #03d3ec;
     }
   }
@@ -249,25 +249,26 @@ export default {
   }
 
   .card-footer-item {
-    padding: 2px 5px 0 5px;
+    padding: 5px 10px 0px 10px;
     box-sizing: border-box;
     width: 40%;
     background-color: rgba(6, 30, 93, 0.7);
-    border-radius: 2px;
+    border-radius: 3px;
 
     .footer-title {
-      font-size: 7px;
-      margin-bottom: 2px;
+      font-size: 15px;
+      margin-bottom: 5px;
     }
 
     .footer-detail {
+      font-size: 20px;
       color: #1294fb;
       display: flex;
-      font-size: 9px;
+      font-size: 18px;
       align-items: center;
 
       .dv-digital-flop {
-        margin-right: 2px;
+        margin-right: 5px;
       }
     }
   }

@@ -102,7 +102,7 @@ export default {
     position: absolute;
     width: 95%;
     left: 2.5%;
-    height: 2px;
+    height: 5px;
     bottom: 0px;
   }
 
@@ -113,13 +113,13 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-left: 2px solid rgb(6, 30, 93);
-    border-right: 2px solid rgb(6, 30, 93);
+    border-left: 3px solid rgb(6, 30, 93);
+    border-right: 3px solid rgb(6, 30, 93);
   }
 
   .digital-flop-title {
-    font-size: 10px;
-    margin-bottom: 10px;
+    font-size: 20px;
+    margin-bottom: 20px;
   }
 
   .digital-flop {
@@ -127,11 +127,11 @@ export default {
   }
 
   .unit {
-    margin-left: 5px;
+    margin-left: 10px;
     display: flex;
     align-items: flex-end;
     box-sizing: border-box;
-    padding-bottom: 7px;
+    padding-bottom: 13px;
   }
 }
 </style>

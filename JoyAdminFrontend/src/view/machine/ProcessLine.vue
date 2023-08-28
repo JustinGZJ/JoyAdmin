@@ -38,7 +38,6 @@
 
       </Modal>
     </div>
-<!--    <ProductLineList :ProcessLine_Id="selectedRow.ProcessLine_Id"></ProductLineList>-->
       <ProductLineList :ProcessLine_Id="selectedRow?selectedRow.ProcessLine_Id:0"></ProductLineList>
   </div>
 </template>

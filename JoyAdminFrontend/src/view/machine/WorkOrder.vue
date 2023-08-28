@@ -6,11 +6,13 @@
         <h3>工单管理</h3>
       </div>
       <div>
-        <Button type="primary" @click="addOrder">新增</Button>
+        <button-group>
+          <Button v-if="selectedRow" type="success" @click="editOrder(selectedRow)">编辑</Button>
+          <Button type="primary" @click="addOrder">新增</Button>
+        </button-group>
       </div>
-
     </div>
-    <Table :columns="columns" :data="orders">
+    <Table :columns="columns" :data="orders" highlight-row  @on-current-change="selectionChange" >
       <template #operation="{ index,row }">
         <div>
           <Button
@@ -38,8 +40,7 @@
     <Modal v-model="modalVisible" title="确认操作" ok-text="确定" cancel-text="取消" @on-ok="confirmAction">
       {{ modalContent }}
     </Modal>
-    <Modal v-model="modalAddVisible" title="添加工单" ok-text="确定" cancel-text="取消" @on-ok="confirmAddWorkOrder">
-      // 添加工单的表单
+    <Modal v-model="modalAddVisible" :title=modalTitle ok-text="确定" cancel-text="取消" @on-ok="confirmAddWorkOrder">
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="120px">
         <Row gutter=10>
           <Col span=12>
@@ -49,14 +50,22 @@
           </Col>
           <Col span=12 gutter="10">
             <FormItem label="产品编号" prop="ProductNo">
-              <Input v-model="formValidate.ProductNo" placeholder="请输入产品编号"/>
+              <Select v-model="formValidate.ProductNo" placeholder="请选择产品编号"  @on-change="(value)=>updateFormProduct('ProductCode',value)">
+                <Option v-for="product in Products" :key="product.Id" :value="product.ProductCode">
+                  {{ product.ProductCode }}
+                </Option>
+              </Select>
             </FormItem>
           </Col>
         </Row>
         <Row gutter=10>
           <Col span=12>
             <FormItem label="产品名称" prop="ProductName">
-              <Input v-model="formValidate.ProductName" placeholder="请输入产品名称"/>
+              <Select v-model="formValidate.ProductName" placeholder="请选择产品名称"  @on-change="(value)=>updateFormProduct('ProductName',value)">
+                <Option v-for="product in Products" :key="product.Id" :value="product.ProductName">
+                  {{ product.ProductName }}
+                </Option>
+              </Select>
             </FormItem>
           </Col>
           <Col span=12>
@@ -67,13 +76,13 @@
         </Row>
         <Row gutter=10>
           <Col span=12>
-            <FormItem label="实际数量" prop="ActualQuantity">
-              <InputNumber v-model="formValidate.ActualQuantity" placeholder="请输入实际数量"/>
+            <FormItem label="计划数量" prop="PlanQuanPlanQuantitytity">
+              <InputNumber v-model="formValidate.PlanQuantity" placeholder="请输入计划数量"/>
             </FormItem>
           </Col>
           <Col span=12>
-            <FormItem label="计划数量" prop="PlanQuanPlanQuantitytity">
-              <InputNumber v-model="formValidate.PlanQuantity" placeholder="请输入计划数量"/>
+            <FormItem label="实际数量" prop="ActualQuantity">
+              <InputNumber v-model="formValidate.ActualQuantity" placeholder="请输入实际数量"/>
             </FormItem>
           </Col>
         </Row>
@@ -85,7 +94,13 @@
           </Col>
           <Col span=12>
             <FormItem label="状态" prop="Status">
-              <Input v-model="formValidate.Status" placeholder="请输入状态"/>
+<!--              <Input v-model="formValidate.Status" placeholder="请输入状态"/>-->
+              <Select v-model="formValidate.Status">
+                <Option value="未开始">未开始</Option>
+                <Option value="进行中">进行中</Option>
+                <Option value="已完成">已完成</Option>
+                <Option value="已撤回">已撤回</Option>
+              </Select>
             </FormItem>
           </Col>
         </Row>
@@ -98,6 +113,8 @@
 
 import dayjs from 'dayjs'
 import { addWorkOrder, FilterWorkOrderList, updateWorkOrder } from '@/api/WorkOrder'
+import { getProductList } from '@/api/Product'
+import edit from '_c/tables/edit.vue'
 
 export default {
   data () {
@@ -108,6 +125,7 @@ export default {
       CurrentPage: 1,
       PageSize: 40,
       modalAddVisible: false,
+      modalTitle: '添加工单',
       formValidate: {
         WorkOrderNo: '',
         ProductNo: '',
@@ -130,18 +148,6 @@ export default {
         ],
         PlanQuantity: [
           { required: true, message: '计划数量不能为空', trigger: 'blur' }
-        ],
-        ActualQuantity: [
-          { required: true, message: '实际数量不能为空', trigger: 'blur' }
-        ],
-        StartTime: [
-          { required: true, message: '开始时间不能为空', trigger: 'blur' }
-        ],
-        FinishTime: [
-          { required: true, message: '完成时间不能为空', trigger: 'blur' }
-        ],
-        Status: [
-          { required: true, message: '状态不能为空', trigger: 'blur' }
         ]
       },
       columns: [
@@ -199,13 +205,18 @@ export default {
       modalVisible: false,
       modalContent: '',
       currentOrder: null,
-      actionType: ''
+      actionType: '',
+      Products: [],
+      selectedRow: null
     }
   },
   computed: {
-
+    edit () {
+      return edit
+    }
   },
   mounted () {
+    this.getProducts()
     this.getData()
   },
   methods: {
@@ -225,33 +236,71 @@ export default {
     },
     addOrder () {
       this.modalAddVisible = true
+      this.modalTitle = '添加工单'
+      this.$refs.formValidate.resetFields()
+    },
+    editOrder (row) {
+      this.modalAddVisible = true
+      this.modalTitle = '编辑工单'
+      this.formValidate = { ...row }
     },
     confirmAddWorkOrder () {
       this.modalAddVisible = false
-      addWorkOrder(this.formValidate).then(res => {
-        const { Data, Success } = res.data
-        if (Success) {
-          this.$Notice.success({
-            title: '成功',
-            desc: '添加成功'
-          })
-        } else {
+      if (this.modalTitle === '编辑工单') {
+        updateWorkOrder(this.formValidate).then(res => {
+          const { Data, Succeeded } = res.data
+          if (Succeeded) {
+            this.$Notice.success({
+              title: '成功',
+              desc: '编辑成功'
+            })
+          } else {
+            this.$Notice.error({
+              title: '错误',
+              desc: JSON.stringify(Data)
+            })
+          }
+          this.getData()
+        }).catch(err => {
+          console.log(err)
           this.$Notice.error({
             title: '错误',
-            desc: Data
+            desc: err
           })
-        }
-        this.getData()
-      }).catch(err => {
-        console.log(err)
-        this.$Notice.error({
-          title: '错误',
-          desc: err
+        }).finally(() => {
+          this.modalAddVisible = false
+          this.CurrentPage = 1
         })
-      }).finally(() => {
-        this.modalAddVisible = false
-        this.CurrentPage = 1
-      })
+        return
+      }
+      if (this.modalTitle === '添加工单') {
+        this.formValidate.CreatedTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
+        this.formValidate.UpdatedTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
+        addWorkOrder(this.formValidate).then(res => {
+          const { Data, Succeeded } = res.data
+          if (Succeeded) {
+            this.$Notice.success({
+              title: '成功',
+              desc: '添加成功'
+            })
+          } else {
+            this.$Notice.error({
+              title: '错误',
+              desc: JSON.stringify(Data)
+            })
+          }
+          this.getData()
+        }).catch(err => {
+          console.log(err)
+          this.$Notice.error({
+            title: '错误',
+            desc: err
+          })
+        }).finally(() => {
+          this.modalAddVisible = false
+          this.CurrentPage = 1
+        })
+      }
     },
     startOrder (order) {
       console.log('start')
@@ -347,6 +396,33 @@ export default {
           handler: this.cancelOrder
         }
       ]
+    },
+    getProducts () {
+      getProductList().then(res => {
+        const { Succeeded, Errors, Data } = res.data
+        if (!Succeeded) {
+          this.$Notice.error({
+            title: '错误',
+            desc: Errors
+          })
+        }
+        this.Products = Data
+      })
+    },
+    updateFormProduct (type, value) {
+      switch (type) {
+        case 'ProductCode':
+        //  this.formValidate.ProductCode = value
+          this.formValidate.ProductName = this.Products.find(item => item.ProductCode === value).ProductName
+          break
+        case 'ProductName':
+          // this.formValidate.ProductName = value
+          this.formValidate.ProductNo = this.Products.find(item => item.ProductName === value).ProductCode
+          break
+      }
+    },
+    selectionChange (row) {
+      this.selectedRow = row
     }
   }
 }
