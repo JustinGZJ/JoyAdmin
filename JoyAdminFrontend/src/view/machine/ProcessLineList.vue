@@ -109,7 +109,7 @@ export default {
           sortType: 'asc'// 初始化排序
         },
         {
-          title: '提交工作匹配',
+          title: '报工比例',
           key: 'SubmitWorkMatch'
         },
         {

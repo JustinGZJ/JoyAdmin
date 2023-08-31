@@ -5,6 +5,6 @@
 
 namespace JoyAdmin.Core.Entities.Custom.partial;
 
-public partial class Base_Process
+public class Base_Process
 {
 }

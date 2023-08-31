@@ -1,17 +1,13 @@
-﻿using JoyAdmin.Core;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using Furion;
 using Furion.DatabaseAccessor;
-using Microsoft.AspNetCore.Http;
+using JoyAdmin.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.Extensions.Caching.Memory;
-using System;
-using System.Linq;
-using System.Linq.Expressions;
-using Furion.FriendlyException;
 using Yitter.IdGenerator;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace JoyAdmin.EntityFramework.Core;
 //  [AppDbContext("SqlServerConnectionString")]
@@ -34,7 +30,7 @@ public class DefaultDbContext : AppDbContext<DefaultDbContext>, IModelBuilderFil
         Type dbContextLocator)
     {
         //假删除过滤器
-        LambdaExpression expression = FakeDeleteQueryFilterExpression(entityBuilder, dbContext);
+        var expression = FakeDeleteQueryFilterExpression(entityBuilder, dbContext);
         if (expression != null)
             entityBuilder.HasQueryFilter(expression);
     }
@@ -47,7 +43,7 @@ public class DefaultDbContext : AppDbContext<DefaultDbContext>, IModelBuilderFil
         // 获取所有新增和更新的实体
         var entities = dbContext.ChangeTracker.Entries().Where(u =>
             u.State == EntityState.Added || u.State == EntityState.Modified || u.State == EntityState.Deleted);
-        if(App.User==null)
+        if (App.User == null)
             return;
         var userId = App.User.FindFirst(ClaimConst.CLAINM_USERID)?.Value;
         var userName = App.User.FindFirst(ClaimConst.CLAINM_ACCOUNT)?.Value;
@@ -80,7 +76,7 @@ public class DefaultDbContext : AppDbContext<DefaultDbContext>, IModelBuilderFil
     }
 
     /// <summary>
-    /// 假删除过滤器
+    ///     假删除过滤器
     /// </summary>
     /// <param name="entityBuilder"></param>
     /// <param name="dbContext"></param>
@@ -91,19 +87,16 @@ public class DefaultDbContext : AppDbContext<DefaultDbContext>, IModelBuilderFil
         DbContext dbContext, string isDeletedKey = null, object filterValue = null)
     {
         isDeletedKey ??= "IsDeleted";
-        IMutableEntityType metadata = entityBuilder.Metadata;
-        if (metadata.FindProperty(isDeletedKey) == null)
-        {
-            return null;
-        }
+        var metadata = entityBuilder.Metadata;
+        if (metadata.FindProperty(isDeletedKey) == null) return null;
 
         Expression finialExpression = Expression.Constant(true);
-        ParameterExpression parameterExpression = Expression.Parameter(metadata.ClrType, "u");
+        var parameterExpression = Expression.Parameter(metadata.ClrType, "u");
         // 假删除过滤器
         if (metadata.FindProperty(isDeletedKey) == null)
             return Expression.Lambda(finialExpression, parameterExpression);
-        ConstantExpression constantExpression = Expression.Constant(isDeletedKey);
-        ConstantExpression right = Expression.Constant(filterValue ?? false);
+        var constantExpression = Expression.Constant(isDeletedKey);
+        var right = Expression.Constant(filterValue ?? false);
         var fakeDeleteQueryExpression = Expression.Equal(Expression.Call(typeof(EF), "Property", new Type[1]
         {
             typeof(bool)

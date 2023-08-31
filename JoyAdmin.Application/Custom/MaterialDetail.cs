@@ -3,7 +3,7 @@ using JoyAdmin.Core.Entities.Custom;
 
 namespace JoyAdmin.Application.Custom;
 
-public class MaterialDetail:ServiceBase<Base_MaterialDetail>
+public class MaterialDetail : ServiceBase<Base_MaterialDetail>
 {
     public MaterialDetail(IRepository<Base_MaterialDetail> repository) : base(repository)
     {

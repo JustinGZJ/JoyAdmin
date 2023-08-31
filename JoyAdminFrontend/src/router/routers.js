@@ -98,7 +98,8 @@ export default [
     },
     component: Main,
     children: [
-      { path: '/workOrder',
+      {
+        path: '/workOrder',
         name: 'workOrder',
         meta: {
           icon: 'ios-search',
@@ -107,7 +108,8 @@ export default [
         },
         component: resolve => require(['@/view/machine/WorkOrder.vue'], resolve)
       },
-      { path: '/productList',
+      {
+        path: '/productList',
         name: 'productList',
         meta: {
           icon: 'ios-search',
@@ -125,8 +127,7 @@ export default [
           access: ['role', 'auth', 'employee']
         },
         component: resolve => require(['@/view/machine/ProcessLine.vue'], resolve)
-      },
-      {
+      }, {
         path: '/process',
         name: 'process',
         meta: {
@@ -135,7 +136,27 @@ export default [
           access: ['role', 'auth', 'employee']
         },
         component: resolve => require(['@/view/machine/Process.vue'], resolve)
+      }, {
+        path: '/SysUnit',
+        name: 'SysUnit',
+        meta: {
+          icon: 'ios-search',
+          title: '单位管理',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/SysUnit.vue'], resolve)
       },
+      {
+        path: '/DefectItem',
+        name: 'DefectItem',
+        meta: {
+          icon: 'ios-search',
+          title: '不良品项',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/DefectItem.vue'], resolve)
+      },
+
       {
         path: '/query',
         name: 'query',
@@ -243,7 +264,7 @@ export default [
       title: '设备上传'
     },
     component: Main,
-    children: [ {
+    children: [{
       path: '/testdata',
       name: 'testdata',
       meta: {

@@ -3,7 +3,7 @@ using Furion.DatabaseAccessor;
 
 namespace JoyAdmin.Core.Entities.Production;
 
-public class ProductionWorkOrder:Entity
+public class ProductionWorkOrder : Entity
 {
     public string WorkOrderNo { get; set; } // 工单号
     public string ProductNo { get; set; } // 产品编号

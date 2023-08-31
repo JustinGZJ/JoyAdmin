@@ -3,43 +3,38 @@
     <div style="display:flex;justify-content: space-between">
       <div style="display: flex;align-items: center">
         <Icon size="20" type="md-apps"/>
-        <h3>工序采集数据</h3>
+        <h3>不良品项</h3>
       </div>
       <div>
-        <Button v-if="Process_Id!==0" type="primary" @click="add">新增</Button>
+        <Button type="primary" @click="add">新增</Button>
       </div>
     </div>
-    <Table :columns="columns" :data="tableData"></Table>
+    <Table highlight-row :columns="columns" :data="tableData"></Table>
     <div class="pagination">
       <Page
-          :current="currentPage"
-          :page-size="pageSize"
-          :total="total"
-          @on-change="handlePageChange"
-          @on-page-size-change="pageSizeChange"
-          show-sizer="true"
-          show-total="true"
+        :current="currentPage"
+        :page-size="pageSize"
+        :total="total"
+        @on-change="handlePageChange"
+        @on-page-size-change="pageSizeChange"
+        show-sizer
+        show-total
       ></Page>
     </div>
     <Modal width="60%" v-model="modalVisible" :title="modalTitle" ok-text="确定" cancel-text="取消" @on-ok="submitForm"
            @on-cancel="cancelModal">
       <Form ref="form" :model="form" :rules="rules">
-<!--        <FormItem label="工序列表ID" prop="ProcessList_Id">-->
-<!--          <Input v-model="form.ProcessList_Id"/>-->
-<!--        </FormItem>-->
-<!--        <FormItem label="工序ID" prop="Process_Id">-->
-<!--          <Input v-model="form.Process_Id"/>-->
-<!--        </FormItem>-->
-        <FormItem label="数据点类型" prop="DataPointType">
-          <Select v-model="form.DataPointType">
-            <Option value="string">文本</Option>
-            <Option value="number">数字</Option>
-            <Option value="bool">布尔</Option>
-            <Option value="datetime">时间</Option>
-          </Select>
+        <FormItem label="不良编号" prop="DefectItemCode">
+          <Input name="DefectItemCode" v-model="form.DefectItemCode"></Input>
         </FormItem>
-        <FormItem label="数据点名称" prop="DataPointName">
-          <Input v-model="form.DataPointName"/>
+        <FormItem label="不良品名称" prop="DefectItemName">
+          <Input name="DefectItemName" v-model="form.DefectItemName"></Input>
+        </FormItem>
+        <FormItem label="附件" prop="Attachment">
+          <Input name="Attachment" v-model="form.Attachment"></Input>
+        </FormItem>
+        <FormItem label="图片" prop="ImageUrl">
+          <Input name="ImageUrl" v-model="form.ImageUrl"></Input>
         </FormItem>
       </Form>
     </Modal>
@@ -49,75 +44,74 @@
 <script>
 
 import dayjs from 'dayjs'
-import { addProcessList, deleteProcessList, FilterProcessListList, updateProcessList } from '@/api/ProcessList'
+import { addDefectItem, deleteDefectItem, FilterDefectItemList, updateDefectItem } from '@/api/DefectItem'
 
 export default {
-  props: {
-    Process_Id: {
-      type: Number,
-      default: 0
-    }
-  },
   data () {
     return {
-      tableData: [],
       columns: [
         {
-          key: 'DataPointType',
-          title: '数据点类型'
+          title: '不良编号',
+          key: 'DefectItemCode'
         },
         {
-          key: 'DataPointName',
-          title: '数据点名称'
+          title: '不良名称',
+          key: 'DefectItemName'
+        }, {
+          title: '附件',
+          key: 'Attachment'
         },
         {
-          key: 'CreateDate',
-          title: '创建日期'
+          title: '图片',
+          key: 'ImageUrl'
         },
         {
-          key: 'Creator',
-          title: '创建者'
+          title: '创建时间',
+          key: 'CreateDate'
         },
         {
-          key: 'Modifier',
-          title: '修改者'
+          title: '创建人',
+          key: 'Creator'
         },
         {
-          key: 'ModifyDate',
-          title: '修改日期'
+          title: '修改时间',
+          key: 'ModifyDate'
+        },
+        {
+          title: '修改人',
+          key: 'Modifier'
         },
         {
           title: '操作',
           key: 'action',
           width: 150,
-          align: 'center',
           render: (h, params) => {
             return h('div', [
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.edit(params.row)
+              h(
+                'Button',
+                {
+                  props: { type: 'primary', size: 'small' },
+                  on: {
+                    click: () => {
+                      this.edit(params.row)
+                    }
                   }
-                }
-              }, '编辑'),
-              h('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
                 },
-                on: {
-                  click: () => {
-                    this.delete(params.row)
+                '编辑'
+              ),
+              h(
+                'Button',
+                {
+                  props: { type: 'error', size: 'small' },
+                  style: { marginLeft: '5px' },
+                  on: {
+                    click: () => {
+                      this.delete(params.row)
+                    }
                   }
-                }
-              }, '删除')
+                },
+                '删除'
+              )
             ])
           }
         }
@@ -125,38 +119,31 @@ export default {
       currentPage: 1,
       pageSize: 10,
       total: 0,
-      filterProperty: 'Process_Id',
+      filterProperty: null,
+      tableData: [],
       filterValue: null,
       sortProperty: null,
       modalVisible: false,
       desc: true,
       modalTitle: '新增',
       form: {
-        'ProcessList_Id': 0,
-        'Process_Id': 0,
-        'DataPointType': 'string',
-        'DataPointName': 'string',
-        'CreateDate': '2023-08-25T01:19:16.843Z',
+        'DefectItem_Id': 0,
+        'DefectItemCode': '',
+        'DefectItemName': '',
+        'Attachment': '',
+        'ImageUrl': '',
+        'CreateDate': '2023-08-31T14:35:09.543Z',
         'CreateID': 0,
         'Creator': 'string',
         'Modifier': 'string',
-        'ModifyDate': '2023-08-25T01:19:16.843Z',
+        'ModifyDate': '2023-08-31T14:35:09.543Z',
         'ModifyID': 0
       },
       rules: {
-        'ProcessList_Id': [
-          { required: true, message: '请输入工序列表ID', trigger: 'blur' }
-        ],
-        'Process_Id': [
-          { required: true, message: '请输入工序ID', trigger: 'blur' }
-        ],
-        'DataPointType': [
-          { required: true, message: '请输入数据点类型', trigger: 'blur' }
-        ],
-        'DataPointName': [
-          { required: true, message: '请输入数据点名称', trigger: 'blur' }
-        ]
-      }
+        DefectItemCode: [{ required: true, message: '请输入不良编号', trigger: 'blur' }],
+        DefectItemName: [{ required: true, message: '请输入不良名称', trigger: 'blur' }]
+      },
+      ProcessLines: []
     }
   },
   mounted () {
@@ -165,8 +152,7 @@ export default {
   methods: {
     getData () {
       // 从后端获取数据
-      // this.filterValue = this.Process_Id
-      FilterProcessListList({
+      FilterDefectItemList({
         'page': this.currentPage,
         'size': this.pageSize,
         'filterProperty': this.filterProperty,
@@ -174,15 +160,22 @@ export default {
         'sortProperty': this.sortProperty,
         'desc': this.desc
       }).then(res => {
-        this.tableData = res.data.Data.Items
-        this.total = res.data.Data.TotalCount
+        const { Succeeded, Errors, Data } = res.data
+        if (Succeeded) {
+          this.tableData = Data.Items
+          this.total = Data.TotalCount
+        } else {
+          this.$Notice.error({
+            title: '错误',
+            desc: Errors
+          })
+        }
       })
     },
     add () {
       this.modalVisible = true
       this.modalTitle = '新增'
       this.$refs.form.resetFields()
-      this.form.Process_Id = this.Process_Id
     },
     edit (row) {
       // 打开编辑模态框
@@ -205,7 +198,7 @@ export default {
         title: '删除',
         content: '确定删除该产品吗？',
         onOk: () => {
-          deleteProcessList(row.Product_Id).then(res => {
+          deleteDefectItem(row.DefectItem_Id).then(res => {
             const { Succeeded, Errors } = res.data
             if (Succeeded) {
               this.$Notice.success({
@@ -230,14 +223,14 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           if (this.modalTitle === '新增') {
-            this.form.ProcessList_Id = 0
+            this.form.Product_Id = 0
             this.form.CreateID = this.userId
             this.form.Creator = this.userName
             this.form.ModifyID = this.userId
             this.form.Modifier = this.userName
             this.form.CreateDate = dayjs().format()
             this.form.ModifyDate = dayjs().format()
-            addProcessList(this.form).then(res => {
+            addDefectItem(this.form).then(res => {
               const { Succeeded, Errors } = res.data
               if (Succeeded) {
                 this.$Notice.success({
@@ -254,12 +247,13 @@ export default {
               this.modalVisible = false
               this.currentPage = 1
               this.getData()
+              this.form.resetFields()
             })
           } else {
             this.form.ModifyID = this.userId
             this.form.Modifier = this.userName
             this.form.ModifyDate = dayjs().format()
-            updateProcessList(this.form).then(res => {
+            updateDefectItem(this.form).then(res => {
               const { Succeeded, Errors } = res.data
               if (Succeeded) {
                 this.$Notice.success({
@@ -276,6 +270,7 @@ export default {
               this.modalVisible = false
               this.currentPage = 1
               this.getData()
+              this.form.resetFields()
             })
           }
         }
@@ -297,13 +292,6 @@ export default {
       return (
         this.$store.state.user.userId
       )
-    }
-  },
-  watch: {
-    Process_Id (newValue, oldValue) {
-      this.filterProperty = 'Process_Id'
-      this.filterValue = newValue
-      this.getData()
     }
   }
 }

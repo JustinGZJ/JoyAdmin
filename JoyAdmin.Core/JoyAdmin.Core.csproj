@@ -1,25 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <NoWarn>1701;1702;1591</NoWarn>
-    <DocumentationFile>JoyAdmin.Core.xml</DocumentationFile>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <NoWarn>1701;1702;1591</NoWarn>
+        <DocumentationFile>JoyAdmin.Core.xml</DocumentationFile>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="JoyAdmin.Core.xml" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Remove="JoyAdmin.Core.xml"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Furion" Version="3.7.8" />
-    <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="3.7.8" />
-    <PackageReference Include="Furion.Extras.Logging.Serilog" Version="3.7.8" />
-    <PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="3.7.8" />
-    <PackageReference Include="Yitter.IdGenerator" Version="1.0.14" />
+    <ItemGroup>
+        <PackageReference Include="Furion" Version="3.7.8"/>
+        <PackageReference Include="Furion.Extras.Authentication.JwtBearer" Version="3.7.8"/>
+        <PackageReference Include="Furion.Extras.Logging.Serilog" Version="3.7.8"/>
+        <PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="3.7.8"/>
+        <PackageReference Include="Yitter.IdGenerator" Version="1.0.14"/>
 
-  </ItemGroup>
-
-
+    </ItemGroup>
 
 
 </Project>

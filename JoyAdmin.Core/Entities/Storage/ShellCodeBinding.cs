@@ -13,6 +13,9 @@ public class ShellCodeBinding : EntityBase, IEntityTypeBuilder<ShellCodeBinding>
 
     public string RotorCode { get; set; }
 
+    public DateTime CreateTime { get; set; }
+    public bool IsDeleted { get; set; }
+
     public void Configure(EntityTypeBuilder<ShellCodeBinding> entityBuilder, DbContext dbContext, Type dbContextLocator)
     {
         entityBuilder.HasIndex(x => x.ShellCode);
@@ -20,7 +23,4 @@ public class ShellCodeBinding : EntityBase, IEntityTypeBuilder<ShellCodeBinding>
         entityBuilder.HasIndex(x => x.StatorCode);
         //   throw new NotImplementedException();
     }
-
-    public DateTime CreateTime { get; set; }
-    public bool IsDeleted { get; set; }
 }

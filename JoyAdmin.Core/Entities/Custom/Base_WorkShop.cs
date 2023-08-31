@@ -5,126 +5,110 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Furion.DatabaseAccessor;
 
 namespace JoyAdmin.Core.Entities.Custom;
 
-
-public partial class Base_WorkShop:IEntity
+public class Base_WorkShop : IEntity
 {
     /// <summary>
-    ///车间主键
+    ///     车间主键
     /// </summary>
     [Key]
-    [Display(Name ="车间主键")]
-    
+    [Display(Name = "车间主键")]
     [Editable(true)]
-    [Required(AllowEmptyStrings=false)]
+    [Required(AllowEmptyStrings = false)]
     public Guid WorkShopId { get; set; }
 
     /// <summary>
-    ///车间名称
+    ///     车间名称
     /// </summary>
-    [Display(Name ="车间名称")]
+    [Display(Name = "车间名称")]
     [MaxLength(100)]
-    
     [Editable(true)]
-    [Required(AllowEmptyStrings=false)]
+    [Required(AllowEmptyStrings = false)]
     public string WorkShopName { get; set; }
 
     /// <summary>
-    ///车间编码
+    ///     车间编码
     /// </summary>
-    [Display(Name ="车间编码")]
+    [Display(Name = "车间编码")]
     [MaxLength(100)]
-    
     [Editable(true)]
     public string WorkShopCode { get; set; }
 
     /// <summary>
-    ///负责人
+    ///     负责人
     /// </summary>
-    [Display(Name ="负责人")]
+    [Display(Name = "负责人")]
     [MaxLength(100)]
-    
     [Editable(true)]
     public string MainPerson { get; set; }
 
     /// <summary>
-    ///面积
+    ///     面积
     /// </summary>
-    [Display(Name ="面积")]
-    
+    [Display(Name = "面积")]
     [Editable(true)]
     public int? Area { get; set; }
 
     /// <summary>
-    ///是否启用
+    ///     是否启用
     /// </summary>
-    [Display(Name ="是否启用")]
-    
+    [Display(Name = "是否启用")]
     [Editable(true)]
-    [Required(AllowEmptyStrings=false)]
+    [Required(AllowEmptyStrings = false)]
     public int Enable { get; set; }
 
     /// <summary>
-    ///备注
+    ///     备注
     /// </summary>
-    [Display(Name ="备注")]
+    [Display(Name = "备注")]
     [MaxLength(1000)]
-    
     [Editable(true)]
     public string Remark { get; set; }
 
     /// <summary>
-    ///创建人编号
+    ///     创建人编号
     /// </summary>
-    [Display(Name ="创建人编号")]
-    
+    [Display(Name = "创建人编号")]
     [Editable(true)]
     public int? CreateID { get; set; }
 
     /// <summary>
-    ///创建人
+    ///     创建人
     /// </summary>
-    [Display(Name ="创建人")]
+    [Display(Name = "创建人")]
     [MaxLength(30)]
-    
     [Editable(true)]
     public string Creator { get; set; }
 
     /// <summary>
-    ///创建时间
+    ///     创建时间
     /// </summary>
-    [Display(Name ="创建时间")]
-    
+    [Display(Name = "创建时间")]
     [Editable(true)]
     public DateTime? CreateDate { get; set; }
 
     /// <summary>
-    ///修改人编号
+    ///     修改人编号
     /// </summary>
-    [Display(Name ="修改人编号")]
-    
+    [Display(Name = "修改人编号")]
     [Editable(true)]
     public int? ModifyID { get; set; }
 
     /// <summary>
-    ///修改人
+    ///     修改人
     /// </summary>
-    [Display(Name ="修改人")]
+    [Display(Name = "修改人")]
     [MaxLength(30)]
-    
     [Editable(true)]
     public string Modifier { get; set; }
 
     /// <summary>
-    ///修改时间
+    ///     修改时间
     /// </summary>
-    [Display(Name ="修改时间")]
-    
+    [Display(Name = "修改时间")]
     [Editable(true)]
     public DateTime? ModifyDate { get; set; }
-     
 }

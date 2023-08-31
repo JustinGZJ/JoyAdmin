@@ -21,7 +21,7 @@ public class AlarmHistoryService : IDynamicApiController
     }
 
     /// <summary>
-    /// 查询报警信息，站位内容不指定则查询所有报警
+    ///     查询报警信息，站位内容不指定则查询所有报警
     /// </summary>
     /// <param name="alarmHistoryQueryDto"></param>
     /// <returns></returns>
@@ -31,19 +31,17 @@ public class AlarmHistoryService : IDynamicApiController
         AlarmHistoryQueryDto alarmHistoryQueryDto)
     {
         var alarmHistories = _alarmHistoryRepo
-            .Where(x => 
+            .Where(x =>
                 x.StartTime > alarmHistoryQueryDto.Start
                 && x.EndTime < alarmHistoryQueryDto.End);
         if (!string.IsNullOrWhiteSpace(alarmHistoryQueryDto.Station))
-        {
             alarmHistories = alarmHistories.Where(x => x.Station == alarmHistoryQueryDto.Station);
-        }
         return alarmHistories.ToPagedListAsync(alarmHistoryQueryDto.page, alarmHistoryQueryDto.size);
     }
 
 
     /// <summary>
-    /// 按报警类型和次数topn统计，站位名为空则查询所有站位
+    ///     按报警类型和次数topn统计，站位名为空则查询所有站位
     /// </summary>
     /// <param name="alarmCountQueryDto"></param>
     /// <returns></returns>
@@ -55,12 +53,10 @@ public class AlarmHistoryService : IDynamicApiController
             .Where(x => x.StartTime > alarmCountQueryDto.Start
                         && x.EndTime < alarmCountQueryDto.End);
         if (!string.IsNullOrWhiteSpace(alarmCountQueryDto.Station))
-        {
             alarmHistories = alarmHistories.Where(x => x.Station == alarmCountQueryDto.Station);
-        }
 
-        var alarmFreqDtoList =await alarmHistories.ToListAsync();
-       var alarmFreqDtos  = alarmFreqDtoList.GroupBy(x => new {x.Station, x.Message})
+        var alarmFreqDtoList = await alarmHistories.ToListAsync();
+        var alarmFreqDtos = alarmFreqDtoList.GroupBy(x => new { x.Station, x.Message })
             .Select(x => new AlarmFreqDto
             {
                 Station = x.Key.Station,
@@ -73,16 +69,16 @@ public class AlarmHistoryService : IDynamicApiController
             .GroupBy(x => x.Station).ToList();
         return alarmCountQueryDto.OrderMode switch
         {
-            0 =>  alarmFreqDtos.ToDictionary(g => g.Key,
+            0 => alarmFreqDtos.ToDictionary(g => g.Key,
                 g => g.OrderByDescending(x => x.Count).Take(alarmCountQueryDto.TopN).ToList()),
-            _ =>  alarmFreqDtos.ToDictionary(g => g.Key,
+            _ => alarmFreqDtos.ToDictionary(g => g.Key,
                 g => g.OrderByDescending(x => x.Timespan).Take(alarmCountQueryDto.TopN).ToList())
         };
     }
 
 
     /// <summary>
-    /// 时间段内各站位查询报警次数，站位名为空则查询总报警,
+    ///     时间段内各站位查询报警次数，站位名为空则查询总报警,
     /// </summary>
     /// <param name="alarmCountQueryDto"></param>
     /// <returns></returns>
@@ -94,9 +90,7 @@ public class AlarmHistoryService : IDynamicApiController
             .Where(x => x.StartTime > alarmCountQueryDto.Start
                         && x.EndTime < alarmCountQueryDto.End);
         if (!string.IsNullOrWhiteSpace(alarmCountQueryDto.Station))
-        {
             alarmHistories = alarmHistories.Where(x => x.Station == alarmCountQueryDto.Station);
-        }
 
         return await alarmHistories.GroupBy(x => x.Station).Select(x => new AlarmCountDto
         {
@@ -107,7 +101,7 @@ public class AlarmHistoryService : IDynamicApiController
 
 
     /// <summary>
-    /// 上传报警信息
+    ///     上传报警信息
     /// </summary>
     /// <param name="alarmHistoryCreateDto"></param>
     [AllowAnonymous]

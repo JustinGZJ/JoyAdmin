@@ -5,85 +5,74 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Furion.DatabaseAccessor;
 
 namespace JoyAdmin.Core.Entities.Custom;
 
-
-public partial class Sys_Unit:IEntity
+public class Sys_Unit : IEntity
 {
     /// <summary>
-    ///单位表主键ID
+    ///     单位表主键ID
     /// </summary>
     [Key]
-    [Display(Name ="单位表主键ID")]
-    
-    [Required(AllowEmptyStrings=false)]
+    [Display(Name = "单位表主键ID")]
+    [Required(AllowEmptyStrings = false)]
     public int Unit_Id { get; set; }
 
     /// <summary>
-    ///名称
+    ///     名称
     /// </summary>
-    [Display(Name ="名称")]
+    [Display(Name = "名称")]
     [MaxLength(200)]
-    
     [Editable(true)]
-    [Required(AllowEmptyStrings=false)]
+    [Required(AllowEmptyStrings = false)]
     public string UnitName { get; set; }
 
     /// <summary>
-    ///备注
+    ///     备注
     /// </summary>
-    [Display(Name ="备注")]
+    [Display(Name = "备注")]
     [MaxLength(1000)]
-    
     [Editable(true)]
     public string Remark { get; set; }
 
     /// <summary>
-    ///创建时间
+    ///     创建时间
     /// </summary>
-    [Display(Name ="创建时间")]
-    
+    [Display(Name = "创建时间")]
     public DateTime? CreateDate { get; set; }
 
     /// <summary>
-    ///创建人编号
+    ///     创建人编号
     /// </summary>
-    [Display(Name ="创建人编号")]
-    
+    [Display(Name = "创建人编号")]
     public int? CreateID { get; set; }
 
     /// <summary>
-    ///创建人
+    ///     创建人
     /// </summary>
-    [Display(Name ="创建人")]
+    [Display(Name = "创建人")]
     [MaxLength(200)]
-    
+
     public string Creator { get; set; }
 
     /// <summary>
-    ///修改人
+    ///     修改人
     /// </summary>
-    [Display(Name ="修改人")]
+    [Display(Name = "修改人")]
     [MaxLength(200)]
-    
+
     public string Modifier { get; set; }
 
     /// <summary>
-    ///修改时间
+    ///     修改时间
     /// </summary>
-    [Display(Name ="修改时间")]
-    
+    [Display(Name = "修改时间")]
     public DateTime? ModifyDate { get; set; }
 
     /// <summary>
-    ///修改人编号
+    ///     修改人编号
     /// </summary>
-    [Display(Name ="修改人编号")]
-    
+    [Display(Name = "修改人编号")]
     public int? ModifyID { get; set; }
-
-       
 }

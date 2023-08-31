@@ -8,5 +8,5 @@ public class NgReasonCount
     public DateTime To { get; set; }
     public string Device { get; set; }
     public string Reason { get; set; }
-    public int Count { get; set; }  
+    public int Count { get; set; }
 }

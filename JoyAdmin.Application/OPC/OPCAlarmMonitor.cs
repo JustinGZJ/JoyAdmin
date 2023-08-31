@@ -13,12 +13,12 @@ namespace JoyAdmin.Application.OPC;
 
 public class OPCAlarmMonitor : BackgroundService
 {
-    private readonly IOpcUaClientWrapper _opcUaClient;
+    private readonly IRepository<Core.Entities.Storage.AlarmHistory> _alarmHistoryRepository;
     private readonly IConfiguration _configuration;
     private readonly IOpcMonitorDataStorage _dataStorage = new OpcMonitorDataStorage();
     private readonly ILogger<OPCAlarmMonitor> _logger;
-    private readonly IRepository<Core.Entities.Storage.AlarmHistory> _alarmHistoryRepository;
-    private IRepository<Core.Entities.Storage.AlarmHistory> repository;
+    private readonly IOpcUaClientWrapper _opcUaClient;
+    private readonly IRepository<Core.Entities.Storage.AlarmHistory> repository;
 
     public OPCAlarmMonitor(IOpcUaClientWrapper opcUaClient, IConfiguration configuration,
         IServiceScopeFactory serviceScopeFactory, ILogger<OPCAlarmMonitor> logger)
@@ -55,16 +55,13 @@ public class OPCAlarmMonitor : BackgroundService
                     var data = dataValues.Where(x =>
                             x.Value.WrappedValue.TypeInfo.BuiltInType == BuiltInType.Boolean)
                         .ToDictionary(x => x.Key, x => x.Value);
-                    foreach (var d in data)
-                    {
-                        _dataStorage.Update(d.Key, d.Value.Value);
-                    }
+                    foreach (var d in data) _dataStorage.Update(d.Key, d.Value.Value);
                 });
                 await Task.WhenAll(tasks);
 
                 var alarms = _dataStorage.GetAll()
                     .Where(x => x.ValueChanged)
-                    .Where(x => !(bool) x.CurrentValue).Select(x => new Core.Entities.Storage.AlarmHistory
+                    .Where(x => !(bool)x.CurrentValue).Select(x => new Core.Entities.Storage.AlarmHistory
                     {
                         Station = x.Name.Split(".")[1],
                         Address = "",
@@ -73,10 +70,7 @@ public class OPCAlarmMonitor : BackgroundService
                         EndTime = x.UpdateTime
                     }).ToList();
 
-                if (alarms.Any())
-                {
-                    await repository.InsertNowAsync(alarms, stoppingToken);
-                }
+                if (alarms.Any()) await repository.InsertNowAsync(alarms, stoppingToken);
 
                 await Task.CompletedTask;
             }, stoppingToken);

@@ -1,17 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JoyAdmin.Web.Entry.Controllers
+namespace JoyAdmin.Web.Entry.Controllers;
+
+[AllowAnonymous]
+public class HomeController : Controller
 {
-    [AllowAnonymous]
-    public class HomeController : Controller
+    public IActionResult Index()
     {
+        ViewBag.Description = "规范化接口";
 
-        public IActionResult Index()
-        {
-            ViewBag.Description = "规范化接口";
-
-            return View();
-        }
+        return View();
     }
 }

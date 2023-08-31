@@ -5,96 +5,84 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Furion.DatabaseAccessor;
 
 namespace JoyAdmin.Core.Entities.Custom;
 
-
-public partial class Base_Notice:IEntity
+public class Base_Notice : IEntity
 {
     /// <summary>
-    ///通知表主键ID
+    ///     通知表主键ID
     /// </summary>
     [Key]
-    [Display(Name ="通知表主键ID")]
-    
-    [Required(AllowEmptyStrings=false)]
+    [Display(Name = "通知表主键ID")]
+    [Required(AllowEmptyStrings = false)]
     public int Notice_Id { get; set; }
 
     /// <summary>
-    ///通知类型
+    ///     通知类型
     /// </summary>
-    [Display(Name ="通知类型")]
+    [Display(Name = "通知类型")]
     [MaxLength(200)]
-    
     [Editable(true)]
-    [Required(AllowEmptyStrings=false)]
+    [Required(AllowEmptyStrings = false)]
     public string NoticeType { get; set; }
 
     /// <summary>
-    ///标题
+    ///     标题
     /// </summary>
-    [Display(Name ="标题")]
+    [Display(Name = "标题")]
     [MaxLength(500)]
-    
     [Editable(true)]
-    [Required(AllowEmptyStrings=false)]
+    [Required(AllowEmptyStrings = false)]
     public string NoticeTitle { get; set; }
 
     /// <summary>
-    ///内容
+    ///     内容
     /// </summary>
-    [Display(Name ="内容")]
+    [Display(Name = "内容")]
     [MaxLength(4000)]
-    
     [Editable(true)]
-    [Required(AllowEmptyStrings=false)]
+    [Required(AllowEmptyStrings = false)]
     public string NoticeContent { get; set; }
 
     /// <summary>
-    ///创建时间
+    ///     创建时间
     /// </summary>
-    [Display(Name ="创建时间")]
-    
+    [Display(Name = "创建时间")]
     public DateTime? CreateDate { get; set; }
 
     /// <summary>
-    ///创建人编号
+    ///     创建人编号
     /// </summary>
-    [Display(Name ="创建人编号")]
-    
+    [Display(Name = "创建人编号")]
     public int? CreateID { get; set; }
 
     /// <summary>
-    ///创建人
+    ///     创建人
     /// </summary>
-    [Display(Name ="创建人")]
+    [Display(Name = "创建人")]
     [MaxLength(200)]
-    
+
     public string Creator { get; set; }
 
     /// <summary>
-    ///修改人
+    ///     修改人
     /// </summary>
-    [Display(Name ="修改人")]
+    [Display(Name = "修改人")]
     [MaxLength(200)]
-    
+
     public string Modifier { get; set; }
 
     /// <summary>
-    ///修改时间
+    ///     修改时间
     /// </summary>
-    [Display(Name ="修改时间")]
-    
+    [Display(Name = "修改时间")]
     public DateTime? ModifyDate { get; set; }
 
     /// <summary>
-    ///修改人编号
+    ///     修改人编号
     /// </summary>
-    [Display(Name ="修改人编号")]
-    
+    [Display(Name = "修改人编号")]
     public int? ModifyID { get; set; }
-
-       
 }

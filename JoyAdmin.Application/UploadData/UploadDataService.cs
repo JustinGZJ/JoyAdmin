@@ -16,8 +16,8 @@ namespace JoyAdmin.Application.UploadData;
 
 public class MachineDataService : IDynamicApiController
 {
-    private readonly IRepository<Core.Entities.Storage.UploadData> _uploadDataRepository;
     private readonly IRepository<ShellCodeBinding> _shellcodeBindingRepository;
+    private readonly IRepository<Core.Entities.Storage.UploadData> _uploadDataRepository;
 
     public MachineDataService(
         IRepository<Core.Entities.Storage.UploadData> uploadDataRepository,
@@ -28,7 +28,7 @@ public class MachineDataService : IDynamicApiController
     }
 
     /// <summary>
-    /// 上传数据
+    ///     上传数据
     /// </summary>
     /// <param name="uploadData"></param>
     /// <returns></returns>
@@ -41,7 +41,7 @@ public class MachineDataService : IDynamicApiController
 
 
     /// <summary>
-    /// 批量上传数据
+    ///     批量上传数据
     /// </summary>
     /// <param name="uploadData"></param>
     /// <returns></returns>
@@ -54,7 +54,7 @@ public class MachineDataService : IDynamicApiController
 
 
     /// <summary>
-    /// 绑定二维码
+    ///     绑定二维码
     /// </summary>
     /// <param name="shellCodeBindingDto">绑定参数</param>
     /// <returns></returns>
@@ -68,7 +68,7 @@ public class MachineDataService : IDynamicApiController
 
 
     /// <summary>
-    /// 查看绑定数据
+    ///     查看绑定数据
     /// </summary>
     /// <param name="shellCodeBindingDto">绑定参数</param>
     /// <returns></returns>
@@ -80,7 +80,7 @@ public class MachineDataService : IDynamicApiController
     }
 
     /// <summary>
-    /// 获取上传的原始数据
+    ///     获取上传的原始数据
     /// </summary>
     /// <param name="range"></param>
     /// <returns></returns>
@@ -93,7 +93,7 @@ public class MachineDataService : IDynamicApiController
     }
 
     /// <summary>
-    /// 获取所有的上传数据名称
+    ///     获取所有的上传数据名称
     /// </summary>
     /// <returns></returns>
     [AllowAnonymous]
@@ -107,7 +107,7 @@ public class MachineDataService : IDynamicApiController
     }
 
     /// <summary>
-    ///  根据名称获取数据
+    ///     根据名称获取数据
     /// </summary>
     /// <param name="range"></param>
     /// <returns></returns>
@@ -119,20 +119,17 @@ public class MachineDataService : IDynamicApiController
                 .Where(x => x.Name == range.Name)
                 .OrderByDescending(x => x.Time)
                 .ToListAsync())
-            .Where(x=>!string.IsNullOrWhiteSpace( x.Code))
+            .Where(x => !string.IsNullOrWhiteSpace(x.Code))
             .GroupBy(x => x.Code)
             .Select(x =>
             {
-                Dictionary<string, object> data = new Dictionary<string, object>();
+                var data = new Dictionary<string, object>();
                 data.Add("识别码", x.Key);
                 data.Add("日期", x.Last().Time.ToString("g"));
                 var lookup = x.ToLookup(
                     uploadData => uploadData.Description,
-                    uploadData => uploadData.Content).OrderBy(group=>group.Key);
-                foreach (var item in lookup)
-                {
-                    data.Add(item.Key, string.Join(",", item.ToList()));
-                }
+                    uploadData => uploadData.Content).OrderBy(group => group.Key);
+                foreach (var item in lookup) data.Add(item.Key, string.Join(",", item.ToList()));
 
                 return data;
             });
@@ -140,7 +137,7 @@ public class MachineDataService : IDynamicApiController
     }
 
     /// <summary>
-    /// 获取所有生产数据
+    ///     获取所有生产数据
     /// </summary>
     /// <param name="range"></param>
     /// <returns></returns>
@@ -152,7 +149,7 @@ public class MachineDataService : IDynamicApiController
             .ToListAsync();
 
         // 找出所有码
-        var codes = data.Select(x => x.Code).Distinct().Where(code=>!code.IsNullOrWhiteSpace());
+        var codes = data.Select(x => x.Code).Distinct().Where(code => !code.IsNullOrWhiteSpace());
 
         // 从codes中排除掉已绑定的码
         var bindings = await _shellcodeBindingRepository
@@ -225,10 +222,7 @@ public class MachineDataService : IDynamicApiController
 
 
             var lookup = uploadDatas.ToLookup(x => x.Description, x => x.Content);
-            foreach (var item in lookup)
-            {
-                expano[item.Key] = item.Last();
-            }
+            foreach (var item in lookup) expano[item.Key] = item.Last();
 
             return expano;
         });
@@ -237,7 +231,7 @@ public class MachineDataService : IDynamicApiController
     }
 
     /// <summary>
-    /// 根据二维码获取所有测试数据
+    ///     根据二维码获取所有测试数据
     /// </summary>
     /// <param name="code"></param>
     /// <returns></returns>
@@ -253,12 +247,10 @@ public class MachineDataService : IDynamicApiController
             var shellCode = codeBindings.Where(x => !string.IsNullOrWhiteSpace(x.ShellCode)).LastOrDefault()?.ShellCode;
             // 判断是否是壳体二维码
             if (shellCode != code)
-            {
                 // 如果不是重新根据壳体二维码查一遍
                 codeBindings = await _shellcodeBindingRepository
                     .Where(x => x.ShellCode == shellCode)
                     .ToListAsync();
-            }
 
             var codes = codeBindings
                 .SelectMany(cb => new[] { cb.ShellCode, cb.RotorCode, cb.StatorCode })

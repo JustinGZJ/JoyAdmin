@@ -25,7 +25,7 @@ public class DeviceRequestService : IDynamicApiController
     }
 
     /// <summary>
-    /// 未处理的请求
+    ///     未处理的请求
     /// </summary>
     /// <returns></returns>
     [AllowAnonymous]
@@ -35,7 +35,7 @@ public class DeviceRequestService : IDynamicApiController
     }
 
     /// <summary>
-    /// 增加未处理的请求
+    ///     增加未处理的请求
     /// </summary>
     [AllowAnonymous]
     public async Task PostDeviceRequest(DeviceRequestCreateDto deviceRequestDto)
@@ -46,7 +46,7 @@ public class DeviceRequestService : IDynamicApiController
     }
 
     /// <summary>
-    /// 未处理的请求
+    ///     未处理的请求
     /// </summary>
     /// <returns></returns>
     [AllowAnonymous]
@@ -56,7 +56,7 @@ public class DeviceRequestService : IDynamicApiController
     }
 
     /// <summary>
-    /// 历史请求查询
+    ///     历史请求查询
     /// </summary>
     [AllowAnonymous]
     public Task<PagedList<DeviceRequest>> GetDeviceRequests([FromQuery] DeviceRequestQueryDto deviceRequestQueryDto)
@@ -64,27 +64,22 @@ public class DeviceRequestService : IDynamicApiController
         var deviceRequests = _deviceRequestRepository.Entities
             .Where(x =>
                 x.RequestTime > deviceRequestQueryDto.Start
-                && x.RequestTime < deviceRequestQueryDto.End 
+                && x.RequestTime < deviceRequestQueryDto.End
                 && x.IsHandled == deviceRequestQueryDto.Handled);
-            
+
         if (!string.IsNullOrWhiteSpace(deviceRequestQueryDto.DeviceName))
-        {
             deviceRequests = deviceRequests.Where(x => x.DeviceName == deviceRequestQueryDto.DeviceName);
-        }
         return deviceRequests.ToPagedListAsync(deviceRequestQueryDto.Page, deviceRequestQueryDto.Size);
     }
 
     /// <summary>
-    /// 更新
+    ///     更新
     /// </summary>
     [AllowAnonymous]
     public async Task UpdateDeviceRequest(DeviceRequestUpdateDto deviceRequestUpdate)
     {
         var request = await _deviceRequestRepository.FirstOrDefaultAsync(x => x.Id == deviceRequestUpdate.Id);
-        if (request == null)
-        {
-            throw Oops.Oh(ErrorCode.WrongValidation, "请求不存在").StatusCode(ErrorStatus.ValidationFaild);
-        }
+        if (request == null) throw Oops.Oh(ErrorCode.WrongValidation, "请求不存在").StatusCode(ErrorStatus.ValidationFaild);
         request.Operator = deviceRequestUpdate.Operator;
         request.IsHandled = true;
         request.CompletionMessage = deviceRequestUpdate.CompletionMessage;

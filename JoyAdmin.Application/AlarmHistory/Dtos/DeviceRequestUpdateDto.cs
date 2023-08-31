@@ -3,7 +3,7 @@ namespace JoyAdmin.Application.AlarmHistory.Dtos;
 public class DeviceRequestUpdateDto
 {
     public int Id { get; set; }
-    public string Operator { get; set; } 
+    public string Operator { get; set; }
     public string CompletionMessage { get; set; }
 }
 

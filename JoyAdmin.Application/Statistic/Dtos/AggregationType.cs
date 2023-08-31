@@ -6,5 +6,5 @@ public enum AggregationType
     Hour,
     Day,
     Week,
-    Month,
+    Month
 }

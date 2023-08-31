@@ -11,112 +11,101 @@ using Furion.DatabaseAccessor;
 
 namespace JoyAdmin.Core.Entities.Custom;
 
-public partial class Base_Process:IEntity
+public class Base_Process : IEntity
 {
     /// <summary>
-    ///工序主键ID
+    ///     工序主键ID
     /// </summary>
     [Key]
-    [Display(Name ="工序主键ID")]
-    
-    [Required(AllowEmptyStrings=false)]
+    [Display(Name = "工序主键ID")]
+    [Required(AllowEmptyStrings = false)]
     public int Process_Id { get; set; }
 
     /// <summary>
-    ///工序编号
+    ///     工序编号
     /// </summary>
-    [Display(Name ="工序编号")]
+    [Display(Name = "工序编号")]
     [MaxLength(200)]
-    
     [Editable(true)]
     public string ProcessCode { get; set; }
 
     /// <summary>
-    ///工序名称
+    ///     工序名称
     /// </summary>
-    [Display(Name ="工序名称")]
+    [Display(Name = "工序名称")]
     [MaxLength(200)]
-    
     [Editable(true)]
-    [Required(AllowEmptyStrings=false)]
+    [Required(AllowEmptyStrings = false)]
     public string ProcessName { get; set; }
 
     /// <summary>
-    ///报工权限
+    ///     报工权限
     /// </summary>
-    [Display(Name ="报工权限")]
+    [Display(Name = "报工权限")]
     [MaxLength(1000)]
-    
     [Editable(true)]
-    [Required(AllowEmptyStrings=false)]
+    [Required(AllowEmptyStrings = false)]
     public string SubmitWorkLimit { get; set; }
 
     /// <summary>
-    ///报工数配比
+    ///     报工数配比
     /// </summary>
-    [Display(Name ="报工数配比")]
-    [DisplayFormat(DataFormatString="20,3")]
-    
+    [Display(Name = "报工数配比")]
+    [DisplayFormat(DataFormatString = "20,3")]
     [Editable(true)]
-    [Required(AllowEmptyStrings=false)]
+    [Required(AllowEmptyStrings = false)]
     public decimal SubmitWorkMatch { get; set; }
 
     /// <summary>
-    ///不良品项列表
+    ///     不良品项列表
     /// </summary>
-    [Display(Name ="不良品项列表")]
+    [Display(Name = "不良品项列表")]
     [MaxLength(1000)]
-    
     [Editable(true)]
-    [Required(AllowEmptyStrings=false)]
+    [Required(AllowEmptyStrings = false)]
     public string DefectItem { get; set; }
 
     /// <summary>
-    ///创建时间
+    ///     创建时间
     /// </summary>
-    [Display(Name ="创建时间")]
-    
+    [Display(Name = "创建时间")]
     public DateTime? CreateDate { get; set; }
 
     /// <summary>
-    ///创建人编号
+    ///     创建人编号
     /// </summary>
-    [Display(Name ="创建人编号")]
-    
+    [Display(Name = "创建人编号")]
     public int? CreateID { get; set; }
 
     /// <summary>
-    ///创建人
+    ///     创建人
     /// </summary>
-    [Display(Name ="创建人")]
+    [Display(Name = "创建人")]
     [MaxLength(200)]
-    
+
     public string Creator { get; set; }
 
     /// <summary>
-    ///修改人
+    ///     修改人
     /// </summary>
-    [Display(Name ="修改人")]
+    [Display(Name = "修改人")]
     [MaxLength(200)]
-    
+
     public string Modifier { get; set; }
 
     /// <summary>
-    ///修改时间
+    ///     修改时间
     /// </summary>
-    [Display(Name ="修改时间")]
-    
+    [Display(Name = "修改时间")]
     public DateTime? ModifyDate { get; set; }
 
     /// <summary>
-    ///修改人编号
+    ///     修改人编号
     /// </summary>
-    [Display(Name ="修改人编号")]
-    
+    [Display(Name = "修改人编号")]
     public int? ModifyID { get; set; }
 
-    [Display(Name ="工序采集数据")]
+    [Display(Name = "工序采集数据")]
     [ForeignKey("Process_Id")]
     public List<Base_ProcessList> Base_ProcessList { get; set; }
-
 }

@@ -1,27 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <NoWarn>1701;1702;1591</NoWarn>
-    <DocumentationFile>JoyAdmin.Web.Core.xml</DocumentationFile>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <NoWarn>1701;1702;1591</NoWarn>
+        <DocumentationFile>JoyAdmin.Web.Core.xml</DocumentationFile>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="JoyAdmin.Web.Core.xml" />
-    <None Remove="obj\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Remove="JoyAdmin.Web.Core.xml"/>
+        <None Remove="obj\**"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\JoyAdmin.Application\JoyAdmin.Application.csproj" />
-    <ProjectReference Include="..\JoyAdmin.Database.Migrations\JoyAdmin.Database.Migrations.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\JoyAdmin.Application\JoyAdmin.Application.csproj"/>
+        <ProjectReference Include="..\JoyAdmin.Database.Migrations\JoyAdmin.Database.Migrations.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="obj\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="obj\**"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Remove="obj\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Remove="obj\**"/>
+    </ItemGroup>
 
 </Project>
