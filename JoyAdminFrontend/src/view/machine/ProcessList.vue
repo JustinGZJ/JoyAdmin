@@ -205,7 +205,7 @@ export default {
         title: '删除',
         content: '确定删除该产品吗？',
         onOk: () => {
-          deleteProcessList(row.Product_Id).then(res => {
+          deleteProcessList(row.ProcessList_Id).then(res => {
             const { Succeeded, Errors } = res.data
             if (Succeeded) {
               this.$Notice.success({

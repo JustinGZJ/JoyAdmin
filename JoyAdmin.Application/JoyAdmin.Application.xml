@@ -636,6 +636,13 @@
             <param name="range"></param>
             <returns></returns>
         </member>
+        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetProductDataByNameNoPage(JoyAdmin.Application.UploadData.Dtos.QueryDataByNameDto)">
+            <summary>
+            根据名称获取生产数据，不分页，用于导出，使用filestream
+            </summary>
+            <param name="range"></param>
+            <returns></returns>
+        </member>
         <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetProductData(JoyAdmin.Application.UploadData.Dtos.TimeSpanDto)">
             <summary>
                 获取所有生产数据

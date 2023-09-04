@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div>
+      <div style="height: 50%">
         <div style="display:flex;justify-content: space-between">
           <div style="display: flex;align-items: center" >
             <Icon size="20" type="md-apps"/>
@@ -38,7 +38,7 @@
 
       </Modal>
     </div>
-      <ProductLineList :ProcessLine_Id="selectedRow?selectedRow.ProcessLine_Id:0"></ProductLineList>
+    <ProductLineList style="height: 50%" :ProcessLine_Id="selectedRow?selectedRow.ProcessLine_Id:0"></ProductLineList>
   </div>
 </template>
 

@@ -55,6 +55,19 @@ export const GetProductData = (params) => {
   })
 }
 
+// curl -X 'GET' \
+//   'http://localhost:9001/api/MachineData/GetProductDataByNameNoPage?Start=2022-01-01&End=2024-01-01&Name=%E5%AE%9A%E5%AD%90' \
+//   -H 'accept: text/plain' \
+//   -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEsIkFjY291bnQiOiJhZG1pbiIsIk5hbWUiOm51bGwsImlhdCI6MTY5MjY5NDQ1MywibmJmIjoxNjkyNjk0NDUzLCJleHAiOjE2OTI5NTM2NTMsImlzcyI6ImRvdG5ldGNoaW5hIiwiYXVkIjoicG93ZXJieSBGdXJpb24ifQ.QhIwVsqOCttyiEyp1-PAOoSabA4-jZONU0GqJOtLVRk' \
+//   -H 'request-from: swagger'
+
+export const GetProductDataByNameNoPage = (params) => {
+  return axios.get('api/MachineData/GetProductDataByNameNoPage', {
+    params
+  })}
+
+
+
 /// curl -X 'GET' \
 //   'http://localhost:9001/api/MachineData/GetBindingData/1/50' \
 //   -H 'accept: text/plain' \
@@ -67,11 +80,17 @@ export const GetBindingData = (page, size) => {
 //   -H 'accept: text/plain' \
 //   -H 'request-from: swagger'
 
+
 export const GetProductDataByName = (params) => {
   return axios.get('api/MachineData/GetProductDataByName', {
     params
   })
 }
+
+
+
+
+
 
 // curl -X 'GET' \
 //   'http://localhost:9001/api/MachineData/GetUploadDataNames?Start=2023-05-01&End=2023-07-01' \
@@ -91,4 +110,6 @@ export default {
   GetMachineDataByCode,
   GetBindingData,
   GetUploadDataNames,
-  GetProductDataByName }
+  GetProductDataByName,
+  GetProductDataByNameNoPage
+  }

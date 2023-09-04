@@ -114,6 +114,27 @@ public class MachineDataService : IDynamicApiController
     public async Task<PagedList<Dictionary<string, object>>> GetProductDataByName(
         [FromQuery] QueryDataByNameDto range)
     {
+        var groupQuery = await GetProductDataByNameAndTimeSpan(range);
+        return groupQuery.AsQueryable().ToPagedList(range.page, range.size);
+    }
+    
+    /// <summary>
+    /// 根据名称获取生产数据，不分页，用于导出，使用filestream
+    /// </summary>
+    /// <param name="range"></param>
+    /// <returns></returns>
+    
+    public async Task<IEnumerable<Dictionary<string, object>>> GetProductDataByNameNoPage(
+        [FromQuery] QueryDataByNameDto range)
+    {
+        var groupQuery = await GetProductDataByNameAndTimeSpan(range);
+        
+        return groupQuery;
+    }
+    
+
+    private async Task<IEnumerable<Dictionary<string, object>>> GetProductDataByNameAndTimeSpan(QueryDataByNameDto range)
+    {
         var groupQuery = (await _uploadDataRepository
                 .Where(x => x.Time > range.Start && x.Time < range.End)
                 .Where(x => x.Name == range.Name)
@@ -129,11 +150,11 @@ public class MachineDataService : IDynamicApiController
                 var lookup = x.ToLookup(
                     uploadData => uploadData.Description,
                     uploadData => uploadData.Content).OrderBy(group => group.Key);
-                foreach (var item in lookup) data.Add(item.Key, string.Join(",", item.ToList()));
+                foreach (var item in lookup) data.Add(item.Key, item.Last());
 
                 return data;
             });
-        return groupQuery.AsQueryable().ToPagedList(range.page, range.size);
+        return groupQuery;
     }
 
     /// <summary>

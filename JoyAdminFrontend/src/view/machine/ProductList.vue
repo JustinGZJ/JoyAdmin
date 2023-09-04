@@ -37,7 +37,12 @@
           </Col>
           <Col span="6">
             <FormItem label="单位" prop="Unit_Id">
-              <Input name="Unit_Id" v-model="form.Unit_Id"></Input>
+<!--              <Input name="Unit_Id" v-model="form.Unit_Id"></Input>-->
+              <Select name="Unit_Id" v-model="form.Unit_Id">
+                <Option v-for="item in SysUnits" :value="item.Unit_Id" :key="item.Unit_Id">
+                  {{ item.UnitName }}
+                </Option>
+              </Select>
             </FormItem>
           </Col>
           <Col span="6">
@@ -102,6 +107,7 @@
 import { addProduct, deleteProduct, FilterProductList, updateProduct } from '@/api/Product'
 import dayjs from 'dayjs'
 import { getProcessLineList } from '@/api/ProcessLine'
+import {getSysUnitList} from "@/api/sysunit";
 
 export default {
   data () {
@@ -118,7 +124,7 @@ export default {
         },
         {
           title: '单位',
-          key: 'Unit_Id'
+          key: 'UnitName'
         },
         {
           title: '产品规格',
@@ -237,11 +243,13 @@ export default {
         ProductName: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
         ProductStandard: [{ required: true, message: '请输入产品规格', trigger: 'blur' }]
       },
-      ProcessLines: []
+      ProcessLines: [],
+      SysUnits:[]
     }
   },
   mounted () {
     this.getProcessLines()
+    this.getSysUnits()
     this.$nextTick(() => {
       this.getData()
     })
@@ -390,6 +398,19 @@ export default {
           })
         }
       })
+    },
+    getSysUnits(){
+      getSysUnitList().then(res => {
+        const { Succeeded, Errors, Data } = res.data
+        if (Succeeded) {
+          this.SysUnits = Data
+        } else {
+          this.$Notice.error({
+            title: '错误',
+            desc: Errors
+          })
+        }
+      })
     }
   },
   computed: {
@@ -408,6 +429,10 @@ export default {
         const data = this.ProcessLines.find(p => p.ProcessLine_Id === item.ProcessLine_Id)
         if (data) {
           item.ProcessLineName = data.ProcessLineName
+        }
+        const unit = this.SysUnits.find(p => p.Unit_Id === item.Unit_Id)
+        if (unit) {
+          item.UnitName = unit.UnitName
         }
         return item
       })

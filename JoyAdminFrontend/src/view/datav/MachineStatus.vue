@@ -49,8 +49,8 @@ export default {
           this.status = Object.entries(groupValuesByStationData).map(([key, value]) => {
             const row = [key]
             this.header.slice(1).forEach(header => {
-              if (typeof value[header] === 'number') {
-                row.push(value[header].toFixed(2))
+              if(header.includes("数量")){
+                row.push(value[header].toFixed(0))
                 return
               }
               if (header === '报警状态') {
@@ -67,6 +67,10 @@ export default {
                 } else {
                   row.push('工作')
                 }
+                return
+              }
+              if (typeof value[header] === 'number') {
+                row.push(value[header].toFixed(2))
                 return
               }
               row.push(value[header])
