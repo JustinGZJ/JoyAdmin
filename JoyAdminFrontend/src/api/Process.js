@@ -29,6 +29,18 @@ export function addProcess (data) {
   return axios.post('/api/Process/Add', data)
 }
 
+export const getStations = async () => {
+  const response = await getProcessList()
+  // get list 并提取其中的 ProcessName
+  const { Succeeded, Data, Errors, StatusCode } = response.data
+  if (Succeeded) {
+    const stations = Data.map(item => item.ProcessName)
+    return { status: StatusCode, data: stations }
+  } else {
+    return { status: StatusCode, message: Errors }
+  }
+}
+
 export default {
   FilterProcessList,
   getProcessList,

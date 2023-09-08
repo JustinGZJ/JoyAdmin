@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import Alarm from '@/api/alarm'
 import { ChartBar } from '@/components/charts'
 import ChartPie from '_c/charts/pie.vue'
-import { getStations } from '@/api/get_status'
+import { getStations } from '@/api/Process'
 
 export default {
   data () {

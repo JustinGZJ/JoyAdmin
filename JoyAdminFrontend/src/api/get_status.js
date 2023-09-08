@@ -17,9 +17,6 @@ export const getAlarms = (station) => {
     return axios.get(`/alarm/${station}`)
   }
 }
-export const getStations = () => {
-  return axios.get(`/stations`)
-}
 
 export const getStatus = (station) => {
   if (station === 'all') return axios.get(`/status`)
@@ -50,4 +47,4 @@ export const groupValuesByStation = (data) => {
   return valuesByStation
 }
 
-export default { getStations, getByKey, getAlarms, groupValuesByStation }
+export default { getByKey, getAlarms, groupValuesByStation }

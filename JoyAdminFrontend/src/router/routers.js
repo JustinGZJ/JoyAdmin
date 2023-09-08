@@ -98,64 +98,6 @@ export default [
     },
     component: Main,
     children: [
-      {
-        path: '/workOrder',
-        name: 'workOrder',
-        meta: {
-          icon: 'ios-search',
-          title: '工单查询',
-          access: ['role', 'auth', 'employee']
-        },
-        component: resolve => require(['@/view/machine/WorkOrder.vue'], resolve)
-      },
-      {
-        path: '/productList',
-        name: 'productList',
-        meta: {
-          icon: 'ios-search',
-          title: '产品信息',
-          access: ['role', 'auth', 'employee']
-        },
-        component: resolve => require(['@/view/machine/ProductList.vue'], resolve)
-      },
-      {
-        path: '/processLine',
-        name: 'processLine',
-        meta: {
-          icon: 'ios-search',
-          title: '工艺路线',
-          access: ['role', 'auth', 'employee']
-        },
-        component: resolve => require(['@/view/machine/ProcessLine.vue'], resolve)
-      }, {
-        path: '/process',
-        name: 'process',
-        meta: {
-          icon: 'ios-search',
-          title: '工序',
-          access: ['role', 'auth', 'employee']
-        },
-        component: resolve => require(['@/view/machine/Process.vue'], resolve)
-      }, {
-        path: '/SysUnit',
-        name: 'SysUnit',
-        meta: {
-          icon: 'ios-search',
-          title: '单位管理',
-          access: ['role', 'auth', 'employee']
-        },
-        component: resolve => require(['@/view/machine/SysUnit.vue'], resolve)
-      },
-      {
-        path: '/DefectItem',
-        name: 'DefectItem',
-        meta: {
-          icon: 'ios-search',
-          title: '不良品项',
-          access: ['role', 'auth', 'employee']
-        },
-        component: resolve => require(['@/view/machine/DefectItem.vue'], resolve)
-      },
 
       {
         path: '/query',
@@ -186,6 +128,77 @@ export default [
           access: ['role', 'auth', 'employee']
         },
         component: resolve => require(['@/view/machine/queryAll.vue'], resolve)
+      }
+    ]
+  },
+  {
+    path: '/process',
+    name: 'process',
+    meta: {
+      icon: 'ios-paper-outline',
+      title: '工艺管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: '/workOrder',
+        name: 'workOrder',
+        meta: {
+          icon: 'ios-search',
+          title: '工单查询',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/WorkOrder.vue'], resolve)
+      },
+      {
+        path: '/productList',
+        name: 'productList',
+        meta: {
+          icon: 'ios-search',
+          title: '产品信息',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/ProductList.vue'], resolve)
+      },
+      {
+        path: '/processLine',
+        name: 'processLine',
+        meta: {
+          icon: 'ios-search',
+          title: '工艺路线',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/ProcessLine.vue'], resolve)
+      },
+      {
+        path: '/process',
+        name: 'process',
+        meta: {
+          icon: 'ios-search',
+          title: '工序',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/Process.vue'], resolve)
+      },
+      {
+        path: '/SysUnit',
+        name: 'SysUnit',
+        meta: {
+          icon: 'ios-search',
+          title: '单位管理',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/SysUnit.vue'], resolve)
+      },
+      {
+        path: '/DefectItem',
+        name: 'DefectItem',
+        meta: {
+          icon: 'ios-search',
+          title: '不良品项',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/DefectItem.vue'], resolve)
       }
     ]
   },

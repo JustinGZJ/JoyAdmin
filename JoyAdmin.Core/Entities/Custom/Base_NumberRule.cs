@@ -37,28 +37,28 @@ public class Base_NumberRule : IEntity
     public string Prefix { get; set; }
 
     /// <summary>
-    ///     提交时间
+    ///     时间格式 可以是yyyyMMddHHmmss yyyyMM  yyyyMMdd yyyyMMddHHmmssfff
     /// </summary>
-    [Display(Name = "提交时间")]
+    [Display(Name = "时间格式")]
     [MaxLength(200)]
     [Editable(true)]
     [Required(AllowEmptyStrings = false)]
-    public string SubmitTime { get; set; }
+    public string DateRule { get; set; }
 
     /// <summary>
-    ///     流水号
+    ///     流水号长度
     /// </summary>
-    [Display(Name = "流水号")]
+    [Display(Name = "流水号长度")]
     [Editable(true)]
     [Required(AllowEmptyStrings = false)]
-    public int SerialNumber { get; set; }
+    public int SNLength { get; set; }
 
     /// <summary>
     ///     编号生成规则
     /// </summary>
     [Display(Name = "编号生成规则")]
     [MaxLength(200)]
-    [Editable(true)]
+
     [Required(AllowEmptyStrings = false)]
     public string GenerativeRule { get; set; }
 

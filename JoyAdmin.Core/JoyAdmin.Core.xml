@@ -386,14 +386,14 @@
                 编号前缀
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.SubmitTime">
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.DateRule">
             <summary>
-                提交时间
+                时间格式 可以是yyyyMMddHHmmss yyyyMM  yyyyMMdd yyyyMMddHHmmssfff
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.SerialNumber">
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.SNLength">
             <summary>
-                流水号
+                流水号长度
             </summary>
         </member>
         <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.GenerativeRule">

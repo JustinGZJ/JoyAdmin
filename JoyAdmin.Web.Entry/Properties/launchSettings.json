@@ -18,7 +18,6 @@
     "JoyAdmin.Web.Entry": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
-      "launchBrowser": true,
       "applicationUrl": "http://localhost:9001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

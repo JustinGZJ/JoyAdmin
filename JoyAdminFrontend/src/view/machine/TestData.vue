@@ -46,10 +46,10 @@
 
 <script>
 import Tables from '_c/tables'
-import machine_data, {GetProductDataByNameNoPage} from '@/api/machine_data'
-import { getStations } from '@/api/get_status'
+import machine_data, { GetProductDataByNameNoPage } from '@/api/machine_data'
 import dayjs from 'dayjs'
-import {export_array_to_excel, export_json_to_excel} from "@/libs/excel";
+import { export_array_to_excel } from '@/libs/excel'
+import { getStations } from '@/api/Process'
 
 export default {
   components: {
@@ -142,18 +142,18 @@ export default {
       GetProductDataByNameNoPage({
         start: dayjs(this.headerForm.dtFrom).format('YYYY-MM-DD HH:mm:ss'),
         end: dayjs(this.headerForm.dtTo).format('YYYY-MM-DD HH:mm:ss'),
-        name: this.siderParams.activeName,
+        name: this.siderParams.activeName
       })
         .then(res => {
-         const {Data,Succeeded,Errors}=res.data
-          if(!Succeeded){
+          const { Data, Succeeded, Errors } = res.data
+          if (!Succeeded) {
             this.$Notice.error({
               title: '错误',
               desc: Errors
             })
             return
           }
-          if(Data.length===0){
+          if (Data.length === 0) {
             this.$Notice.error({
               title: '错误',
               desc: '没有数据'
@@ -161,20 +161,20 @@ export default {
             return
           }
           console.log(Data)
-          let titles=Object.keys(Data[0])
+          let titles = Object.keys(Data[0])
           console.log(titles)
-          let param={ data:res.data.Data,
+          let param = { data: res.data.Data,
             key: titles,
             title: titles,
-            filename: this.siderParams.activeName +dayjs().unix()+ '.xlsx',
-            autoWidth: true}
+            filename: this.siderParams.activeName + dayjs().unix() + '.xlsx',
+            autoWidth: true }
           console.log(param)
           export_array_to_excel(param)
         }).catch(err => {
-        this.$Notice.error({
-          title: '错误',
-          desc: err
-        })
+          this.$Notice.error({
+            title: '错误',
+            desc: err
+          })
         })
     },
     getHeight () {
@@ -183,7 +183,7 @@ export default {
     getStations () {
       getStations()
         .then(response => {
-          // console.log(response)
+          console.log(response)
           let Data = response.data
           this.siderParams.stations = Data.reduce((result, item) => {
             const key = item.substring(0, 2) // 获取前两个字母作为 key
