@@ -2,7 +2,6 @@
   <div id="status">
     <dv-full-screen-container>
       <TopHeader title="运行情况"/>
-<!--      <product-by-hour/>-->
       <dv-scroll-board :config="option" style="height: 75%"/>
     </dv-full-screen-container>
   </div>
