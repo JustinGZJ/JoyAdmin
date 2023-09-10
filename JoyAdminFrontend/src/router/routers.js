@@ -189,6 +189,15 @@ export default [
           access: ['role', 'auth', 'employee']
         },
         component: resolve => require(['@/view/machine/SysUnit.vue'], resolve)
+      }, {
+        path: '/RuleNumber',
+        name: 'RuleNumber',
+        meta: {
+          icon: 'ios-search',
+          title: '规则编号',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/RuleNumber.vue'], resolve)
       },
       {
         path: '/DefectItem',

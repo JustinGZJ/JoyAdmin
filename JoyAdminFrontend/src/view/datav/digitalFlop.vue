@@ -59,22 +59,42 @@ export default {
           if (lower !== undefined && digitalData[digitalDataKey] < lower) {
             color = this.colors[0]
           }
-          data.push(
-            {
-              title: digitalDataKey,
-              number: {
-                number: [digitalData[digitalDataKey]],
-                toFixed: fixed || 0,
-                content: '{nt}',
-                textAlign: 'right',
-                style: {
-                  fill: color,
-                  fontWeight: 'bold'
-                }
-              },
-              unit: unit
-            }
-          )
+          // 判断是否是数字
+          if (isNaN(digitalData[digitalDataKey])) {
+            data.push(
+              {
+                title: digitalDataKey,
+                number: {
+                  number: 0,
+                  toFixed: fixed || 0,
+                  content: digitalData[digitalDataKey],
+                  textAlign: 'right',
+                  style: {
+                    fill: color,
+                    fontWeight: 'bold'
+                  }
+                },
+                unit: unit
+              }
+            )
+          } else {
+            data.push(
+              {
+                title: digitalDataKey,
+                number: {
+                  number: [digitalData[digitalDataKey]],
+                  toFixed: fixed || 0,
+                  content: '{nt}',
+                  textAlign: 'right',
+                  style: {
+                    fill: color,
+                    fontWeight: 'bold'
+                  }
+                },
+                unit: unit
+              }
+            )
+          }
         }
       }
       this.digitalFlopData = data
@@ -107,7 +127,7 @@ export default {
   }
 
   .digital-flop-item {
-    width: 11%;
+    width: 12%;
     height: 80%;
     display: flex;
     flex-direction: column;

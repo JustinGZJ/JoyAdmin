@@ -10,6 +10,7 @@ public class ProductionWorkOrder : Entity
     public string ProductName { get; set; }
     public int PlanQuantity { get; set; } // 计划数量
     public int ActualQuantity { get; set; } // 实际数量
+    public int NgQuantity { get; set; }  // NG数量
     public DateTime StartTime { get; set; } // 开始时间
     public DateTime FinishTime { get; set; } // 完成时间
     public string Status { get; set; } // 工单状态

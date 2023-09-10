@@ -29,7 +29,7 @@
              @on-cancel="cancelModal">
         <Form ref="form" :model="form" :rules="rules">
           <FormItem label="工艺流程编码" prop="ProcessLineCode">
-            <Input v-model="form.ProcessLineCode"/>
+            <Input v-model="form.ProcessLineCode" placeholder="编码默认自动生成"/>
           </FormItem>
           <FormItem label="工艺流程名称" prop="ProcessLineName">
             <Input v-model="form.ProcessLineName"/>
@@ -46,6 +46,7 @@
 
 import dayjs from 'dayjs'
 import { addProcessLine, deleteProcessLine, FilterProcessLineList, updateProcessLine } from '@/api/ProcessLine'
+import { GetNextSn } from '@/api/NumberRule'
 
 export default {
   data () {
@@ -142,9 +143,9 @@ export default {
         ModifyID: 0
       },
       rules: {
-        ProcessLineCode: [
-          { required: true, message: '请输入工艺流程编码', trigger: 'blur' }
-        ],
+        // ProcessLineCode: [
+        //   { required: true, message: '请输入工艺流程编码', trigger: 'blur' }
+        // ],
         ProcessLineName: [
           { required: true, message: '请输入工艺流程名称', trigger: 'blur' }
         ]
@@ -219,7 +220,7 @@ export default {
     },
     submitForm () {
       // 提交表单数据
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate(async valid => {
         if (valid) {
           if (this.modalTitle === '新增') {
             this.form.ProcessLine_Id = 0
@@ -229,6 +230,10 @@ export default {
             this.form.Modifier = this.userName
             this.form.CreateDate = dayjs().format()
             this.form.ModifyDate = dayjs().format()
+            // 如果工艺路线编码为空，则自动生成
+            if (this.form.ProcessLineCode === '') {
+              this.form.ProcessLineCode = (await GetNextSn('PL')).data.Data
+            }
             addProcessLine(this.form).then(res => {
               const { Succeeded, Errors } = res.data
               if (Succeeded) {

@@ -4,6 +4,8 @@ namespace JoyAdmin.Application.UploadData.Dtos;
 
 public class UploadDataDto
 {
+    public string Model { get; set; }
+    public string WorkOrder { get; set; }
     public string Code { get; set; }
     public int Order { get; set; }
     public string Name { get; set; }

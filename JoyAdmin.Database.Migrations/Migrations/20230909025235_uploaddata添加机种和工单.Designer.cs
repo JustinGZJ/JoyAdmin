@@ -3,6 +3,7 @@ using System;
 using JoyAdmin.EntityFramework.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JoyAdmin.Database.Migrations.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    partial class DefaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230909025235_uploaddata添加机种和工单")]
+    partial class uploaddata添加机种和工单
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,9 +316,6 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.Property<string>("Prefix")
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
-
-                    b.Property<string>("Remark")
-                        .HasColumnType("text");
 
                     b.Property<int>("SNLength")
                         .HasColumnType("integer");
@@ -788,9 +787,6 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.Property<DateTime>("FinishTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("NgQuantity")
-                        .HasColumnType("integer");
-
                     b.Property<int>("PlanQuantity")
                         .HasColumnType("integer");
 
@@ -901,9 +897,6 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.Property<string>("Device")
                         .HasColumnType("text");
 
-                    b.Property<string>("Model")
-                        .HasColumnType("text");
-
                     b.Property<int>("ProductionType")
                         .HasColumnType("integer");
 
@@ -915,9 +908,6 @@ namespace JoyAdmin.Database.Migrations.Migrations
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("WorkOrderNo")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -960,47 +950,6 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.HasIndex("StatorCode");
 
                     b.ToTable("ShellCodeBinding", (string)null);
-                });
-
-            modelBuilder.Entity("JoyAdmin.Core.Entities.Storage.Telemetry", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<int>("DataType")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EntityName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Key")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool?>("ValueBool")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ValueJson")
-                        .HasColumnType("text");
-
-                    b.Property<double?>("ValueNum")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("ValueStr")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EntityName");
-
-                    b.HasIndex("Key");
-
-                    b.ToTable("Telemetry", (string)null);
                 });
 
             modelBuilder.Entity("JoyAdmin.Core.Entities.Storage.UploadData", b =>
@@ -1158,7 +1107,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedTime = new DateTime(2023, 9, 10, 22, 9, 32, 27, DateTimeKind.Local).AddTicks(1070),
+                            CreatedTime = new DateTime(2023, 9, 9, 10, 52, 34, 568, DateTimeKind.Local).AddTicks(2990),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1247,7 +1196,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedTime = new DateTime(2023, 9, 10, 22, 9, 32, 27, DateTimeKind.Local).AddTicks(2780),
+                            CreatedTime = new DateTime(2023, 9, 9, 10, 52, 34, 568, DateTimeKind.Local).AddTicks(4550),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1258,7 +1207,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedTime = new DateTime(2023, 9, 10, 22, 9, 32, 27, DateTimeKind.Local).AddTicks(2780),
+                            CreatedTime = new DateTime(2023, 9, 9, 10, 52, 34, 568, DateTimeKind.Local).AddTicks(4550),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1269,7 +1218,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedTime = new DateTime(2023, 9, 10, 22, 9, 32, 27, DateTimeKind.Local).AddTicks(2780),
+                            CreatedTime = new DateTime(2023, 9, 9, 10, 52, 34, 568, DateTimeKind.Local).AddTicks(4550),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1340,7 +1289,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         {
                             Id = 1L,
                             Account = "admin",
-                            CreatedTime = new DateTime(2023, 9, 10, 22, 9, 32, 27, DateTimeKind.Local).AddTicks(9020),
+                            CreatedTime = new DateTime(2023, 9, 9, 10, 52, 34, 569, DateTimeKind.Local).AddTicks(2650),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1368,20 +1317,6 @@ namespace JoyAdmin.Database.Migrations.Migrations
                             UserId = 1L,
                             RoleId = 1L
                         });
-                });
-
-            modelBuilder.Entity("JoyAdmin.Core.Entities.Storage.TelemetryData", b =>
-                {
-                    b.HasBaseType("JoyAdmin.Core.Entities.Storage.Telemetry");
-
-                    b.ToTable("TelemetryData", (string)null);
-                });
-
-            modelBuilder.Entity("JoyAdmin.Core.Entities.Storage.TelemetryLatest", b =>
-                {
-                    b.HasBaseType("JoyAdmin.Core.Entities.Storage.Telemetry");
-
-                    b.ToTable("TelemetryLatest", (string)null);
                 });
 
             modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_ProcessLineList", b =>
@@ -1438,24 +1373,6 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("JoyAdmin.Core.Entities.Storage.TelemetryData", b =>
-                {
-                    b.HasOne("JoyAdmin.Core.Entities.Storage.Telemetry", null)
-                        .WithOne()
-                        .HasForeignKey("JoyAdmin.Core.Entities.Storage.TelemetryData", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("JoyAdmin.Core.Entities.Storage.TelemetryLatest", b =>
-                {
-                    b.HasOne("JoyAdmin.Core.Entities.Storage.Telemetry", null)
-                        .WithOne()
-                        .HasForeignKey("JoyAdmin.Core.Entities.Storage.TelemetryLatest", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Base_Process", b =>

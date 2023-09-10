@@ -29,6 +29,8 @@ import waterLevelChart from './waterLevelChart'
 import scrollBoard from './scrollBoard'
 import cards from './cards'
 import currentData from '@/api/get_status'
+import { FilterWorkOrderList } from '@/api/WorkOrder'
+import dayjs from 'dayjs'
 
 export default {
   name: 'DataView',
@@ -48,19 +50,21 @@ export default {
       groupValuesByStationData: {},
       alarms: {},
       tmrStatus: undefined,
-      tmrAlarm: undefined
+      tmrAlarm: undefined,
+      orders: []
     }
   },
   computed: {
     digitalFlopData () {
-      let keys = ['预设数量', '进料数量', '出料数量', 'NG数量', '合格率', '运行时间', '停机时间', '报警时间', '平均周期']
       let data = {}
-      let tempData = this.groupValuesByStationData['总装锁螺丝测试']
-      if (tempData !== undefined) {
-        for (const key of keys) {
-          data[key] = this.groupValuesByStationData['总装锁螺丝测试'][key] || '-'
-        }
-      }
+      data['工单号'] = this.orders.length === 0 ? '-' : this.orders[0]['WorkOrderNo']
+      data['产品名称'] = this.orders.length === 0 ? '-' : this.orders[0]['ProductName']
+      data['预设数量'] = this.orders.length === 0 ? 0 : this.orders[0]['PlanQuantity']
+      data['出料数量'] = this.orders.length === 0 ? 0 : this.orders[0]['ActualQuantity']
+      data['NG数量'] = this.orders.length === 0 ? 0 : this.orders[0]['NgQuantity']
+      data['合格率'] = this.orders.length === 0 ? 0 : this.orders[0]['ActualQuantity'] * 100 / (this.orders[0]['ActualQuantity'] + this.orders[0]['NgQuantity'])
+      data['完成率'] = this.orders.length === 0 ? 0 : this.orders[0]['ActualQuantity'] * 100 / this.orders[0]['PlanQuantity']
+      data['完成时间'] = this.orders.length === 0 ? 0 : dayjs(this.orders[0]['FinishTime']).diff(dayjs(), 'hour')
       return data
     },
     randing () {
@@ -117,15 +121,9 @@ export default {
       return Object.fromEntries(topTen)
     },
     waterLevel () {
-      const tempData = this.groupValuesByStationData['总成3'] || {}
-      //  const {plan:预设数量,product:出料数量}=this.groupValuesByStationData["总成3"]
-      const func = (value, defaultValue = -1) => {
-        if (isNaN(value)) {
-          return defaultValue
-        } else return value
-      }
-      const plan = func(tempData['预设数量'], 1)
-      const product = func(tempData['出料数量'], 0)
+      if (this.orders.length === 0) return { plan: 0, product: 0 }
+      let plan = this.orders[0]['PlanQuantity']
+      let product = this.orders[0]['ActualQuantity']
       return { plan, product }
     },
     cards () {
@@ -179,6 +177,18 @@ export default {
         console.log(e)
       }
     },
+    getActiveWorkOrder () {
+      FilterWorkOrderList({
+        desc: true,
+        filterProperty: 'Status',
+        filterValue: '进行中',
+        page: 1,
+        size: 40,
+        sortProperty: 'UpdatedTime'
+      }).then(res => {
+        this.orders = res.data.Data.Items
+      })
+    },
     getAlarms () {
       try {
         currentData.getAlarms('all').then(res => {
@@ -192,8 +202,12 @@ export default {
   mounted () {
     this.getData()
     this.getAlarms()
-    this.tmrStatus = setInterval(() => this.getData(), 5000)
-    this.tmrAlarm = setInterval(() => this.getAlarms(), 5000)
+    this.getActiveWorkOrder()
+    this.tmrStatus = setInterval(() => {
+      this.getData()
+      this.getActiveWorkOrder()
+      this.getAlarms()
+    }, 5000)
   },
   destroyed () {
     clearInterval(this.tmrStatus)

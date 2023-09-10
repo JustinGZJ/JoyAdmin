@@ -27,12 +27,12 @@
         <Row type="flex" :gutter="10">
           <Col span="6">
             <FormItem label="产品编码" prop="ProductCode">
-              <Input name="ProductCode" v-model="form.ProductCode"></Input>
+              <Input name="ProductCode" v-model="form.ProductCode" placeholder="编码默认自动生成"></Input>
             </FormItem>
           </Col>
           <Col span="6">
             <FormItem label="产品名称" prop="ProductName">
-              <Input name="ProductName" v-model="form.ProductName"></Input>
+              <Input name="ProductName" v-model="form.ProductName" ></Input>
             </FormItem>
           </Col>
           <Col span="6">
@@ -107,7 +107,8 @@
 import { addProduct, deleteProduct, FilterProductList, updateProduct } from '@/api/Product'
 import dayjs from 'dayjs'
 import { getProcessLineList } from '@/api/ProcessLine'
-import {getSysUnitList} from "@/api/sysunit";
+import { getSysUnitList } from '@/api/sysunit'
+import { GetNextSn } from '@/api/NumberRule'
 
 export default {
   data () {
@@ -239,12 +240,13 @@ export default {
         ModifyID: 0
       },
       rules: {
-        ProductCode: [{ required: true, message: '请输入产品编码', trigger: 'blur' }],
+        // ProductCode: [{ required: true, message: '请输入产品编码', trigger: 'blur' }],
         ProductName: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
-        ProductStandard: [{ required: true, message: '请输入产品规格', trigger: 'blur' }]
+        ProductStandard: [{ required: true, message: '请输入产品规格', trigger: 'blur' }],
+        ProductAttribute: [{ required: true, message: '请输入产品属性', trigger: 'blur' }]
       },
       ProcessLines: [],
-      SysUnits:[]
+      SysUnits: []
     }
   },
   mounted () {
@@ -325,7 +327,7 @@ export default {
     submitForm () {
       console.log('submit')
       // 提交表单数据
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate(async valid => {
         if (valid) {
           if (this.modalTitle === '新增') {
             this.form.Product_Id = 0
@@ -335,6 +337,10 @@ export default {
             this.form.Modifier = this.userName
             this.form.CreateDate = dayjs().format()
             this.form.ModifyDate = dayjs().format()
+            // 如果prudctcode为空，则自动生成
+            if (this.form.ProductCode === '') {
+              this.form.ProductCode = (await GetNextSn('PN')).data.Data
+            }
             addProduct(this.form).then(res => {
               const { Succeeded, Errors } = res.data
               if (Succeeded) {
@@ -399,7 +405,7 @@ export default {
         }
       })
     },
-    getSysUnits(){
+    getSysUnits () {
       getSysUnitList().then(res => {
         const { Succeeded, Errors, Data } = res.data
         if (Succeeded) {

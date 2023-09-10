@@ -26,10 +26,22 @@ public class Production : EntityBase, IEntityTypeBuilder<Production>
     public int Count { get; set; }
     public DateTime Time { get; set; } = DateTime.Now;
 
+    /// <summary>
+    /// 工单号
+    /// </summary>
+    public string WorkOrderNo { get; set; }
+
+    /// <summary>
+    /// 机种
+    /// </summary>
+    public string Model { get; set; }
+
     public void Configure(EntityTypeBuilder<Production> entityBuilder, DbContext dbContext, Type dbContextLocator)
     {
         //  throw new NotImplementedException();
         entityBuilder.HasIndex(x => x.ProductionType);
         entityBuilder.HasIndex(x => x.Device);
+        entityBuilder.HasIndex(x => x.WorkOrderNo);
+        entityBuilder.HasIndex(x => x.Model);
     }
 }

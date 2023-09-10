@@ -401,6 +401,11 @@
                 编号生成规则
             </summary>
         </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.Remark">
+            <summary>
+              备注
+            </summary>
+        </member>
         <member name="P:JoyAdmin.Core.Entities.Custom.Base_NumberRule.CreateDate">
             <summary>
                 创建时间
@@ -941,6 +946,16 @@
         </member>
         <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.ModifyID">
             <summary>
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Storage.Production.WorkOrderNo">
+            <summary>
+            工单号
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Storage.Production.Model">
+            <summary>
+            机种
             </summary>
         </member>
         <member name="T:JoyAdmin.Core.Role">

@@ -1,9 +1,12 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using Furion;
+using Furion.DependencyInjection;
+using JoyAdmin.EntityFramework.Core;
 using JoyAdmin.Web.Core.Provider;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -16,6 +19,7 @@ public class Startup : AppStartup
         services.AddJwt<JwtHandler>(enableGlobalAuthorize: true);
         services.AddRemoteRequest();
         services.AddCorsAccessor();
+        services.AddTaskScheduler();
         services.AddControllersWithViews()
             .AddInjectWithUnifyResult<RstRProvider>()
             .AddJsonOptions(options =>
@@ -33,6 +37,8 @@ public class Startup : AppStartup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
+
+
         }
         else
         {

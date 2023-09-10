@@ -559,6 +559,13 @@
             <param name="endtime"></param>
             <returns></returns>
         </member>
+        <member name="M:JoyAdmin.Application.Statistic.StatisticService.GetPassRateByWorkOrder(System.String)">
+            <summary>
+            根据工单号查询各站位的合格率
+            </summary>
+            <param name="workOrder"></param>
+            <returns></returns>
+        </member>
         <member name="M:JoyAdmin.Application.Statistic.StatisticService.QueryNgCounts(JoyAdmin.Application.Statistic.Dtos.QueryNgCount)">
             <summary>
                 获取各站的失效原因分布

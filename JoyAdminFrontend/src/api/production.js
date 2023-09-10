@@ -65,4 +65,8 @@ export const GetPassRateByDevice = (from, to) => {
 const QueryNgCounts = (data) => {
   return axios.post(`api/Statistic/QueryNgCounts`, data)
 }
-export default { Upload, GetRecentUpload, GetPassRates, GetPassRateByDevice, QueryNgCounts }
+export const GetPassRateByWorkOrder = (workOrder) => {
+  return axios.get(`api/Statistic/GetPassRateByWorkOrder/${workOrder}`)
+}
+
+export default { Upload, GetRecentUpload, GetPassRates, GetPassRateByDevice, QueryNgCounts, GetPassRateByWorkOrder }

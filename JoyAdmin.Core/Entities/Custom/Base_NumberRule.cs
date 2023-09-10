@@ -61,6 +61,10 @@ public class Base_NumberRule : IEntity
 
     [Required(AllowEmptyStrings = false)]
     public string GenerativeRule { get; set; }
+    /// <summary>
+    ///   备注
+    /// </summary>
+    public string Remark { get; set; }
 
     /// <summary>
     ///     创建时间

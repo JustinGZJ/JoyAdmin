@@ -197,11 +197,18 @@ public class MachineDataService : IDynamicApiController
             .Except(boundRotorCodes);
 
         // 找出所有的关键词
-        var keys = data.Select(x => x.Name).Distinct();
+        var keys = data.Select(x => x.Description).Distinct();
+        //  根据keys 创建dictionary
+
 
         var result = codesToQuery.Select(code =>
         {
             var expano = new Dictionary<string, object>();
+            expano["时间"]=DateTime.Now;
+            expano["壳体二维码"] = "";
+            expano["定子二维码"] = "";
+            expano["转子二维码"] = "";       
+            foreach (var key in keys) expano.Add(key, "");
             var uploadDatas = data.Where(x => x.Code == code)
                 .OrderBy(x => x.Order)
                 .ToList();
@@ -248,7 +255,7 @@ public class MachineDataService : IDynamicApiController
             return expano;
         });
 
-        return await Task.FromResult(result);
+        return await Task.FromResult(result.OrderByDescending(x=>x["时间"]));
     }
 
     /// <summary>
@@ -333,4 +340,7 @@ public class MachineDataService : IDynamicApiController
             };
         }
     }
+    
+    
+    
 }

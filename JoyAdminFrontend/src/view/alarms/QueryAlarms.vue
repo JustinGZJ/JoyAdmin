@@ -34,8 +34,8 @@
 </template>
 <script>
 import { GetAlarmHistories } from '@/api/alarm'
-import { getStations } from '@/api/get_status'
 import dayjs from 'dayjs'
+import { getStations } from '@/api/Process'
 
 export default {
   data () {
@@ -112,7 +112,6 @@ export default {
         }
       })
     }
-
   },
   mounted () {
     this.date_range = [dayjs().startOf('day').format(), dayjs().endOf('day').format()]

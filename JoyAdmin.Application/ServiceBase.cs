@@ -11,17 +11,17 @@ namespace JoyAdmin.Application;
 
 public class ServiceBase<T> : IDynamicApiController where T : class, IPrivateEntity, new()
 {
-    private readonly IRepository<T> _repository;
+    private readonly IRepository<T> _workorderRepository;
 
 
-    public ServiceBase(IRepository<T> repository)
+    public ServiceBase(IRepository<T> workorderRepository)
     {
-        _repository = repository;
+        _workorderRepository = workorderRepository;
     }
 
     public async Task<PagedList<T>> FilterList(FilterDto filter)
     {
-        var query = _repository.DetachedEntities.AsQueryable();
+        var query = _workorderRepository.DetachedEntities.AsQueryable();
 
         if (filter.filterProperty != null)
         {
@@ -40,35 +40,35 @@ public class ServiceBase<T> : IDynamicApiController where T : class, IPrivateEnt
     // GET: api/ProcessLine
     public async Task<List<T>> GetList()
     {
-        return await _repository.DetachedEntities.ToListAsync();
+        return await _workorderRepository.DetachedEntities.ToListAsync();
     }
 
     // GET: api/ProcessLine/5
     public async Task<T> GetOne(int id)
     {
-        return await _repository.FindAsync(id);
+        return await _workorderRepository.FindAsync(id);
     }
 
 
     // delete
     public async Task<T> Delete(int id)
     {
-        var entity = await _repository.FindAsync(id);
-        await _repository.DeleteNowAsync(entity);
+        var entity = await _workorderRepository.FindAsync(id);
+        await _workorderRepository.DeleteNowAsync(entity);
         return entity;
     }
 
     // add
     public async Task<T> Add(T entity)
     {
-        await _repository.InsertNowAsync(entity);
+        await _workorderRepository.InsertNowAsync(entity);
         return entity;
     }
 
     // Batch Add
     public async Task<IEnumerable<T>> BatchAdd(T[] entities)
     {
-        await _repository.InsertNowAsync(entities);
+        await _workorderRepository.InsertNowAsync(entities);
         return entities;
     }
 
@@ -76,14 +76,14 @@ public class ServiceBase<T> : IDynamicApiController where T : class, IPrivateEnt
     // update
     public async Task<T> Update(T entity)
     {
-        await _repository.UpdateAsync(entity);
+        await _workorderRepository.UpdateAsync(entity);
         return entity;
     }
 
     // Batch update
     public async Task<IEnumerable<T>> BatchUpdate(T[] entities)
     {
-        await _repository.UpdateAsync(entities);
+        await _workorderRepository.UpdateAsync(entities);
         return entities;
     }
 }

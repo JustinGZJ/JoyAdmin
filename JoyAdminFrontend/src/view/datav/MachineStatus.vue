@@ -48,7 +48,7 @@ export default {
           this.status = Object.entries(groupValuesByStationData).map(([key, value]) => {
             const row = [key]
             this.header.slice(1).forEach(header => {
-              if(header.includes("数量")){
+              if (header.includes('数量')) {
                 row.push(value[header].toFixed(0))
                 return
               }

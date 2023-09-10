@@ -117,7 +117,26 @@ public class StatisticService : IDynamicApiController
             });
         return await statisticRates.ToListAsync();
     }
-
+    
+    /// <summary>
+    /// 根据工单号查询各站位的合格率
+    /// </summary>
+    /// <param name="workOrder"></param>
+    /// <returns></returns>
+    public async Task<List<StatisticRate>> GetPassRateByWorkOrder(string workOrder)
+    {
+        var statisticRates = _productionRepository
+            .Entities.Where(x => x.WorkOrderNo == workOrder)
+            .GroupBy(x => x.Device)
+            .Select(x => new StatisticRate
+            {
+                Device = x.Key,
+                Ok = x.Count(production => production.ProductionType == ProductionType.OK),
+                Ng = x.Count(production => production.ProductionType == ProductionType.NG),
+                FeedQuality = x.Count(production => production.ProductionType == ProductionType.NG)
+            });
+        return await statisticRates.ToListAsync();
+    }
 
     /// <summary>
     ///     获取各站的失效原因分布
