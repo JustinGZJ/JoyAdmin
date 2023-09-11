@@ -51,20 +51,31 @@ export default {
       alarms: {},
       tmrStatus: undefined,
       tmrAlarm: undefined,
-      orders: []
+      order: undefined
     }
   },
   computed: {
     digitalFlopData () {
-      let data = {}
-      data['工单号'] = this.orders.length === 0 ? '-' : this.orders[0]['WorkOrderNo']
-      data['产品名称'] = this.orders.length === 0 ? '-' : this.orders[0]['ProductName']
-      data['预设数量'] = this.orders.length === 0 ? 0 : this.orders[0]['PlanQuantity']
-      data['出料数量'] = this.orders.length === 0 ? 0 : this.orders[0]['ActualQuantity']
-      data['NG数量'] = this.orders.length === 0 ? 0 : this.orders[0]['NgQuantity']
-      data['合格率'] = this.orders.length === 0 ? 0 : this.orders[0]['ActualQuantity'] * 100 / (this.orders[0]['ActualQuantity'] + this.orders[0]['NgQuantity'])
-      data['完成率'] = this.orders.length === 0 ? 0 : this.orders[0]['ActualQuantity'] * 100 / this.orders[0]['PlanQuantity']
-      data['完成时间'] = this.orders.length === 0 ? 0 : dayjs(this.orders[0]['FinishTime']).diff(dayjs(), 'hour')
+      let data = {
+        '工单号': '-',
+        '产品名称': '-',
+        '预设数量': 0,
+        '出料数量': 0,
+        'NG数量': 0,
+        '合格率': 0,
+        '完成率': 0,
+        '剩余时间': 0
+      }
+      if (this.order) {
+        data['工单号'] = this.order['WorkOrderNo']
+        data['产品名称'] = this.order['ProductName']
+        data['预设数量'] = this.order['PlanQuantity']
+        data['出料数量'] = this.order['ActualQuantity']
+        data['NG数量'] = this.order['NgQuantity']
+        data['合格率'] = this.order['ActualQuantity'] * 100 / (this.order['ActualQuantity'] + this.order['NgQuantity'])
+        data['完成率'] = this.order['ActualQuantity'] * 100 / this.order['PlanQuantity']
+        data['剩余时间'] = dayjs(this.order['FinishTime']).diff(dayjs(), 'hour', true)
+      }
       return data
     },
     randing () {
@@ -74,7 +85,7 @@ export default {
       let obj = {}
       for (const key in tempData) {
         let data = tempData[key] || {}
-        obj[key] = data['平均周期']
+        obj[key] = data['单次周期']
       }
       // console.log(obj)
       const sortedArray = Object.entries(obj).sort((a, b) => {
@@ -121,9 +132,9 @@ export default {
       return Object.fromEntries(topTen)
     },
     waterLevel () {
-      if (this.orders.length === 0) return { plan: 0, product: 0 }
-      let plan = this.orders[0]['PlanQuantity']
-      let product = this.orders[0]['ActualQuantity']
+      if (this.order) return { plan: 0, product: 0 }
+      let plan = this.order['PlanQuantity']
+      let product = this.order['ActualQuantity']
       return { plan, product }
     },
     cards () {
@@ -186,7 +197,7 @@ export default {
         size: 40,
         sortProperty: 'UpdatedTime'
       }).then(res => {
-        this.orders = res.data.Data.Items
+        this.order = res.data.Data.Items[0]
       })
     },
     getAlarms () {

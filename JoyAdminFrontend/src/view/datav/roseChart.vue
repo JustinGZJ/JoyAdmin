@@ -23,37 +23,73 @@ export default {
   },
   watch: {
     roseData (newValue) {
-      let option = {
+      const option = {
+        xAxis: {
+          name: '',
+          data: [],
+          axisLabel: {
+            rotate: 45,
+            style: {
+              fill: '#fff',
+              fontSize: 15
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          nameTextStyle: {
+            fill: '#fff',
+            fontSize: 15
+          }
+        },
+        yAxis: {
+          name: '',
+          data: 'value',
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          min: 0
+        },
         series: [
           {
-            type: 'pie',
-            radius: '50%',
-            roseSort: false,
-            data: [
-            ],
-            insideLabel: {
-              show: false
-            },
-            outsideLabel: {
-              formatter: '{name} {percent}%',
-              labelLineEndLength: 20,
+            data: [],
+            type: 'bar',
+            label: {
+              show: true,
+              position: 'top',
               style: {
-                fill: '#fff'
-              },
-              labelLineStyle: {
-                stroke: '#fff'
+                color: '#fff'
               }
             },
-            roseType: true
+            gradient: {
+              color: ['#fdd819', '#e80505']
+            },
+            barStyle: {
+              radius: [10, 10, 0, 0]
+            }
           }
-        ],
-        color: ['#da2f00', '#fa3600', '#ff4411', '#ff724c', '#541200', '#801b00', '#a02200', '#5d1400', '#b72700']
+        ]
       }
+
       for (const newValueKey in newValue) {
-        option.series[0].data.push({
-          name: newValueKey,
-          value: newValue[newValueKey]
-        })
+        option.xAxis.data.push(newValueKey)
+        option.series[0].data.push(Math.round(newValue[newValueKey])
+        )
       }
       this.option = option
     }

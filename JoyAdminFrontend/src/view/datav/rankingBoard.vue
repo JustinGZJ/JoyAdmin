@@ -21,47 +21,47 @@ export default {
         data: [
           {
             name: '联轴机装配',
-            value: 70
+            value: 0
           },
           {
             name: '转子装外衬套',
-            value: 120
+            value: 0
           },
           {
             name: '端盖铆压轴承',
-            value: 78
+            value: 0
           },
           {
             name: '定子性能测试',
-            value: 66
+            value: 0
           },
           {
             name: '装磁石',
-            value: 80
+            value: 0
           },
           {
             name: '入壳产品铆压',
-            value: 45
+            value: 0
           },
           {
             name: '定子入机壳',
-            value: 29
+            value: 0
           },
           {
             name: '激光焊接',
-            value: 29
+            value: 0
           },
           {
             name: '定子拼园',
-            value: 29
+            value: 0
           },
           {
             name: '电机合装',
-            value: 29
+            value: 0
           },
           {
             name: '汇流桥装配',
-            value: 29
+            value: 0
           }
         ],
         rowNum: 11
