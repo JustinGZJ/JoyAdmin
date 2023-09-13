@@ -149,7 +149,7 @@ export default {
           }
         }
         let num = func(gp['出料数量'])
-        let total = func(gp['进料数量']) + func(gp['NG数量'])
+        let total = func(gp['出料数量']) + func(gp['NG数量'])
         let passRate = func(gp['合格率'])
         let title = gpKey
         let data = { title, num, total, passRate }

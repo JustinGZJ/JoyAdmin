@@ -7,9 +7,6 @@ namespace JoyAdmin.Core.Entities.Storage;
 
 public class UploadData : EntityBase, IEntityTypeBuilder<UploadData>
 {
-
-
-    
     public string Code { get; set; }
     public int Order { get; set; }
     public string Name { get; set; }

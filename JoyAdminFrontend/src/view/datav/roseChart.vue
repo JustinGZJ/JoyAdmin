@@ -1,7 +1,8 @@
 <template>
   <div id="rose-chart">
     <div class="rose-chart-title">故障分布</div>
-    <dv-charts :option="option" />
+<!--    <dv-charts :option="option" />-->
+    <dv-active-ring-chart :config="config" style="width: 100%;height: 100%" />
   </div>
 </template>
 <script>
@@ -15,7 +16,14 @@ export default {
   },
   data () {
     return {
-      option: {
+      option: {},
+      config: {
+        radius: '60%',
+        activeRadius: '55%',
+        data: [],
+        digitalFlopStyle: {
+          fontSize: 20
+        }
       }
     }
   },
@@ -23,75 +31,22 @@ export default {
   },
   watch: {
     roseData (newValue) {
-      const option = {
-        xAxis: {
-          name: '',
-          data: [],
-          axisLabel: {
-            rotate: 45,
-            style: {
-              fill: '#fff',
-              fontSize: 15
-            }
-          },
-          axisTick: {
-            show: false
-          },
-          axisLine: {
-            show: false
-          },
-          splitLine: {
-            show: false
-          },
-          nameTextStyle: {
-            fill: '#fff',
-            fontSize: 15
-          }
-        },
-        yAxis: {
-          name: '',
-          data: 'value',
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          },
-          axisLine: {
-            show: false
-          },
-          splitLine: {
-            show: false
-          },
-          min: 0
-        },
-        series: [
-          {
-            data: [],
-            type: 'bar',
-            label: {
-              show: true,
-              position: 'top',
-              style: {
-                color: '#fff'
-              }
-            },
-            gradient: {
-              color: ['#fdd819', '#e80505']
-            },
-            barStyle: {
-              radius: [10, 10, 0, 0]
-            }
-          }
-        ]
+      let config = {
+        radius: '60%',
+        activeRadius: '55%',
+        data: [
+        ],
+        digitalFlopStyle: {
+          fontSize: 20
+        }
       }
-
       for (const newValueKey in newValue) {
-        option.xAxis.data.push(newValueKey)
-        option.series[0].data.push(Math.round(newValue[newValueKey])
-        )
+        config.data.push({
+          name: newValueKey,
+          value: newValue[newValueKey]
+        })
       }
-      this.option = option
+      this.config = config
     }
   },
   mounted () {
