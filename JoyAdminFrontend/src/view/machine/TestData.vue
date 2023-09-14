@@ -1,25 +1,30 @@
 <template>
 
-    <div >
-      <div  style="margin-left: 200px">
-        起始时间:
-        <DatePicker  class="ivu-date-picker" type="datetime" v-model="headerForm.dtFrom"  format="yyyy-MM-dd HH:mm"
-                    placeholder="请选择起始时间" @on-change="dateChange" style="width: 200px"></DatePicker>
-        结束时间
-        <DatePicker  type="datetime" v-model="headerForm.dtTo"  format="yyyy-MM-dd HH:mm"
-                    placeholder="请选择结束时间" @on-change="dateChange" style="width: 200px"></DatePicker>
-        <Button style="margin: 0 10px;" type="primary" @click="handleQueryClicked">查询</Button>
-        <Button style="margin: 0 10px;" icon="ios-download-outline" @click="exportExcel">导出文件</Button>
-      </div>
-      <layout>
+  <div>
+    <div style="margin-left: 200px">
+      起始时间:
+      <DatePicker class="ivu-date-picker" type="datetime" v-model="headerForm.dtFrom" format="yyyy-MM-dd HH:mm"
+                  placeholder="请选择起始时间" @on-change="dateChange" style="width: 200px"></DatePicker>
+      结束时间
+      <DatePicker type="datetime" v-model="headerForm.dtTo" format="yyyy-MM-dd HH:mm"
+                  placeholder="请选择结束时间" @on-change="dateChange" style="width: 200px"></DatePicker>
+      <Button style="margin: 0 10px;" type="primary" @click="handleQueryClicked">查询</Button>
+      <Button style="margin: 0 10px;" icon="ios-download-outline" @click="exportExcel">导出文件</Button>
+      <!--        选择table字段进行筛选-->
+      <Select v-model="cpkColumn" style="width: 200px">
+        <Option v-for="item in tableConfig.columns" :value="item.key" :key="item.key">{{ item.title }}</Option>
+      </Select>
+      <Button style="margin: 0 10px;" type="primary" @click="handleQueryCpk">CPK计算</Button>
+    </div>
+    <layout>
       <sider span="auto" :style="{position: 'relative', height: '100%', left: 0}">
-        <Menu   active-name:="siderParams.activeName"  @on-select="handleStationChanged" title="站位数据"   width="auto" >
-          <Submenu v-for="(value,key) in siderParams.stations"  :key="key" :name="key">
+        <Menu active-name:="siderParams.activeName" @on-select="handleStationChanged" title="站位数据" width="auto">
+          <Submenu v-for="(value,key) in siderParams.stations" :key="key" :name="key">
             <template slot="title">
-              <Icon type="ios-stats" />
+              <Icon type="ios-stats"/>
               {{ key }}
             </template>
-            <MenuItem v-for="item in value" :key="item" :name="item">{{item}}</MenuItem>
+            <MenuItem v-for="item in value" :key="item" :name="item">{{ item }}</MenuItem>
           </Submenu>
         </Menu>
       </sider>
@@ -40,8 +45,11 @@
               @on-page-size-change="handlePageSizeChanged"
               @on-change="handlePageChanged"></page>
       </content>
-        </layout>
-    </div >
+    </layout>
+    <Modal v-model="modal1" title="CPK计算" width="80" @on-ok="handleOk1" @on-cancel="handleCancel1">
+      <CpkCalc :input="input" :lsl="lsl" :usl="usl"></CpkCalc>
+    </Modal>
+  </div>
 </template>
 
 <script>
@@ -50,9 +58,11 @@ import machine_data, { GetProductDataByNameNoPage } from '@/api/machine_data'
 import dayjs from 'dayjs'
 import { export_array_to_excel } from '@/libs/excel'
 import { getStations } from '@/api/Process'
+import CpkCalc from '@/view/components/CpkCalc.vue'
 
 export default {
   components: {
+    CpkCalc,
     Tables
   },
   data () {
@@ -60,6 +70,11 @@ export default {
       page: 1,
       pageSize: 100,
       total: 0,
+      modal1: false,
+      input: '',
+      lsl: 0,
+      usl: 0,
+      cpkColumn: undefined,
       tableConfig: {
         loading: false,
         columns: [],
@@ -98,6 +113,27 @@ export default {
     handleQueryClicked () {
       this.queryData()
     },
+    handleQueryCpk () {
+      this.modal1 = true
+      let data = this.tableConfig.tableData.map(item => {
+        // 判定是否是数字，如果是文字的话提取其中的数字
+        if (isNaN(item[this.cpkColumn])) {
+          let reg = /\d+\.?\d*/g
+          let arr = item[this.cpkColumn].match(reg)
+          return arr[0]
+        }
+        return item[this.cpkColumn]
+      })
+      this.input = data.join(',')
+      console.log(this.input)
+    },
+    handleOk1 () {
+      this.modal1 = false
+    },
+    handleCancel1 () {
+      this.modal1 = false
+    },
+
     dateChange (date) {
 
     },
@@ -163,11 +199,13 @@ export default {
           console.log(Data)
           let titles = Object.keys(Data[0])
           console.log(titles)
-          let param = { data: res.data.Data,
+          let param = {
+            data: res.data.Data,
             key: titles,
             title: titles,
             filename: this.siderParams.activeName + dayjs().unix() + '.xlsx',
-            autoWidth: true }
+            autoWidth: true
+          }
           console.log(param)
           export_array_to_excel(param)
         }).catch(err => {
@@ -213,10 +251,11 @@ export default {
 </script>
 
 <style>
-  .ivu-menu-item-selected {
-    background-color: #e6f7ff;
-  }
-  .ivu-date-picker  {
-    z-index: 2000;
-  }
+.ivu-menu-item-selected {
+  background-color: #e6f7ff;
+}
+
+.ivu-date-picker {
+  z-index: 2000;
+}
 </style>
