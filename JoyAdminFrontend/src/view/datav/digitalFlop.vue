@@ -31,43 +31,34 @@ export default {
   },
   data () {
     return {
-      colors: ['#f46827', '#4d99fc', '#40fbee'],
-      digitalFlopData: []
+      colors: ['#f46827', '#4d99fc', '#40fbee']
     }
   },
-  created: function () {
-  },
-  watch: {
-    digitalData (newValue, oldValue) {
-      this.createData(newValue)
-    }
-  },
-  methods: {
-    createData (digitalData) {
-      //   debugger
+  computed: {
+    digitalFlopData () {
       let data = []
-      for (const digitalDataKey in digitalData) {
+      for (const digitalDataKey in this.digitalData) {
         let cfg = configs[digitalDataKey] || undefined
         let color = this.colors[1]
         if (cfg !== undefined) {
           let { '上限': upper, '下限': lower, '小数位数': fixed, '单位': unit } = cfg
           // 超过上限
-          if (upper !== undefined && digitalData[digitalDataKey] > upper) {
+          if (upper !== undefined && this.digitalData[digitalDataKey] > upper) {
             color = this.colors[2]
           }
           // 低于下限
-          if (lower !== undefined && digitalData[digitalDataKey] < lower) {
+          if (lower !== undefined && this.digitalData[digitalDataKey] < lower) {
             color = this.colors[0]
           }
           // 判断是否是数字
-          if (isNaN(digitalData[digitalDataKey])) {
+          if (isNaN(this.digitalData[digitalDataKey])) {
             data.push(
               {
                 title: digitalDataKey,
                 number: {
                   number: 0,
                   toFixed: fixed || 0,
-                  content: digitalData[digitalDataKey],
+                  content: this.digitalData[digitalDataKey],
                   textAlign: 'right',
                   style: {
                     fill: color,
@@ -82,7 +73,7 @@ export default {
               {
                 title: digitalDataKey,
                 number: {
-                  number: [digitalData[digitalDataKey]],
+                  number: [this.digitalData[digitalDataKey]],
                   toFixed: fixed || 0,
                   content: '{nt}',
                   textAlign: 'right',
@@ -97,13 +88,13 @@ export default {
           }
         }
       }
-      this.digitalFlopData = data
+      return data
     }
+  },
+  methods: {
 
   },
   mounted () {
-    const { createData } = this
-    createData()
   }
 }
 </script>

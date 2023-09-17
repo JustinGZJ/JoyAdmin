@@ -8,8 +8,9 @@
           <ranking-board :ranking="randing"/>
           <div class="block-top-bottom-content">
             <div class="block-top-content">
-              <rose-chart :rose-data="roseData"/>
-              <water-level-chart :water-level="waterLevel"/>
+<!--              <rose-chart :rose-data="roseData"/>-->
+<!--              <water-level-chart :water-level="waterLevel"/>-->
+              <ColumnChart :column-data="columnData"/>
               <scroll-board :scroll-data="scrollData"/>
             </div>
             <cards :cards="cards"/>
@@ -31,10 +32,12 @@ import cards from './cards'
 import currentData from '@/api/get_status'
 import { FilterWorkOrderList } from '@/api/WorkOrder'
 import dayjs from 'dayjs'
+import ColumnChart from '@/view/datav/ColumnChart.vue'
 
 export default {
   name: 'DataView',
   components: {
+    ColumnChart,
     topHeader,
     digitalFlop,
     rankingBoard,
@@ -50,8 +53,8 @@ export default {
       groupValuesByStationData: {},
       alarms: {},
       tmrStatus: undefined,
-      tmrAlarm: undefined,
-      order: undefined
+      order: undefined,
+      tags: undefined
     }
   },
   computed: {
@@ -79,14 +82,21 @@ export default {
       return data
     },
     randing () {
-      // 从groupValuesByStationData数组中获取说有的周期时间字段
-      let tempData = this.groupValuesByStationData || {}
-
-      let obj = {}
-      for (const key in tempData) {
-        let data = tempData[key] || {}
-        obj[key] = data['单次周期']
+      // 递归从tags对象和子对象中找到所有名字为“物料情况“的字段
+      const findMaterial = (obj) => {
+        let result = {}
+        for (const key in obj) {
+          if (key === '物料情况') {
+            result = { ...result, ...obj[key] }
+          } else if (typeof (obj[key]) === 'object') {
+            result = { ...result, ...findMaterial(obj[key]) }
+          }
+        }
+        return result
       }
+
+      let obj = findMaterial(this.tags)
+
       // console.log(obj)
       const sortedArray = Object.entries(obj).sort((a, b) => {
         const func = (value) => {
@@ -94,48 +104,32 @@ export default {
             return -1
           } else return value
         }
-        return func(b[1]) - func(a[1])
+        return func(a[1]) - func(b[1])
       })
       // 获取前 10 个元素
       const topTen = sortedArray.slice(0, 10)
       // 将结果转换回对象格式（如果需要）
       return Object.fromEntries(topTen)
     },
-    roseData () {
-      // 从groupValuesByStationData数组中获取说有的周期时间字段
-      let tempData = this.groupValuesByStationData || {}
-
-      let obj = {}
-      for (const key in tempData) {
-        let data = tempData[key] || {}
-        if (!isNaN(data['报警时间'])) {
-          obj[key] = data['报警时间']
-        }
+    columnData () {
+      let data = {
+        '定子不良': 10,
+        '转子不良': 20,
+        '总成不良': 60,
+        '转子插磁不良': 30,
+        '其他不良': 5
       }
-
-      // console.log(obj)
-      const sortedArray = Object.entries(obj).sort((a, b) => {
-        const func = (value) => {
-          if (isNaN(value)) {
-            return -1
-          } else return value
-        }
-        return func(b[1]) - func(a[1])
+      // 排序取 前5，其他合并为其他
+      const sortedArray = Object.entries(data).sort((a, b) => {
+        return b[1] - a[1]
       })
-      // 获取前 5 个元素
-      const top = sortedArray.slice(0, 5)
-      const other = sortedArray.slice(5).reduce((sum, item) => {
-        return sum + item[1]
-      }, 0)
-      const topTen = top.concat([['其他', other]])
-      // 将结果转换回对象格式（如果需要）
-      return Object.fromEntries(topTen)
-    },
-    waterLevel () {
-      if (this.order) return { plan: 0, product: 0 }
-      let plan = this.order['PlanQuantity']
-      let product = this.order['ActualQuantity']
-      return { plan, product }
+      const topFive = sortedArray.slice(0, 5)
+      let other = 0
+      for (let i = 5; i < sortedArray.length; i++) {
+        other += sortedArray[i][1]
+      }
+      topFive.push(['其他不良', other])
+      return Object.fromEntries(topFive)
     },
     cards () {
       const dataList = []
@@ -163,18 +157,30 @@ export default {
       return sortedArray.slice(0, 5)
     },
     scrollData () {
-      const extractInfo = (json) => {
-        const result = []
-        for (const key in json) {
-          const parts = key.split('.')
-          const objectField = parts[1]
-          const alarmContent = parts[3]
-          const time = json[key].sourceTimestamp
-          result.push({ 站位: objectField, 报警内容: alarmContent, 报警时间: time })
-        }
-        return result
+      if (!this.tags) {
+        // 返回测试数据
+        return [
+          { '时间': '8:00', '目标': 0, '实际产量': 0, '达成率': '0%' }
+        ]
       }
-      return extractInfo(this.alarms)
+      let products = Object.entries(this.tags['总成']['总成锁螺丝测试']['小时产量']).map(item => item[1])
+      let targets = Object.entries(this.tags['总成']['总成锁螺丝测试']['小时目标产量']).map(item => item[1])
+      let achievementRate = products.map((item, index) => (item / targets[index] * 100).toFixed(2) + '%')
+
+      // 时间 目标 产量 达成率
+      let data = []
+      for (let i = 0; i < products.length; i++) {
+        let time = i.toString() + ':00'
+        let target = targets[i]
+        let product = products[i]
+        let rate = achievementRate[i]
+        data.push({ 时间: time, 目标: target, 实际产量: product, 达成率: rate })
+      }
+      if (data.length === 0) {
+        data.push({ 时间: '8:00', 目标: 0, 实际产量: 0, 达成率: '0%' })
+      }
+      return data
+      // return extractInfo(this.alarms)
     }
   },
   methods: {
@@ -200,6 +206,15 @@ export default {
         this.order = res.data.Data.Items[0]
       })
     },
+    getTags () {
+      try {
+        currentData.getTags().then(res => {
+          this.tags = res.data
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    },
     getAlarms () {
       try {
         currentData.getAlarms('all').then(res => {
@@ -214,15 +229,16 @@ export default {
     this.getData()
     this.getAlarms()
     this.getActiveWorkOrder()
+    this.getTags()
     this.tmrStatus = setInterval(() => {
       this.getData()
       this.getActiveWorkOrder()
       this.getAlarms()
+      this.getTags()
     }, 5000)
   },
   destroyed () {
     clearInterval(this.tmrStatus)
-    clearInterval(this.tmrAlarm)
   }
 }
 </script>

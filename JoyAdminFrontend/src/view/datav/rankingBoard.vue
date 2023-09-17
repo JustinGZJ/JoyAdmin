@@ -1,6 +1,6 @@
 <template>
   <div id="ranking-board">
-    <div class="ranking-board-title">工站周期时间</div>
+    <div class="ranking-board-title">物料剩余</div>
     <dv-scroll-ranking-board :config="config">
     </dv-scroll-ranking-board>
   </div>
@@ -15,56 +15,20 @@ export default {
       default: () => {}
     }
   },
-  data () {
-    return {
-      config: {
-        data: [
-          {
-            name: '联轴机装配',
-            value: 0
-          },
-          {
-            name: '转子装外衬套',
-            value: 0
-          },
-          {
-            name: '端盖铆压轴承',
-            value: 0
-          },
-          {
-            name: '定子性能测试',
-            value: 0
-          },
-          {
-            name: '装磁石',
-            value: 0
-          },
-          {
-            name: '入壳产品铆压',
-            value: 0
-          },
-          {
-            name: '定子入机壳',
-            value: 0
-          },
-          {
-            name: '激光焊接',
-            value: 0
-          },
-          {
-            name: '定子拼园',
-            value: 0
-          },
-          {
-            name: '电机合装',
-            value: 0
-          },
-          {
-            name: '汇流桥装配',
-            value: 0
-          }
-        ],
-        rowNum: 11
+  computed: {
+    config () {
+      let data = []
+      for (const newValueKey in this.ranking) {
+        data.push({
+          name: newValueKey,
+          value: Math.round(this.ranking[newValueKey] * 10) / 10
+        })
+      }
+      return {
+        data: data,
+        rowNum: 11,
+        sort: false,
+        unit: ''
       }
     }
   },
@@ -72,21 +36,6 @@ export default {
 
   },
   mounted () {
-  },
-  watch: {
-    ranking (newValue) {
-      let data = []
-      for (const newValueKey in newValue) {
-        data.push({
-          name: newValueKey,
-          value: Math.round(newValue[newValueKey] * 10) / 10
-        })
-      }
-      this.config = {
-        data: data,
-        rowNum: data.length
-      }
-    }
   },
   methods: {
   }

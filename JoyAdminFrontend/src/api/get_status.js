@@ -10,6 +10,10 @@ export const getByKey = (key) => {
   return axios.get(`/map/${key}`)
 }
 
+export const getTags = () => {
+  return axios.get(`/tags`)
+}
+
 // eslint-disable-next-line camelcase
 export const getAlarms = (station) => {
   if (station === 'all') return axios.get(`/alarm`)
@@ -47,4 +51,4 @@ export const groupValuesByStation = (data) => {
   return valuesByStation
 }
 
-export default { getByKey, getAlarms, groupValuesByStation }
+export default { getByKey, getAlarms, groupValuesByStation, getTags, getStatus, getProductByHours }
