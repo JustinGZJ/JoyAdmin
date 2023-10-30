@@ -36,7 +36,9 @@ public class WorkOrderService : ServiceBase<ProductionWorkOrder>
         _processLineListRepository = processLineListRepository;
         _processRepository = processRepository;
     }
-
+/// <summary>
+/// 更新活动工单的数量统计
+/// </summary>
     public async Task UpdateActiveWorkOrder()
     {
         var orders = await _workorderRepository.Entities.Where(x => x.Status == "进行中").ToListAsync();

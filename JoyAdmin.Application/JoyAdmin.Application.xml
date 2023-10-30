@@ -309,6 +309,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:JoyAdmin.Application.Production.WorkOrderService.UpdateActiveWorkOrder">
+            <summary>
+            更新活动工单的数量统计
+            </summary>
+        </member>
         <member name="T:JoyAdmin.Application.RBAC.Dtos.LoginInput">
             <summary>
                 登录输入参数

@@ -15,13 +15,7 @@ public class Telemetry : IEntity, IEntityTypeBuilder<Telemetry>
 
     public string Key { get; set; }
 
-    public double? ValueNum { get; set; }
-
-    public bool? ValueBool { get; set; }
-
-    public string ValueStr { get; set; }
-
-    public string ValueJson { get; set; }
+    public string Value { get; set; }
 
     public DateTime Time { get; set; } = DateTime.Now;
 

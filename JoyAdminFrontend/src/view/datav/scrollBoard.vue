@@ -19,7 +19,7 @@ export default {
         header: [],
         data: [],
         index: true,
-        columnWidth: [43, 170, 200, 150],
+        columnWidth: [100, 100, 100, 100,100],
         align: ['center'],
         rowNum: 7,
         headerBGC: '#1981f6',
