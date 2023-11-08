@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div>
     <Card style="margin-bottom: 10px">
       <Input v-model="code" placeholder="二维码" style="width: 200px"/>

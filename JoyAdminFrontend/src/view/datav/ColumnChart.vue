@@ -1,6 +1,6 @@
 <template>
   <div class="column-chart">
-    <dv-charts :option="option" style="width: 100%;"/>
+    <dv-charts :option="option" style="width: 100%;" />
   </div>
 </template>
 <script>
@@ -13,12 +13,12 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {}
   },
   methods: {},
   computed: {
-    option () {
+    option() {
       let option = {
         title: {
           text: '不良分布',
@@ -54,6 +54,9 @@ export default {
               show: false
             },
             min: 0,
+            max: function (value) {
+              return value.max - 20
+            },
             axisLine: {
               show: false
             },
@@ -98,7 +101,7 @@ export default {
             name: '趋势',
             data: [],
             type: 'line',
-            smooth: true,
+            smooth: false,
             lineArea: {
               show: true,
               gradient: ['rgba(251, 114, 147, 1)', 'rgba(251, 114, 147, 0)']
@@ -123,23 +126,31 @@ export default {
             },
             barStyle: {
               stroke: 'rgba(103, 224, 227, 1)'
+            },
+            label: {
+              show: true,
+              position: 'top'
             }
           }
         ]
       }
+      // option.yAxis[0].max=vs[0][1]+10
       for (const newValueKey in this.columnData) {
         option.xAxis.data.push(newValueKey)
         //  option.series[0].data.push(this.columnData[newValueKey])
         let sum = Object.entries(this.columnData).reduce((sum, [key, value]) => {
           return sum + value
         }, 0)
-        option.series[0].data.push(100 - Math.round(this.columnData[newValueKey] * 100 / sum))
+        if (sum == 0)
+          sum = 1
+        option.series[0].data.push(100- Math.round(this.columnData[newValueKey] * 100 / sum))
         option.series[1].data.push(this.columnData[newValueKey])
       }
       return option
-    } },
+    }
+  },
 
-  mounted () {
+  mounted() {
   }
 }
 </script>

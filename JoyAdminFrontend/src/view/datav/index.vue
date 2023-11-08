@@ -113,12 +113,30 @@ export default {
     },
     columnData () {
       let data = {
-        '焊锡不良': 10,
-        '推脱力不良': 20,
-        '定子铁芯缺料': 60,
-        '定子绝缘物缺料': 30,
-        '其他不良': 5
+    "磁通量不良": 0,
+    "转子推脱力不良": 0,
+    "入壳高度检测不良": 0,
+    "总成锁螺丝测试": 0,
+    "定子综合测试不良": 0
+}
+      const findReasons = (obj, reasons) => {
+        for (let key in obj) {
+          if (key === '不良统计') {
+            for (let reason in obj[key]) {
+              reasons[reason] = obj[key][reason]
+            }
+          } else if (typeof obj[key] === 'object') {
+            findReasons(obj[key],reasons)
+          }
+        }
       }
+
+      let obj2 = {}
+      if (this.tags) {
+        findReasons(this.tags, obj2)
+         data=obj2
+      }
+     
       // 排序取 前5，其他合并为其他
       const sortedArray = Object.entries(data).sort((a, b) => {
         return b[1] - a[1]
@@ -129,17 +147,10 @@ export default {
         other += sortedArray[i][1]
       }
       topFive.push(['其他不良', other])
-      return Object.fromEntries(topFive)
+      let  topFiveObj=Object.fromEntries(topFive)
+      return  topFiveObj
     },
     cards () {
-
-      return [
-        { title:"磁通量检测", num:292, total:300, passRate:293/300 },
-        { title:"推脱力检测", num:295, total:300, passRate:295/300 },
-        { title:"耐压检测", num:290, total:300, passRate: 290/300},
-        { title:"反电动势检测", num:296, total:302, passRate:296/302 },
-        { title:"反电动势检测", num:332, total:342, passRate: 287/342}
-      ]
       const dataList = []
       for (const gpKey in this.groupValuesByStationData) {
         let gp = this.groupValuesByStationData[gpKey]
@@ -159,49 +170,29 @@ export default {
       }
       // console.log(obj)
       const sortedArray = dataList.sort((a, b) => {
-        return b.num / b.total - a.num / a.total
+        return b.num - a.num
       })
+      // 排序
       // 获取前 5个元素
-      return sortedArray.slice(0, 5)
+      return sortedArray
     },
     scrollData () {
-      return [
-        { '时间': '8:00', '目标': 60, '实际产量': 58, '差异': -2,"良率":"98%" },
-        { '时间': '9:00', '目标': 60, '实际产量': 58, '差异': -2,"良率":"99%" },
-        { '时间': '10:00', '目标': 60, '实际产量': 63, '差异': 3,"良率":"98%" },
-        { '时间': '11:00', '目标': 60, '实际产量': 58, '差异': -2,"良率":"97%" },
-        { '时间': '12:00', '目标': 60, '实际产量': 58, '差异': -2,"良率":"98%" },
-        { '时间': '13:00', '目标': 60, '实际产量': 58, '差异': -2,"良率":"99%" },
-        { '时间': '14:00', '目标': 60, '实际产量': 63, '差异': 3,"良率":"98%" },
-        { '时间': '15:00', '目标': 60, '实际产量': 58, '差异': -2,"良率":"97%" },
-        { '时间': '16:00', '目标': 60, '实际产量': 58, '差异': -2,"良率":"99%" },
-        { '时间': '17:00', '目标': 60, '实际产量': 63, '差异': 3,"良率":"98%" },
-      ]
-
-
-      if (!this.tags) {
-        // 返回测试数据
-        return [
-          { '时间': '8:00', '目标': 0, '实际产量': 0, '达成率': '0%' }
-        ]
+      if (this.tags) {
+        let data = []
+        let plcdata = this.tags.总成.总成锁螺丝测试
+        for (let i = 8; i < 18; i++) {
+          let time = i.toString() + ':00'
+          let target = Object.entries(plcdata.小时目标产量)[i][1]
+          let product = Object.entries(plcdata.小时产量)[i][1]
+          let rate = Object.entries(plcdata.每小时良率)[i][1]
+          // 转换成百分比
+          rate = (rate * 100).toFixed(1) + '%'
+          data.push({ 时间: time, 目标: target, 实际产量: product, '差异': product - target, 良率: rate })
+        }
+        return data
+      } else {
+        return []
       }
-      let products = Object.entries(this.tags['总成']['总成锁螺丝测试']['小时产量']).map(item => item[1])
-      let targets = Object.entries(this.tags['总成']['总成锁螺丝测试']['小时目标产量']).map(item => item[1])
-      let achievementRate = products.map((item, index) => (item / targets[index] * 100).toFixed(2) + '%')
-
-      // 时间 目标 产量 达成率
-      let data = []
-      for (let i = 0; i < products.length; i++) {
-        let time = i.toString() + ':00'
-        let target = targets[i]
-        let product = products[i]
-        let rate = achievementRate[i]
-        data.push({ 时间: time, 目标: target, 实际产量: product, 达成率: rate })
-      }
-      if (data.length === 0) {
-        data.push({ 时间: '8:00', 目标: 0, 实际产量: 0, 达成率: '0%' })
-      }
-      return data
       // return extractInfo(this.alarms)
     }
   },

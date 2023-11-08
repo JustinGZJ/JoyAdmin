@@ -1,4 +1,4 @@
-﻿import { axios } from '@/libs/api.request'
+import { axios } from '@/libs/api.request'
 // Curl curl -X 'POST' \ 'http://localhost:9001/api/AlarmHistory/GetAlarmHistories' \
 // -H 'accept: text/plain' \
 // -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEsIkFjY291bnQiOiJhZG1pbiIsIk5hbWUiOm51bGwsImlhdCI6MTY4NjIwNzAzNiwibmJmIjoxNjg2MjA3MDM2LCJleHAiOjE2ODY0NjYyMzYsImlzcyI6ImRvdG5ldGNoaW5hIiwiYXVkIjoicG93ZXJieSBGdXJpb24ifQ.Y8U5-H7LC0fg7F3A0cBLyk-8b85G9MhgHPJHBx_Zch8' \

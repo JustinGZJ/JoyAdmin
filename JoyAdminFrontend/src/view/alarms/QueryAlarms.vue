@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div>
     <div>
       <Select v-model="station" style="width:200px">

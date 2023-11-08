@@ -19,7 +19,7 @@ import dayjs from 'dayjs'
 import * as echarts from 'echarts'
 import { off, on } from '@/libs/tools'
 import tdTheme from '@/components/charts/theme.json'
-import {getStations} from "@/api/Process";
+import { getStations } from '@/api/Process'
 echarts.registerTheme('tdTheme', tdTheme)
 
 export default {

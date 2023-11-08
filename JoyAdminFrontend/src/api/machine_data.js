@@ -64,9 +64,8 @@ export const GetProductData = (params) => {
 export const GetProductDataByNameNoPage = (params) => {
   return axios.get('api/MachineData/GetProductDataByNameNoPage', {
     params
-  })}
-
-
+  })
+}
 
 /// curl -X 'GET' \
 //   'http://localhost:9001/api/MachineData/GetBindingData/1/50' \
@@ -80,17 +79,11 @@ export const GetBindingData = (page, size) => {
 //   -H 'accept: text/plain' \
 //   -H 'request-from: swagger'
 
-
 export const GetProductDataByName = (params) => {
   return axios.get('api/MachineData/GetProductDataByName', {
     params
   })
 }
-
-
-
-
-
 
 // curl -X 'GET' \
 //   'http://localhost:9001/api/MachineData/GetUploadDataNames?Start=2023-05-01&End=2023-07-01' \
@@ -112,4 +105,4 @@ export default {
   GetUploadDataNames,
   GetProductDataByName,
   GetProductDataByNameNoPage
-  }
+}

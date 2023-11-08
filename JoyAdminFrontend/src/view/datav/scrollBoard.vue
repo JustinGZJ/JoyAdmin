@@ -1,10 +1,11 @@
 <template>
   <div id="scroll-board">
-    <dv-scroll-board :config="config"></dv-scroll-board>
+    <dv-scroll-board ref="scrollBoard" :config="config"></dv-scroll-board>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'ScrollBoard',
   props: {
@@ -13,13 +14,13 @@ export default {
       default: () => []
     }
   },
-  computed: {
-    config () {
-      let config = {
-        header: [],
+  data() {
+    return {
+      config: {
+        header: ['时间','目标','产量','差值','合格率'],
         data: [],
         index: true,
-        columnWidth: [100, 100, 100, 100,100],
+        columnWidth: [100, 100, 100, 100, 100],
         align: ['center'],
         rowNum: 7,
         headerBGC: '#1981f6',
@@ -27,22 +28,62 @@ export default {
         oddRowBGC: 'rgba(0, 44, 81, 0.8)',
         evenRowBGC: 'rgba(10, 29, 50, 0.8)'
       }
-      let data = this.scrollData || []
+    }
+  },
+  computed: {
+    // config() {
+    //   let config = {
+    //     header: [],
+    //     data: [],
+    //     index: true,
+    //     columnWidth: [100, 100, 100, 100, 100],
+    //     align: ['center'],
+    //     rowNum: 7,
+    //     headerBGC: '#1981f6',
+    //     headerHeight: 45,
+    //     oddRowBGC: 'rgba(0, 44, 81, 0.8)',
+    //     evenRowBGC: 'rgba(10, 29, 50, 0.8)'
+    //   }
+    //   let data = this.scrollData || []
+    //   if (Array.isArray(data)) {
+    //     if (data.length > 0) {
+    //       let firstData = data[0]
+    //       let header = Object.keys(firstData)
+    //       config.header = header
+    //     }
+    //     let dataArray = []
+    //     for (const item of data) {
+    //       dataArray.push(Object.values(item))
+    //     }
+    //     config.data = dataArray
+    //   } else {
+    //     config.data = []
+    //   }
+    //   return config
+    // }
+  },
+  watch:{
+    scrollData(newValue){
+      let data = newValue || []
       if (Array.isArray(data)) {
         if (data.length > 0) {
-          let firstData = data[0]
-          let header = Object.keys(firstData)
-          config.header = header
+          // let firstData = data[0]
+          // let header = Object.keys(firstData)
+        //  this.$set(this.config,'header',header)
         }
         let dataArray = []
+        console.log(data)
         for (const item of data) {
-          dataArray.push(Object.values(item))
+          if(item['差异']<0){
+            dataArray.push(Object.values(item).map(v=>`<span style="color:#ffdb5c;font-weight: bold;">${v}</span>`))
+          }else{
+            dataArray.push(Object.values(item))
+          }
+         
         }
-        config.data = dataArray
+        this.$refs['scrollBoard'].updateRows(dataArray)
       } else {
-        config.data = []
-      }
-      return config
+      }     
     }
   }
 }

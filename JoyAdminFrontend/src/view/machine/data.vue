@@ -1,4 +1,4 @@
-﻿<template>
+<template>
  <div>
    <Card style="margin-bottom: 10px">
 <!--     <Date-picker type="daterange" :value="date_range"  placeholder="选择日期" style="width: 250px"></Date-picker>-->

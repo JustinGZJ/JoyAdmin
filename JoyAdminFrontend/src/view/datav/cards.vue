@@ -1,6 +1,6 @@
 <template>
   <div id="cards">
-    <div class="card-item" v-for="(card) in cardsData" :key="card.title">
+    <div class="card-item" v-for="(card) in displayCards" :key="card.title">
       <div class="card-header">
         <div class="card-header-left">{{ card.title }}</div>
         <!--        <div class="card-header-right">{{ "0" + (i + 1) }}</div>-->
@@ -51,6 +51,7 @@ export default {
   },
   data () {
     return {
+      cardIndex:0 
       // cardsData: []
     }
   },
@@ -120,7 +121,10 @@ export default {
         })
       }
       return cards
-    }
+    },
+    displayCards() {
+    return this.cardsData.slice(this.cardIndex, this.cardIndex + 5);
+  }
   },
   created: function () {
   },
@@ -197,9 +201,12 @@ export default {
     this.createData(this.cardsData)
   },
   mounted () {
-    // const { createData } = this
-    // createData()
-    // setInterval(this.createData, 30000)
+    setInterval(() => {
+    this.cardIndex+=5;
+    if (this.cardIndex >= this.cardsData.length) {
+      this.cardIndex = 0; 
+    }
+  }, 3000);
   }
 }
 </script>

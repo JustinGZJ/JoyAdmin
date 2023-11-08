@@ -18,10 +18,11 @@
           <Button v-if="selectedRow" type="success" @click="editOrder(selectedRow)">编辑</Button>
           <Button v-if="selectedRow" type="error" @click="deleteOrder(selectedRow)">删除</Button>
           <Button type="primary" @click="addOrder">新增</Button>
+          <Button type="primary" @click="printTable">打印</Button>
         </button-group>
       </div>
     </div>
-    <Table :columns="columns" :data="orders" highlight-row @on-current-change="selectionChange">
+    <Table id="table" :columns="columns" :data="orders" highlight-row @on-current-change="selectionChange">
       <template #operation="{ index,row }">
         <div>
           <Button
@@ -127,6 +128,9 @@ import { addWorkOrder, deleteWorkOrder, FilterWorkOrderList, updateWorkOrder } f
 import { getProductList } from '@/api/Product'
 import edit from '_c/tables/edit.vue'
 import { GetNextSn } from '@/api/NumberRule'
+import print from 'print-js'
+
+import 'print-js/dist/print.css'
 
 export default {
   data () {
@@ -253,6 +257,26 @@ export default {
       this.modalAddVisible = true
       this.modalTitle = '添加工单'
       this.$refs.formValidate.resetFields()
+    },
+    printTable () {
+      print(
+        {
+          printable: this.orders,
+          properties: [
+            { field: 'WorkOrderNo', displayName: '工单编号 / Mã đơn hàng' },
+            { field: 'ProductNo', displayName: '产品编号 / Mã sản phẩm' },
+            { field: 'ProductName', displayName: '产品名称 / Tên sản phẩm' },
+            { field: 'PlanQuantity', displayName: '计划数量 / Số lượng kế hoạch' },
+            { field: 'ActualQuantity', displayName: '实际数量 / Số lượng thực tế' },
+            { field: 'NgQuantity', displayName: '不合格数 / Số lượng không đạt' },
+            { field: 'StartTime', displayName: '开始时间 / Thời gian bắt đầu' },
+            { field: 'FinishTime', displayName: '结束时间 / Thời gian kết thúc' },
+            { field: 'Status', displayName: '状态 / Trạng thái' },
+            { field: 'CreatedTime', displayName: '创建时间 / Thời gian tạo' },
+            { field: 'UpdatedTime', displayName: '更新时间 / Thời gian cập nhật' }
+          ],
+          type: 'json',
+          header: '<h3 class="custom-h3">工单信息 / Thông tin đơn hàng</h3>' })
     },
     editOrder (row) {
       this.modalAddVisible = true

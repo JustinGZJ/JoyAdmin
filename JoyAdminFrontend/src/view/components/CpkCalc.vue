@@ -34,7 +34,7 @@
         <p>CPK等级：{{ cpkLevel }}</p>
       </div>
     </div>
-    <div ref="chart" id="chart" style="width:400px;height:762px; clear: both;"></div>
+    <div ref="chart" id="chart" style="width:800px;height:762px; clear: both;"></div>
     <div>
     </div>
   </div>
