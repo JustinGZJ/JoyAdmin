@@ -79,6 +79,71 @@
                 删除标志
             </summary>
         </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLineListId">
+            <summary>
+                工艺路线工序列表主键ID
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLineId">
+            <summary>
+                工艺路线
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLineType">
+            <summary>
+                类型
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.Process_Id">
+            <summary>
+                工序
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLineDown_Id">
+            <summary>
+                工艺路线
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.Sequence">
+            <summary>
+                顺序
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.SubmitWorkMatch">
+            <summary>
+                报工数配比
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.CreateDate">
+            <summary>
+                创建时间
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.CreateID">
+            <summary>
+                创建人编号
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.Creator">
+            <summary>
+                创建人
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.Modifier">
+            <summary>
+                修改人
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ModifyDate">
+            <summary>
+                修改时间
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ModifyID">
+            <summary>
+                修改人编号
+            </summary>
+        </member>
         <member name="P:JoyAdmin.Core.Entities.Custom.Base_DefectItem.DefectItem_Id">
             <summary>
                 不良品项表主键ID
@@ -541,117 +606,52 @@
                 修改人编号
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ProcessLineList_Id">
-            <summary>
-                工艺路线工序列表主键ID
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ProcessLine_Id">
-            <summary>
-                工艺路线
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ProcessLineType">
-            <summary>
-                类型
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.Process_Id">
-            <summary>
-                工序
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ProcessLineDown_Id">
-            <summary>
-                工艺路线
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.Sequence">
-            <summary>
-                顺序
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.SubmitWorkMatch">
-            <summary>
-                报工数配比
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.CreateDate">
-            <summary>
-                创建时间
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.CreateID">
-            <summary>
-                创建人编号
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.Creator">
-            <summary>
-                创建人
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.Modifier">
-            <summary>
-                修改人
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ModifyDate">
-            <summary>
-                修改时间
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessLineList.ModifyID">
-            <summary>
-                修改人编号
-            </summary>
-        </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.ProcessList_Id">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.ProcessListId">
             <summary>
                 工序采集数据主键ID
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.Process_Id">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.ProcessId">
             <summary>
                 工序ID
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.DataPointType">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.DataPointType">
             <summary>
                 类型
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.DataPointName">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.DataPointName">
             <summary>
                 名称
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.CreateDate">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.CreateDate">
             <summary>
                 创建时间
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.CreateID">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.CreateId">
             <summary>
                 创建人编号
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.Creator">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.Creator">
             <summary>
                 创建人
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.Modifier">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.Modifier">
             <summary>
                 修改人
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.ModifyDate">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.ModifyDate">
             <summary>
                 修改时间
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.Base_ProcessList.ModifyID">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.ModifyId">
             <summary>
                 修改人编号
             </summary>
@@ -946,6 +946,16 @@
         </member>
         <member name="P:JoyAdmin.Core.Entities.Custom.View_Base_MaterialDetail.ModifyID">
             <summary>
+            </summary>
+        </member>
+        <member name="T:JoyAdmin.Core.Entities.Production.Production_ProcessRecord">
+            <summary>
+             过程记录
+            </summary>
+        </member>
+        <member name="T:JoyAdmin.Core.Entities.Production.Production_ProductRecord">
+            <summary>
+            产品的状态记录
             </summary>
         </member>
         <member name="P:JoyAdmin.Core.Entities.Storage.Production.WorkOrderNo">

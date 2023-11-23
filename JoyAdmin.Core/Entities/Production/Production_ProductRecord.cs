@@ -15,10 +15,10 @@ public class Production_ProductRecord:EntityBase,IEntityTypeBuilder<Production_P
     // 产品条码
     public string BarCode { get; set; }
     // 产品ID
-    public int ProductId { get; set; }
+    public int? ProductId { get; set; }
     public Base_Product Product { get; set; }
     // 当前工序ID
-    public int CurrentProcessId { get; set; }
+    public int? CurrentProcessId { get; set; }
     public Base_Process CurrentProcess { get; set; }
     
    public List<Production_ProcessRecord> ProcessRecords { get; set; }

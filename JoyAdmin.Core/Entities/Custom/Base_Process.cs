@@ -106,6 +106,5 @@ public class Base_Process : IEntity
     public int? ModifyID { get; set; }
 
     [Display(Name = "工序采集数据")]
-    [ForeignKey("Process_Id")]
-    public List<Base_ProcessList> Base_ProcessList { get; set; }
+    public List<BaseProcessList> Base_ProcessList { get; set; }
 }

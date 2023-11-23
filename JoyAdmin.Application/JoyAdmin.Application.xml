@@ -309,6 +309,24 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:JoyAdmin.Application.Production.ProcessControlService.GetProcessRecordByBarCode(System.String)">
+            <summary>
+            根据条码获取过站信息
+            </summary>
+        </member>
+        <member name="M:JoyAdmin.Application.Production.ProcessControlService.CheckBarCode(System.String,System.String)">
+            <summary>
+            条码验证
+            </summary>
+            <param name="barCode"></param>
+            <param name="processName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.Production.ProcessControlService.DataPass(System.String,System.String)">
+            <summary>
+            数据过站
+            </summary>
+        </member>
         <member name="M:JoyAdmin.Application.Production.WorkOrderService.UpdateActiveWorkOrder">
             <summary>
             更新活动工单的数量统计

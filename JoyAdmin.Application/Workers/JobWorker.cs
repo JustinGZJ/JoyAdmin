@@ -25,7 +25,7 @@ public class JobWorker : ISpareTimeWorker
             var productionRepository = services.GetService<IRepository<Core.Entities.Storage.Production>>();
             var productRepository = services.GetService<IRepository<Base_Product>>();
             var processLineRepository = services.GetService<IRepository<Base_ProcessLine>>();
-            var processLineListRepository = services.GetService<IRepository<Base_ProcessLineList>>();
+            var processLineListRepository = services.GetService<IRepository<BaseProcessLineList>>();
             var processRepository = services.GetService<IRepository<Base_Process>>();
             await UpdateActiveWorkOrder();
 
@@ -57,7 +57,7 @@ public class JobWorker : ISpareTimeWorker
             async Task UpdateWorkOrder(Base_ProcessLine processLine, ProductionWorkOrder order)
             {
                 var processLineLists = await processLineListRepository.Entities
-                    .Where(x => x.ProcessLine_Id == processLine.ProcessLine_Id).OrderBy(x => x.Sequence).ToListAsync();
+                    .Where(x => x.ProcessLineId == processLine.ProcessLine_Id).OrderBy(x => x.Sequence).ToListAsync();
                 // 判断最后的processLineList的
                 var lastProcessLineList = processLineLists.LastOrDefault();
                 if (lastProcessLineList != null)

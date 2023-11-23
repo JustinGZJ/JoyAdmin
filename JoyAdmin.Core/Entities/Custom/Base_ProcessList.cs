@@ -6,10 +6,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using Furion.DatabaseAccessor;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JoyAdmin.Core.Entities.Custom;
 
-public class Base_ProcessList : IEntity
+public class BaseProcessList : IEntity, IEntityTypeBuilder<BaseProcessList>
 {
     /// <summary>
     ///     工序采集数据主键ID
@@ -17,7 +19,7 @@ public class Base_ProcessList : IEntity
     [Key]
     [Display(Name = "工序采集数据主键ID")]
     [Required(AllowEmptyStrings = false)]
-    public int ProcessList_Id { get; set; }
+    public int ProcessListId { get; set; }
 
     /// <summary>
     ///     工序ID
@@ -25,7 +27,10 @@ public class Base_ProcessList : IEntity
     [Display(Name = "工序ID")]
     [Editable(true)]
     [Required(AllowEmptyStrings = false)]
-    public int Process_Id { get; set; }
+    public int? ProcessId { get; set; }
+
+    public Base_Process Process { get; set; }
+    
 
     /// <summary>
     ///     类型
@@ -55,7 +60,7 @@ public class Base_ProcessList : IEntity
     ///     创建人编号
     /// </summary>
     [Display(Name = "创建人编号")]
-    public int? CreateID { get; set; }
+    public int? CreateId { get; set; }
 
     /// <summary>
     ///     创建人
@@ -83,5 +88,10 @@ public class Base_ProcessList : IEntity
     ///     修改人编号
     /// </summary>
     [Display(Name = "修改人编号")]
-    public int? ModifyID { get; set; }
+    public int? ModifyId { get; set; }
+
+    public void Configure(EntityTypeBuilder<BaseProcessList> entityBuilder, DbContext dbContext, Type dbContextLocator)
+    {
+        //throw new NotImplementedException();
+    }
 }

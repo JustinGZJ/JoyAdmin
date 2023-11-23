@@ -79,6 +79,5 @@ public class Base_ProcessLine : IEntity
     public int? ModifyID { get; set; }
 
     [Display(Name = "工序列表")]
-    [ForeignKey("ProcessLine_Id")]
-    public List<Base_ProcessLineList> ProcessLineList { get; set; }
+    public List<BaseProcessLineList> ProcessLineList { get; set; }
 }

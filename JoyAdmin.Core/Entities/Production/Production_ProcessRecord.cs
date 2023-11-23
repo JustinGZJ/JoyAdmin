@@ -13,9 +13,9 @@ public class Production_ProcessRecord : EntityBase, IEntityTypeBuilder<Productio
 {
     public DateTime EnterTime { get; set; }
     public DateTime LeaveTime { get; set; }
-    public int ProcessId { get; set; }
+    public int? ProcessId { get; set; }
     public Base_Process Process { get; set; }
-    public int ProductRecordId { get; set; }
+    public int? ProductRecordId { get; set; }
 
     public Production_ProductRecord ProductRecord { get; set; }
 

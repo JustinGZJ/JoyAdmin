@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JoyAdmin.Core.Entities.Custom;
 
-public class Base_ProcessLineList : IEntity, IEntityTypeBuilder<Base_ProcessLineList>
+public class BaseProcessLineList : IEntity, IEntityTypeBuilder<BaseProcessLineList>
 {
     /// <summary>
     ///     工艺路线工序列表主键ID
@@ -19,14 +19,15 @@ public class Base_ProcessLineList : IEntity, IEntityTypeBuilder<Base_ProcessLine
     [Key]
     [Display(Name = "工艺路线工序列表主键ID")]
     [Required(AllowEmptyStrings = false)]
-    public int ProcessLineList_Id { get; set; }
+    public int ProcessLineListId { get; set; }
 
     /// <summary>
     ///     工艺路线
     /// </summary>
     [Display(Name = "工艺路线")]
-    [Required(AllowEmptyStrings = false)]
-    public int ProcessLine_Id { get; set; }
+    public int? ProcessLineId { get; set; }
+
+    public Base_ProcessLine ProcessLine { get; set; }
 
     /// <summary>
     ///     类型
@@ -111,7 +112,7 @@ public class Base_ProcessLineList : IEntity, IEntityTypeBuilder<Base_ProcessLine
     [Display(Name = "修改人编号")]
     public int? ModifyID { get; set; }
 
-    public void Configure(EntityTypeBuilder<Base_ProcessLineList> entityBuilder, DbContext dbContext, Type dbContextLocator)
+    public void Configure(EntityTypeBuilder<BaseProcessLineList> entityBuilder, DbContext dbContext, Type dbContextLocator)
     {
       //  throw new NotImplementedException();
       entityBuilder.HasOne(x=>x.ProcessLineDown)

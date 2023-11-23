@@ -18,7 +18,7 @@ public class WorkOrderService : ServiceBase<ProductionWorkOrder>
     private readonly IRepository<Core.Entities.Storage.Production> _productionRepository;
     private readonly IRepository<Base_Product> _productRepository;
     private readonly IRepository<Base_ProcessLine> _processLineRepository;
-    private readonly IRepository<Base_ProcessLineList> _processLineListRepository;
+    private readonly IRepository<BaseProcessLineList> _processLineListRepository;
     private readonly IRepository<Base_Process> _processRepository;
 
     public WorkOrderService(
@@ -26,7 +26,7 @@ public class WorkOrderService : ServiceBase<ProductionWorkOrder>
         IRepository<Core.Entities.Storage.Production> productionRepository,
         IRepository<Base_Product> productRepository,
         IRepository<Base_ProcessLine> processLineRepository,
-        IRepository<Base_ProcessLineList> processLineListRepository,
+        IRepository<BaseProcessLineList> processLineListRepository,
         IRepository<Base_Process> processRepository) : base(workorderRepository)
     {
        _workorderRepository = workorderRepository;
@@ -61,7 +61,7 @@ public class WorkOrderService : ServiceBase<ProductionWorkOrder>
     private async Task UpdateWorkOrder(Base_ProcessLine processLine, ProductionWorkOrder order)
     {
         var processLineLists = await _processLineListRepository.Entities
-            .Where(x => x.ProcessLine_Id == processLine.ProcessLine_Id).OrderBy(x => x.Sequence).ToListAsync();
+            .Where(x => x.ProcessLineId == processLine.ProcessLine_Id).OrderBy(x => x.Sequence).ToListAsync();
         // 判断最后的processLineList的
         var lastProcessLineList = processLineLists.LastOrDefault();
         if (lastProcessLineList != null)

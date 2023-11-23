@@ -10,9 +10,9 @@ public class ProcessService : ServiceBase<Base_Process>
     }
 }
 
-public class ProcessListService : ServiceBase<Base_ProcessList>
+public class ProcessListService : ServiceBase<BaseProcessList>
 {
-    public ProcessListService(IRepository<Base_ProcessList> repository) : base(repository)
+    public ProcessListService(IRepository<BaseProcessList> repository) : base(repository)
     {
     }
 }

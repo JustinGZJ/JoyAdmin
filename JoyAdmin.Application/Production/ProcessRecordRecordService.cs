@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Furion.DatabaseAccessor;
 using Furion.DynamicApiController;
-using JoyAdmin.Application.Custom;
 using JoyAdmin.Core.Entities.Custom;
 using JoyAdmin.Core.Entities.Production;
 using Microsoft.EntityFrameworkCore;
@@ -99,8 +98,8 @@ public static class ProcessLineQueryExtension
         List<Base_Process> processList)
     {
         //  queryable.Include(x=>)
-        var data = await Db.GetRepository<Base_ProcessLineList>().Entities
-            .Where(x => x.ProcessLine_Id == processLine.ProcessLine_Id)
+        var data = await Db.GetRepository<BaseProcessLineList>().Entities
+            .Where(x => x.ProcessLineId == processLine.ProcessLine_Id)
             .OrderBy(x => x.Sequence)
             .Include(x => x.Process)
             .Include(x => x.ProcessLineDown)
