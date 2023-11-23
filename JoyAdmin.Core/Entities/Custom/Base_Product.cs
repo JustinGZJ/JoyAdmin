@@ -68,6 +68,8 @@ public class Base_Product : IEntity
     [Editable(true)]
     public int? ProcessLine_Id { get; set; }
 
+    public    Base_ProcessLine ProcessLine { get; set; }
+
     /// <summary>
     ///     最大库存
     /// </summary>

@@ -6,10 +6,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using Furion.DatabaseAccessor;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JoyAdmin.Core.Entities.Custom;
 
-public class Base_ProcessLineList : IEntity
+public class Base_ProcessLineList : IEntity, IEntityTypeBuilder<Base_ProcessLineList>
 {
     /// <summary>
     ///     工艺路线工序列表主键ID
@@ -42,12 +44,16 @@ public class Base_ProcessLineList : IEntity
     [Editable(true)]
     public int? Process_Id { get; set; }
 
+    public Base_Process Process { get; set; }
+
     /// <summary>
     ///     工艺路线
     /// </summary>
     [Display(Name = "工艺路线")]
     [Editable(true)]
     public int? ProcessLineDown_Id { get; set; }
+    
+    public Base_ProcessLine ProcessLineDown { get; set; }
 
     /// <summary>
     ///     顺序
@@ -104,4 +110,14 @@ public class Base_ProcessLineList : IEntity
     /// </summary>
     [Display(Name = "修改人编号")]
     public int? ModifyID { get; set; }
+
+    public void Configure(EntityTypeBuilder<Base_ProcessLineList> entityBuilder, DbContext dbContext, Type dbContextLocator)
+    {
+      //  throw new NotImplementedException();
+      entityBuilder.HasOne(x=>x.ProcessLineDown)
+          .WithMany().HasForeignKey(x=>x.ProcessLineDown_Id);
+      entityBuilder.HasOne(x=>x.Process)
+          .WithMany().HasForeignKey(x=>x.Process_Id);
+      
+    }
 }

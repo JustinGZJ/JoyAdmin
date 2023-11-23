@@ -80,5 +80,5 @@ public class Base_ProcessLine : IEntity
 
     [Display(Name = "工序列表")]
     [ForeignKey("ProcessLine_Id")]
-    public List<Base_ProcessLineList> Base_ProcessLineList { get; set; }
+    public List<Base_ProcessLineList> ProcessLineList { get; set; }
 }
