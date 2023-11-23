@@ -75,7 +75,7 @@ export default {
         console.log(data)
         for (const item of data) {
           if(item['差异']<0){
-            dataArray.push(Object.values(item).map(v=>`<span style="color:#ffdb5c;font-weight: bold;">${v}</span>`))
+            dataArray.push(Object.values(item).map(v=>`<span style="color:red;font-weight: bold;">${v}</span>`))
           }else{
             dataArray.push(Object.values(item))
           }

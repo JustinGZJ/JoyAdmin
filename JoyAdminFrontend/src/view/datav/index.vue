@@ -1,19 +1,17 @@
 <template>
   <div id="data-view">
     <dv-full-screen-container>
-      <top-header :title="header"/>
+      <top-header :title="header" @on-date-change="handleDateChange" />
       <div class="main-content">
-        <digital-flop :digital-data="digitalFlopData"/>
+        <digital-flop :digital-data="digitalFlopData" />
         <div class="block-left-right-content">
-          <ranking-board :ranking="randing"/>
+          <ranking-board :ranking="randing" />
           <div class="block-top-bottom-content">
             <div class="block-top-content">
-<!--              <rose-chart :rose-data="roseData"/>-->
-<!--              <water-level-chart :water-level="waterLevel"/>-->
-              <ColumnChart :column-data="columnData"/>
-              <scroll-board :scroll-data="scrollData"/>
+              <ColumnChart :column-data="columnData" />
+              <scroll-board :scroll-data="scrollData" />
             </div>
-            <cards :cards="cards"/>
+            <cards :cards="cards" />
           </div>
         </div>
       </div>
@@ -31,6 +29,7 @@ import scrollBoard from './scrollBoard'
 import cards from './cards'
 import currentData from '@/api/get_status'
 import { FilterWorkOrderList } from '@/api/WorkOrder'
+import { TelemetryDataDynamicFilter } from '../../api/telemetry'
 import dayjs from 'dayjs'
 import ColumnChart from '@/view/datav/ColumnChart.vue'
 
@@ -46,7 +45,7 @@ export default {
     scrollBoard,
     cards
   },
-  data () {
+  data() {
     return {
       header: 'PT-A电机生产线',
 
@@ -54,15 +53,17 @@ export default {
       alarms: {},
       tmrStatus: undefined,
       order: undefined,
-      tags: undefined
+      tags: undefined,
+      queryData: {},
+      dateData: { current: true }
     }
   },
   computed: {
-    digitalFlopData () {
+    digitalFlopData() {
       let data = {
         '工单号': '-',
         '产品名称': '-',
-        '预设数量': 0,
+        '计划产量': 0,
         '出料数量': 0,
         'NG数量': 0,
         '合格率': 0,
@@ -72,16 +73,16 @@ export default {
       if (this.order) {
         data['工单号'] = this.order['WorkOrderNo']
         data['产品名称'] = this.order['ProductName']
-        data['预设数量'] = this.order['PlanQuantity']
+        data['计划产量'] = this.order['PlanQuantity']
         data['出料数量'] = this.order['ActualQuantity']
         data['NG数量'] = this.order['NgQuantity']
-        data['合格率'] = this.order['ActualQuantity'] * 100 / (this.order['ActualQuantity'] + this.order['NgQuantity'])
-        data['完成率'] = this.order['ActualQuantity'] * 100 / this.order['PlanQuantity']
+        data['合格率'] = (this.order['ActualQuantity'] + this.order['NgQuantity']) === 0 ? 0 : this.order['ActualQuantity'] * 100 / (this.order['ActualQuantity'] + this.order['NgQuantity']);
+        data['完成率'] = this.order['PlanQuantity'] === 0 ? 0 : this.order['ActualQuantity'] * 100 / this.order['PlanQuantity'];
         data['剩余时间'] = dayjs(this.order['FinishTime']).diff(dayjs(), 'hour', true)
       }
       return data
     },
-    randing () {
+    randing() {
       // 递归从tags对象和子对象中找到所有名字为“物料情况“的字段
       const findMaterial = (obj) => {
         let result = {}
@@ -111,14 +112,14 @@ export default {
       // 将结果转换回对象格式（如果需要）
       return Object.fromEntries(topTen)
     },
-    columnData () {
+    columnData() {
       let data = {
-    "磁通量不良": 0,
-    "转子推脱力不良": 0,
-    "入壳高度检测不良": 0,
-    "总成锁螺丝测试": 0,
-    "定子综合测试不良": 0
-}
+        "磁通量不良": 0,
+        "转子推脱力不良": 0,
+        "入壳高度检测不良": 0,
+        "总成锁螺丝测试": 0,
+        "定子综合测试不良": 0
+      }
       const findReasons = (obj, reasons) => {
         for (let key in obj) {
           if (key === '不良统计') {
@@ -126,7 +127,7 @@ export default {
               reasons[reason] = obj[key][reason]
             }
           } else if (typeof obj[key] === 'object') {
-            findReasons(obj[key],reasons)
+            findReasons(obj[key], reasons)
           }
         }
       }
@@ -134,9 +135,9 @@ export default {
       let obj2 = {}
       if (this.tags) {
         findReasons(this.tags, obj2)
-         data=obj2
+        data = obj2
       }
-     
+
       // 排序取 前5，其他合并为其他
       const sortedArray = Object.entries(data).sort((a, b) => {
         return b[1] - a[1]
@@ -147,10 +148,10 @@ export default {
         other += sortedArray[i][1]
       }
       topFive.push(['其他不良', other])
-      let  topFiveObj=Object.fromEntries(topFive)
-      return  topFiveObj
+      let topFiveObj = Object.fromEntries(topFive)
+      return topFiveObj
     },
-    cards () {
+    cards() {
       const dataList = []
       for (const gpKey in this.groupValuesByStationData) {
         let gp = this.groupValuesByStationData[gpKey]
@@ -176,10 +177,13 @@ export default {
       // 获取前 5个元素
       return sortedArray
     },
-    scrollData () {
+    scrollData() {
       if (this.tags) {
         let data = []
         let plcdata = this.tags.总成.总成锁螺丝测试
+        if (!plcdata) return []
+        if (!plcdata.小时目标产量) return []
+        if (Object.entries(plcdata.小时目标产量).length < 18) return []
         for (let i = 8; i < 18; i++) {
           let time = i.toString() + ':00'
           let target = Object.entries(plcdata.小时目标产量)[i][1]
@@ -194,10 +198,23 @@ export default {
         return []
       }
       // return extractInfo(this.alarms)
+    },
+    filterOption() {
+      let Option = {
+        "page": 1,
+        "size": 1,
+        "sortExp": "Id desc"
+      }
+      if (!this.dateData.current) {
+        let from = dayjs(this.dateData.fromtime).format('YYYY-MM-DD HH:mm:ss')
+        let to = dayjs(this.dateData.totime).format('YYYY-MM-DD HH:mm:ss')
+        Option['filterExp'] = `Time > "${from}" and Time < "${to}"`
+      }
+      return Option
     }
   },
   methods: {
-    getData () {
+    getData() {
       try {
         currentData.getByKey(`运行情况`).then(res => {
           this.status = res.data
@@ -207,7 +224,7 @@ export default {
         console.log(e)
       }
     },
-    getActiveWorkOrder () {
+    getActiveWorkOrder() {
       FilterWorkOrderList({
         desc: true,
         filterProperty: 'Status',
@@ -219,7 +236,7 @@ export default {
         this.order = res.data.Data.Items[0]
       })
     },
-    getTags () {
+    getTags() {
       try {
         currentData.getTags().then(res => {
           this.tags = res.data
@@ -228,7 +245,8 @@ export default {
         console.log(e)
       }
     },
-    getAlarms () {
+
+    getAlarms() {
       try {
         currentData.getAlarms('all').then(res => {
           this.alarms = res.data
@@ -236,21 +254,31 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+    handleDateChange(data) {
+      console.log(data)
+      this.dateData = data
+    },
+    getAllData() {
+      TelemetryDataDynamicFilter(this.filterOption).then(res => {
+        if (res.status === 200) {
+          this.queryData = res.data.Data.Items[0]
+          this.status = this.queryData.Value.status
+          this.groupValuesByStationData = currentData.groupValuesByStation(this.status)
+          this.tags = this.queryData.Value.tags
+          this.order = this.queryData.Value.workorder
+        }
+      })
     }
   },
-  mounted () {
-    this.getData()
-    this.getAlarms()
-    this.getActiveWorkOrder()
-    this.getTags()
+
+  mounted() {
+    this.getAllData()
     this.tmrStatus = setInterval(() => {
-      this.getData()
-      this.getActiveWorkOrder()
-      this.getAlarms()
-      this.getTags()
-    }, 5000)
+      this.getAllData()
+    }, 5000);
   },
-  destroyed () {
+  destroyed() {
     clearInterval(this.tmrStatus)
   }
 }

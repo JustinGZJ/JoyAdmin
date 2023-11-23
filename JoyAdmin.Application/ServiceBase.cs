@@ -36,6 +36,19 @@ public class ServiceBase<T> : IDynamicApiController where T : class, IPrivateEnt
 
         return await query.ToPagedListAsync(filter.page, filter.size);
     }
+    
+    public async Task<PagedList<T>> DynamicFilter(DynamicFilterDto filter)
+    {
+        var query = _workorderRepository.DetachedEntities.AsQueryable();
+
+        if (filter.filterExp != null)
+        {
+            query = query.Where(filter.filterExp);
+        }
+        if(filter.sortExp!=null)
+            query = query.OrderBy(filter.sortExp);
+        return await query.ToPagedListAsync(filter.page, filter.size);
+    }
 
     // GET: api/ProcessLine
     public async Task<List<T>> GetList()

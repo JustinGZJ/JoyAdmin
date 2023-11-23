@@ -1,8 +1,8 @@
 <template>
   <div id="status">
     <dv-full-screen-container>
-      <TopHeader title="生产情况"/>
-      <product-by-hour/>
+      <TopHeader title="生产情况" />
+      <product-by-hour />
     </dv-full-screen-container>
   </div>
 </template>
@@ -24,6 +24,7 @@ export default {
   height: 100%;
   background-color: #030409;
   color: #fff;
+
   #dv-full-screen-container {
     background-image: url("./img/bg.png");
     background-size: 100% 100%;

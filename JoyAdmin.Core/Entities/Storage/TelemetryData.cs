@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using Furion.DatabaseAccessor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -15,7 +16,7 @@ public class Telemetry : IEntity, IEntityTypeBuilder<Telemetry>
 
     public string Key { get; set; }
 
-    public string Value { get; set; }
+    public JsonDocument Value { get; set; }
 
     public DateTime Time { get; set; } = DateTime.Now;
 
@@ -23,6 +24,7 @@ public class Telemetry : IEntity, IEntityTypeBuilder<Telemetry>
     {
         entityBuilder.HasIndex(x => x.EntityName);
         entityBuilder.HasIndex(x => x.Key);
+        entityBuilder.Property(x=>x.Value).HasColumnType("jsonb");
     }
 }
 

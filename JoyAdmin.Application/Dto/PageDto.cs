@@ -15,3 +15,12 @@ public class FilterDto
     public string? sortProperty { get; set; }
     public bool desc { get; set; } = false;
 }
+
+
+public class DynamicFilterDto
+{
+    public int page { get; set; } = 1;
+    public int size { get; set; } = 50;
+    public string? filterExp { get; set; }
+    public string? sortExp { get; set; }
+}

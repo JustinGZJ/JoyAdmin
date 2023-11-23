@@ -2801,6 +2801,11 @@
   "resolved" "https://registry.npm.taobao.org/console-browserify/download/console-browserify-1.2.0.tgz"
   "version" "1.2.0"
 
+"console@^0.7.2":
+  "integrity" "sha512-+JSDwGunA4MTEgAV/4VBKwUHonP8CzJ/6GIuwPi6acKFqFfHUdSGCm89ZxZ5FfGWdZfkdgAroy5bJ5FSeN/t4g=="
+  "resolved" "https://registry.npmjs.org/console/-/console-0.7.2.tgz"
+  "version" "0.7.2"
+
 "consolidate@^0.15.1":
   "integrity" "sha1-IasEMjXHGgfUXZqtmFk7DbpWurc="
   "resolved" "https://registry.npm.taobao.org/consolidate/download/consolidate-0.15.1.tgz?cache=0&sync_timestamp=1599596640464&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fconsolidate%2Fdownload%2Fconsolidate-0.15.1.tgz"

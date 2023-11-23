@@ -20,6 +20,7 @@ public class Startup : AppStartup
         services.AddRemoteRequest();
         services.AddCorsAccessor();
         services.AddTaskScheduler();
+        services.AddEventBus();
         services.AddControllersWithViews()
             .AddInjectWithUnifyResult<RstRProvider>()
             .AddJsonOptions(options =>

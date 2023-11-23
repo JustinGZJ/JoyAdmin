@@ -127,15 +127,6 @@ export default [
           access: ['role', 'auth', 'employee']
         },
         component: resolve => require(['@/view/machine/queryAll.vue'], resolve)
-      }, {
-        path: '/CalCpk',
-        name: 'CalCpk',
-        meta: {
-          icon: 'ios-search',
-          title: '计算Cpk',
-          access: ['role', 'auth', 'employee']
-        },
-        component: resolve => require(['@/view/machine/CalCpk.vue'], resolve)
       }
     ]
   },

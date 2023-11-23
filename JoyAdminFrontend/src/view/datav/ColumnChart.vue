@@ -31,8 +31,10 @@ export default {
             textBaseline: 'bottom'
           }
         },
-        xAxis: {
+        xAxis: [{
           data: [],
+
+
           axisLine: {
             show: false
           },
@@ -44,7 +46,22 @@ export default {
               fill: '#fff'
             }
           }
-        },
+        }, {
+          data: [''],
+          boundaryGap: false,
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false,
+            style: {
+              fill: '#fff'
+            }
+          }
+        }],
         yAxis: [
           {
             name: '数量(个)',
@@ -54,9 +71,6 @@ export default {
               show: false
             },
             min: 0,
-            max: function (value) {
-              return value.max - 20
-            },
             axisLine: {
               show: false
             },
@@ -99,9 +113,11 @@ export default {
         series: [
           {
             name: '趋势',
-            data: [],
+            data: [0],
             type: 'line',
             smooth: false,
+
+
             lineArea: {
               show: true,
               gradient: ['rgba(251, 114, 147, 1)', 'rgba(251, 114, 147, 0)']
@@ -115,12 +131,16 @@ export default {
                 stroke: 'rgba(251, 114, 147, 1)'
               }
             },
-            yAxisIndex: 1
+            yAxisIndex: 1,
+            xAxisIndex: 1,
           },
           {
             name: '数量',
             data: [],
             type: 'bar',
+            barGap: '0%',
+            barCategoryGap: '0%',
+
             gradient: {
               color: ['rgba(103, 224, 227, .6)', 'rgba(103, 224, 227, .1)']
             },
@@ -134,16 +154,19 @@ export default {
           }
         ]
       }
+      let trend = 0
       // option.yAxis[0].max=vs[0][1]+10
       for (const newValueKey in this.columnData) {
-        option.xAxis.data.push(newValueKey)
+        option.xAxis[0].data.push(newValueKey)
+        option.xAxis[1].data.push(newValueKey)
         //  option.series[0].data.push(this.columnData[newValueKey])
         let sum = Object.entries(this.columnData).reduce((sum, [key, value]) => {
           return sum + value
         }, 0)
         if (sum == 0)
           sum = 1
-        option.series[0].data.push(100- Math.round(this.columnData[newValueKey] * 100 / sum))
+        trend += this.columnData[newValueKey]
+        option.series[0].data.push(Math.round(trend * 100 / sum))
         option.series[1].data.push(this.columnData[newValueKey])
       }
       return option
