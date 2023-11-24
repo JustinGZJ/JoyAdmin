@@ -6,10 +6,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using Furion.DatabaseAccessor;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JoyAdmin.Core.Entities.Custom;
 
-public class Base_Product : IEntity
+public class Base_Product : IEntity,IEntityTypeBuilder<Base_Product>
 {
     /// <summary>
     ///     产品定义主键ID
@@ -145,4 +147,13 @@ public class Base_Product : IEntity
     /// </summary>
     [Display(Name = "修改人编号")]
     public int? ModifyID { get; set; }
+
+    public void Configure(EntityTypeBuilder<Base_Product> entityBuilder, DbContext dbContext, Type dbContextLocator)
+    {
+        entityBuilder
+            .HasOne(x=>x.ProcessLine)
+            .WithMany()
+            .HasForeignKey(x=>x.ProcessLine_Id)
+            .IsRequired(false);
+    }
 }

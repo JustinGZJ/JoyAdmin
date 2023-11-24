@@ -127,6 +127,16 @@ export default [
           access: ['role', 'auth', 'employee']
         },
         component: resolve => require(['@/view/machine/queryAll.vue'], resolve)
+      },
+      {
+        path: '/processControl',
+        name: 'ProcessControl',
+        meta: {
+          icon: 'ios-search',
+          title: '产品流程',
+          access: ['role', 'auth', 'employee']
+        },
+        component: resolve => require(['@/view/machine/ProcessControl.vue'], resolve)
       }
     ]
   },

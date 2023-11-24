@@ -58,7 +58,7 @@
 
 import dayjs from 'dayjs'
 import {
-  addProcessLineList, batchUpdateProcessLineList,
+  addProcessLineList, batchUpdateProcessLineList, deleteProcessLineList,
   FilterProcessLineListList,
   updateProcessLineList
 } from '@/api/ProcessLineList'
@@ -214,7 +214,7 @@ export default {
       }).then(res => {
         this.tableData = res.data.Data.Items.map(item => {
           //  item.ProcessLineType = item.ProcessLineType === 0 ? '工序' : '工艺路线'
-          item.ProcessLineName = item.ProcessLine_Id === 0 ? '' : this.ProcessLines.find(x => x.ProcessLine_Id === item.ProcessLine_Id).ProcessLineName
+          item.ProcessLineName = item.ProcessLineId === 0 ? '' : this.ProcessLines.find(x => x.ProcessLine_Id === item.ProcessLineId).ProcessLineName
           item.ProcessName = item.Process_Id === 0 ? '' : this.Processes.find(x => x.Process_Id === item.Process_Id).ProcessName
           item.ProcessLineDownName = item.ProcessLineDown_Id === 0 ? '' : this.ProcessLines.find(x => x.ProcessLine_Id === item.ProcessLineDown_Id).ProcessLineName
           return item
@@ -245,9 +245,9 @@ export default {
       // 删除产品
       this.$Modal.confirm({
         title: '删除',
-        content: '确定删除该产品吗？',
+        content: '确定删除该工序吗？',
         onOk: () => {
-          addProcessLineList(row.Product_Id).then(res => {
+          deleteProcessLineList(row.ProcessLineListId).then(res => {
             const { Succeeded, Errors } = res.data
             if (Succeeded) {
               this.$Notice.success({
@@ -274,7 +274,7 @@ export default {
         if (valid) {
           if (this.modalTitle === '新增') {
             this.form.ProcessLineList_Id = 0
-            this.form.ProcessLine_Id = this.ProcessLine_Id
+            this.form.ProcessLineId = this.ProcessLine_Id
             this.form.CreateID = this.userId
             this.form.ModifyDate = dayjs().format()
             this.form.Creator = this.userName
@@ -391,7 +391,7 @@ export default {
   },
   watch: {
     ProcessLine_Id (newValue, oldValue) {
-      this.filterProperty = 'ProcessLine_Id'
+      this.filterProperty = 'ProcessLineId'
       this.filterValue = newValue
       this.getData()
     }

@@ -314,13 +314,22 @@
             根据条码获取过站信息
             </summary>
         </member>
-        <member name="M:JoyAdmin.Application.Production.ProcessControlService.CheckBarCode(System.String,System.String)">
+        <member name="M:JoyAdmin.Application.Production.ProcessControlService.GetProcessByBarCode(System.String)">
             <summary>
-            条码验证
+            根据条码获取工序流程
             </summary>
             <param name="barCode"></param>
             <param name="processName"></param>
             <returns></returns>
+        </member>
+        <member name="M:JoyAdmin.Application.Production.ProcessControlService.CheckBarCode(System.String,System.String)">
+             <summary>
+             条码验证
+             </summary>
+             <param name="barCode"></param>
+             <param name="processName"></param>
+             <returns></returns>
+            
         </member>
         <member name="M:JoyAdmin.Application.Production.ProcessControlService.DataPass(System.String,System.String)">
             <summary>
