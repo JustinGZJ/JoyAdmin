@@ -6,12 +6,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Furion.DatabaseAccessor;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JoyAdmin.Core.Entities.Custom;
 
-public class Base_ProcessLine : IEntity
+public class Base_ProcessLine : IEntity,IModelBuilderFilter
 {
     /// <summary>
     ///     工艺路线表主键ID
@@ -80,4 +81,12 @@ public class Base_ProcessLine : IEntity
 
     [Display(Name = "工序列表")]
     public List<BaseProcessLineList> ProcessLineList { get; set; }
+
+    public void OnCreating(ModelBuilder modelBuilder, EntityTypeBuilder entityBuilder, DbContext dbContext, Type dbContextLocator)
+    {
+        modelBuilder.Entity<Base_ProcessLine>()
+            .HasMany(x => x.ProcessLineList)
+            .WithOne(x => x.ProcessLine)
+            .HasForeignKey(x => x.ProcessLine_Id);
+    }
 }

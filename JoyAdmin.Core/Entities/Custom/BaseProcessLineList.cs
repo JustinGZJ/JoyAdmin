@@ -11,6 +11,21 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JoyAdmin.Core.Entities.Custom;
 
+public enum ProcessLineType
+{
+    /// <summary>
+    ///     工艺路线
+    /// </summary>
+    [Display(Name = "工艺路线")]
+    工艺路线 = 0,
+
+    /// <summary>
+    ///     工序
+    /// </summary>
+    [Display(Name = "工序")]
+    工序 = 1
+}
+
 public class BaseProcessLineList : IEntity, IEntityTypeBuilder<BaseProcessLineList>
 {
     /// <summary>
@@ -19,13 +34,13 @@ public class BaseProcessLineList : IEntity, IEntityTypeBuilder<BaseProcessLineLi
     [Key]
     [Display(Name = "工艺路线工序列表主键ID")]
     [Required(AllowEmptyStrings = false)]
-    public int ProcessLineListId { get; set; }
+    public int ProcessLineList_Id { get; set; }
 
     /// <summary>
     ///     工艺路线
     /// </summary>
     [Display(Name = "工艺路线")]
-    public int? ProcessLineId { get; set; }
+    public int? ProcessLine_Id { get; set; }
 
     public Base_ProcessLine ProcessLine { get; set; }
 
@@ -33,9 +48,6 @@ public class BaseProcessLineList : IEntity, IEntityTypeBuilder<BaseProcessLineLi
     ///     类型
     /// </summary>
     [Display(Name = "类型")]
-    [MaxLength(200)]
-    [Editable(true)]
-    [Required(AllowEmptyStrings = false)]
     public string ProcessLineType { get; set; }
 
     /// <summary>
@@ -53,7 +65,7 @@ public class BaseProcessLineList : IEntity, IEntityTypeBuilder<BaseProcessLineLi
     [Display(Name = "工艺路线")]
     [Editable(true)]
     public int? ProcessLineDown_Id { get; set; }
-    
+
     public Base_ProcessLine ProcessLineDown { get; set; }
 
     /// <summary>
@@ -112,13 +124,16 @@ public class BaseProcessLineList : IEntity, IEntityTypeBuilder<BaseProcessLineLi
     [Display(Name = "修改人编号")]
     public int? ModifyID { get; set; }
 
-    public void Configure(EntityTypeBuilder<BaseProcessLineList> entityBuilder, DbContext dbContext, Type dbContextLocator)
+    public void Configure(EntityTypeBuilder<BaseProcessLineList> entityBuilder, DbContext dbContext,
+        Type dbContextLocator)
     {
-      //  throw new NotImplementedException();
-      entityBuilder.HasOne(x=>x.ProcessLineDown)
-          .WithMany().HasForeignKey(x=>x.ProcessLineDown_Id);
-      entityBuilder.HasOne(x=>x.Process)
-          .WithMany().HasForeignKey(x=>x.Process_Id);
-      
+        //  throw new NotImplementedException();
+        entityBuilder.HasOne(x => x.ProcessLineDown)
+            .WithMany().HasForeignKey(x => x.ProcessLineDown_Id).IsRequired(false);
+        entityBuilder.HasOne(x => x.Process)
+            .WithMany().HasForeignKey(x => x.Process_Id).IsRequired(false);
+        
+        //ProcessLineType 为枚举类型，需要转换 string 存储内容为display name
+      //  entityBuilder.Property(x=>x.ProcessLineType).HasConversion<string>();
     }
 }

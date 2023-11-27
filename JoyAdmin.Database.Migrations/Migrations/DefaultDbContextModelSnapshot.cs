@@ -468,9 +468,6 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.Property<int?>("ProcessLine_Id")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ProcessLine_Id1")
-                        .HasColumnType("integer");
-
                     b.Property<string>("ProductAttribute")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -497,7 +494,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
 
                     b.HasKey("Product_Id");
 
-                    b.HasIndex("ProcessLine_Id1");
+                    b.HasIndex("ProcessLine_Id");
 
                     b.ToTable("Base_Product", (string)null);
                 });
@@ -558,11 +555,11 @@ namespace JoyAdmin.Database.Migrations.Migrations
 
             modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.BaseProcessLineList", b =>
                 {
-                    b.Property<int>("ProcessLineListId")
+                    b.Property<int>("ProcessLineList_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProcessLineListId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProcessLineList_Id"));
 
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("timestamp without time zone");
@@ -587,13 +584,11 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.Property<int?>("ProcessLineDown_Id")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ProcessLineId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("ProcessLineType")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ProcessLine_Id")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("Process_Id")
                         .HasColumnType("integer");
@@ -604,11 +599,11 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.Property<decimal?>("SubmitWorkMatch")
                         .HasColumnType("numeric");
 
-                    b.HasKey("ProcessLineListId");
+                    b.HasKey("ProcessLineList_Id");
 
                     b.HasIndex("ProcessLineDown_Id");
 
-                    b.HasIndex("ProcessLineId");
+                    b.HasIndex("ProcessLine_Id");
 
                     b.HasIndex("Process_Id");
 
@@ -617,11 +612,14 @@ namespace JoyAdmin.Database.Migrations.Migrations
 
             modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.BaseProcessList", b =>
                 {
-                    b.Property<int>("ProcessListId")
+                    b.Property<int>("ProcessList_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProcessListId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProcessList_Id"));
+
+                    b.Property<int?>("Base_ProcessProcess_Id")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("timestamp without time zone");
@@ -653,15 +651,17 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.Property<int?>("ModifyId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ProcessId")
+                    b.Property<int?>("Process_Id")
                         .IsRequired()
                         .HasColumnType("integer");
 
-                    b.HasKey("ProcessListId");
+                    b.HasKey("ProcessList_Id");
 
-                    b.HasIndex("ProcessId");
+                    b.HasIndex("Base_ProcessProcess_Id");
 
-                    b.ToTable("BaseProcessList", (string)null);
+                    b.HasIndex("Process_Id");
+
+                    b.ToTable("Base_ProcessList", (string)null);
                 });
 
             modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.Sys_Unit", b =>
@@ -805,6 +805,9 @@ namespace JoyAdmin.Database.Migrations.Migrations
                     b.Property<int?>("ProductRecordId")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("Result")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProcessId");
@@ -830,6 +833,9 @@ namespace JoyAdmin.Database.Migrations.Migrations
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -1222,7 +1228,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedTime = new DateTime(2023, 11, 23, 23, 46, 3, 809, DateTimeKind.Local).AddTicks(9050),
+                            CreatedTime = new DateTime(2023, 11, 26, 23, 7, 25, 126, DateTimeKind.Local).AddTicks(8450),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1311,7 +1317,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedTime = new DateTime(2023, 11, 23, 23, 46, 3, 810, DateTimeKind.Local).AddTicks(910),
+                            CreatedTime = new DateTime(2023, 11, 26, 23, 7, 25, 127, DateTimeKind.Local).AddTicks(3700),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1322,7 +1328,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedTime = new DateTime(2023, 11, 23, 23, 46, 3, 810, DateTimeKind.Local).AddTicks(910),
+                            CreatedTime = new DateTime(2023, 11, 26, 23, 7, 25, 127, DateTimeKind.Local).AddTicks(3710),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1333,7 +1339,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedTime = new DateTime(2023, 11, 23, 23, 46, 3, 810, DateTimeKind.Local).AddTicks(920),
+                            CreatedTime = new DateTime(2023, 11, 26, 23, 7, 25, 127, DateTimeKind.Local).AddTicks(3720),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1404,7 +1410,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                         {
                             Id = 1L,
                             Account = "admin",
-                            CreatedTime = new DateTime(2023, 11, 23, 23, 46, 3, 810, DateTimeKind.Local).AddTicks(6690),
+                            CreatedTime = new DateTime(2023, 11, 26, 23, 7, 25, 128, DateTimeKind.Local).AddTicks(5060),
                             CreatedUserId = 0L,
                             IsDeleted = false,
                             ModifiedUserId = 0L,
@@ -1452,7 +1458,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
                 {
                     b.HasOne("JoyAdmin.Core.Entities.Custom.Base_ProcessLine", "ProcessLine")
                         .WithMany()
-                        .HasForeignKey("ProcessLine_Id1");
+                        .HasForeignKey("ProcessLine_Id");
 
                     b.Navigation("ProcessLine");
                 });
@@ -1465,7 +1471,7 @@ namespace JoyAdmin.Database.Migrations.Migrations
 
                     b.HasOne("JoyAdmin.Core.Entities.Custom.Base_ProcessLine", "ProcessLine")
                         .WithMany("ProcessLineList")
-                        .HasForeignKey("ProcessLineId");
+                        .HasForeignKey("ProcessLine_Id");
 
                     b.HasOne("JoyAdmin.Core.Entities.Custom.Base_Process", "Process")
                         .WithMany()
@@ -1480,11 +1486,13 @@ namespace JoyAdmin.Database.Migrations.Migrations
 
             modelBuilder.Entity("JoyAdmin.Core.Entities.Custom.BaseProcessList", b =>
                 {
-                    b.HasOne("JoyAdmin.Core.Entities.Custom.Base_Process", "Process")
+                    b.HasOne("JoyAdmin.Core.Entities.Custom.Base_Process", null)
                         .WithMany("Base_ProcessList")
-                        .HasForeignKey("ProcessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Base_ProcessProcess_Id");
+
+                    b.HasOne("JoyAdmin.Core.Entities.Custom.Base_Process", "Process")
+                        .WithMany()
+                        .HasForeignKey("Process_Id");
 
                     b.Navigation("Process");
                 });

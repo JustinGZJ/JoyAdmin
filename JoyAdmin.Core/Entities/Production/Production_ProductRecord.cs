@@ -20,6 +20,8 @@ public class Production_ProductRecord:EntityBase,IEntityTypeBuilder<Production_P
     // 当前工序ID
     public int? CurrentProcessId { get; set; }
     public Base_Process CurrentProcess { get; set; }
+
+    public string Status { get; set; } = "";
     
    public List<Production_ProcessRecord> ProcessRecords { get; set; }
     public void Configure(EntityTypeBuilder<Production_ProductRecord> entityBuilder, DbContext dbContext, Type dbContextLocator)
@@ -34,5 +36,10 @@ public class Production_ProductRecord:EntityBase,IEntityTypeBuilder<Production_P
             .HasOne(x => x.CurrentProcess)
             .WithMany()
             .HasForeignKey(x => x.CurrentProcessId);
+        
+        entityBuilder
+            .HasMany(x => x.ProcessRecords)
+            .WithOne(x => x.ProductRecord)
+            .HasForeignKey(x => x.ProductRecordId);
     }
 }

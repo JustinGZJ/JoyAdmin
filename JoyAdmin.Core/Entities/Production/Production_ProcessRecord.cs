@@ -22,6 +22,8 @@ public class Production_ProcessRecord : EntityBase, IEntityTypeBuilder<Productio
     // 生成数据ID
     public int DataId { get; set; }
 
+    public bool Result { get; set; }
+
     public void Configure(EntityTypeBuilder<Production_ProcessRecord> entityBuilder, DbContext dbContext,
         Type dbContextLocator)
     {

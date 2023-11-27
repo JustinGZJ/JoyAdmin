@@ -26,8 +26,7 @@
       <Form ref="form" :model="form" :rules="rules">
         <FormItem label="工艺流程类型" prop="ProcessLineType">
           <Select v-model="form.ProcessLineType">
-            <Option value="工序">工序</Option>
-            <Option value="工艺路线">工艺路线</Option>
+            <Option v-for="item in ProcessLineTypes" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>
         <FormItem label="工艺" prop="Process_Id">
@@ -189,11 +188,21 @@ export default {
       },
       rules: {
         ProcessLineType: [
-          { required: true, message: '请输入工艺流程类型', trigger: 'blur' }
+          { required: true, message: '请选择工艺流程类型', trigger: 'blur' ,type:'string'}
         ]
       },
       Processes: [],
-      ProcessLines: []
+      ProcessLines: [],
+      ProcessLineTypes: [
+        {
+          value: '工序',
+          label: '工序'
+        },
+        {
+          value: '工艺路线',
+          label: '工艺路线'
+        }
+      ]
     }
   },
   mounted () {
@@ -214,7 +223,7 @@ export default {
       }).then(res => {
         this.tableData = res.data.Data.Items.map(item => {
           //  item.ProcessLineType = item.ProcessLineType === 0 ? '工序' : '工艺路线'
-          item.ProcessLineName = item.ProcessLineId === 0 ? '' : this.ProcessLines.find(x => x.ProcessLine_Id === item.ProcessLineId).ProcessLineName
+          item.ProcessLineName = item.ProcessLine_Id === 0 ? '' : this.ProcessLines.find(x => x.ProcessLine_Id === item.ProcessLine_Id).ProcessLineName
           item.ProcessName = item.Process_Id === 0 ? '' : this.Processes.find(x => x.Process_Id === item.Process_Id).ProcessName
           item.ProcessLineDownName = item.ProcessLineDown_Id === 0 ? '' : this.ProcessLines.find(x => x.ProcessLine_Id === item.ProcessLineDown_Id).ProcessLineName
           return item
@@ -247,7 +256,7 @@ export default {
         title: '删除',
         content: '确定删除该工序吗？',
         onOk: () => {
-          deleteProcessLineList(row.ProcessLineListId).then(res => {
+          deleteProcessLineList(row.ProcessLineList_Id).then(res => {
             const { Succeeded, Errors } = res.data
             if (Succeeded) {
               this.$Notice.success({
@@ -274,7 +283,7 @@ export default {
         if (valid) {
           if (this.modalTitle === '新增') {
             this.form.ProcessLineList_Id = 0
-            this.form.ProcessLineId = this.ProcessLine_Id
+            this.form.ProcessLine_Id = this.ProcessLine_Id
             this.form.CreateID = this.userId
             this.form.ModifyDate = dayjs().format()
             this.form.Creator = this.userName
@@ -391,7 +400,7 @@ export default {
   },
   watch: {
     ProcessLine_Id (newValue, oldValue) {
-      this.filterProperty = 'ProcessLineId'
+      this.filterProperty = 'ProcessLine_Id'
       this.filterValue = newValue
       this.getData()
     }
