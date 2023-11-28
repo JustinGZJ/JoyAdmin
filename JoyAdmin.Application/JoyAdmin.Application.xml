@@ -314,14 +314,6 @@
             根据条码获取过站信息
             </summary>
         </member>
-        <member name="M:JoyAdmin.Application.Production.ProcessControlService.GetProcessByBarCode(System.String)">
-            <summary>
-            根据条码获取工序流程
-            </summary>
-            <param name="barCode"></param>
-            <param name="processName"></param>
-            <returns></returns>
-        </member>
         <member name="M:JoyAdmin.Application.Production.ProcessControlService.CodeVerify(JoyAdmin.Application.Production.Dto.CodeVerifyDto)">
              <summary>
              条码验证
@@ -334,6 +326,11 @@
         <member name="M:JoyAdmin.Application.Production.ProcessControlService.DataPass(JoyAdmin.Application.Production.Dto.DataPassDto)">
             <summary>
             数据过站
+            </summary>
+        </member>
+        <member name="T:JoyAdmin.Application.Production.ProductRecordDto">
+            <summary>
+            产品的状态记录
             </summary>
         </member>
         <member name="M:JoyAdmin.Application.Production.WorkOrderService.UpdateActiveWorkOrder">

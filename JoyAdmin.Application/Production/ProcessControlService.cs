@@ -12,6 +12,7 @@ using JoyAdmin.Core.Entities.Production;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace JoyAdmin.Application.Production;
 
@@ -26,54 +27,47 @@ public class ProcessControlService : IDynamicApiController
     /// 根据条码获取过站信息
     /// </summary>
     [AllowAnonymous]
-    public async Task<Production_ProductRecord> GetProcessRecordByBarCode(string barCode)
+    public async Task<ProductRecordDto> GetProcessRecordByBarCode(string barCode)
     {
         var productRecord = await Db.GetRepository<Production_ProductRecord>().Entities
             .Include(x => x.ProcessRecords)
             .ThenInclude(x => x.Process)
-            .Include(x => x.Product)
-            .Include(x => x.CurrentProcess)
+             .Include(x => x.Product)
+            .ThenInclude(x=>x.ProcessLine)
+              .Include(x => x.CurrentProcess)
             .FirstOrDefaultAsync(x => x.BarCode == barCode);
-        return productRecord;
-    }
-
-    /// <summary>
-    /// 根据条码获取工序流程
-    /// </summary>
-    /// <param name="barCode"></param>
-    /// <param name="processName"></param>
-    /// <returns></returns>
-    [AllowAnonymous]
-    public async Task<SvResult<List<Base_Process>>> GetProcessByBarCode(string barCode)
-    {
-        var product = await GetProductByCode(barCode);
-        if (product == null)
+        
+        if (productRecord == null)
         {
-            return new SvResult<List<Base_Process>>
+            return new ProductRecordDto()
             {
-                Success = false,
-                Msg = "未找到记录",
-                Data = null
+                BarCode = barCode,
+                CurrentProcessName = "",
+                ProductName = "",
+                ProcessRecords = new List<ProcessRecordDto>()
             };
         }
-
         var list = new List<Base_Process>();
-        await product.ProcessLine.GetProcessFromProcessLineAsync(list);
-        return new SvResult<List<Base_Process>>
+        await productRecord.Product.ProcessLine.GetProcessFromProcessLineAsync(list);
+        var record= new ProductRecordDto()
         {
-            Success = true,
-            Msg = "查询成功",
-            Data = list
+            BarCode = barCode,
+            CurrentProcessName = productRecord.CurrentProcess.ProcessName,
+            ProductName = productRecord.Product.ProductName,
+            ProcessNames = list.Select(x=>x.ProcessName).ToList(),
+            ProcessRecords = productRecord.ProcessRecords.Select(x => new ProcessRecordDto()
+            {
+                EnterTime = x.EnterTime,
+                LeaveTime = x.LeaveTime,
+                ProcessName = x.Process.ProcessName,
+                DataId = x.DataId,
+                Result = x.Result
+            }).ToList()
         };
+        return record;
     }
-
-    private async Task<Base_Product> GetProductByCode(string barCode)
-    {
-        var productRecord = await Db.GetRepository<Production_ProductRecord>()
-            .Include(x => x.Product)
-            .FirstOrDefaultAsync();
-        return productRecord.Product;
-    }
+    
+    
 
     /// <summary>
     /// 条码验证
@@ -220,10 +214,32 @@ public class ProcessControlService : IDynamicApiController
         List<Base_Process> processList = new();
         await productRecord.Product.ProcessLine.GetProcessFromProcessLineAsync(processList);
         var index = processList.FindIndex(x => x.Process_Id == productRecord.CurrentProcessId);
+        if (index == processList.Count - 1)
+        {
+            return new SvResult()
+            {
+                Success = false,
+                Msg = "产品已经完成"
+            };
+        }
         productRecord.CurrentProcessId = processList[index + 1].Process_Id;
         productRecord.Status = dataPassDto.result ? "OK" : "NG";
-        productRecord.ProcessRecords.Last().LeaveTime = DateTime.Now;
-        productRecord.ProcessRecords.Last().Result = dataPassDto.result;
+        var lastProcessRecord = productRecord.ProcessRecords.Last();
+        if (lastProcessRecord.Process.ProcessName != dataPassDto.processName)
+        {
+            productRecord.ProcessRecords.Add(new Production_ProcessRecord()
+            {
+                EnterTime = DateTime.Now,
+                LeaveTime = DateTime.Now,
+                ProcessId = productRecord.CurrentProcessId,
+                Result = dataPassDto.result
+            });
+        }
+        else
+        {
+            productRecord.ProcessRecords.Last().LeaveTime = DateTime.Now;
+            productRecord.ProcessRecords.Last().Result = dataPassDto.result;    
+        }
         await Db.GetRepository<Production_ProductRecord>().UpdateNowAsync(productRecord);
         return new SvResult()
         {
@@ -231,4 +247,28 @@ public class ProcessControlService : IDynamicApiController
             Msg = "过站成功"
         };
     }
+}
+/// <summary>
+/// 产品的状态记录
+/// </summary>
+public class ProductRecordDto
+{
+    // 产品条码
+    public string BarCode { get; set; }
+    public string ProductName { get; set; }
+    // 当前工序ID
+    public string CurrentProcessName { get; set; }
+
+    public string Status { get; set; } = "";
+    public List<string> ProcessNames { get; set; }
+    public List<ProcessRecordDto> ProcessRecords { get; set; }
+}
+public class ProcessRecordDto
+{
+    public DateTime EnterTime { get; set; }
+    public DateTime LeaveTime { get; set; }
+    public string ProcessName { get; set; }
+    // 生成数据ID
+    public int DataId { get; set; }
+    public bool Result { get; set; }
 }
