@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JoyAdmin.Core.Entities.Production;
 
+
+
+
 /// <summary>
 /// 产品的状态记录
 /// </summary>
@@ -20,6 +23,8 @@ public class Production_ProductRecord:EntityBase,IEntityTypeBuilder<Production_P
     // 当前工序ID
     public int? CurrentProcessId { get; set; }
     public Base_Process CurrentProcess { get; set; }
+
+    public string Status { get; set; } = "";
     
    public List<Production_ProcessRecord> ProcessRecords { get; set; }
     public void Configure(EntityTypeBuilder<Production_ProductRecord> entityBuilder, DbContext dbContext, Type dbContextLocator)
@@ -34,5 +39,26 @@ public class Production_ProductRecord:EntityBase,IEntityTypeBuilder<Production_P
             .HasOne(x => x.CurrentProcess)
             .WithMany()
             .HasForeignKey(x => x.CurrentProcessId);
+        
+        entityBuilder
+            .HasMany(x => x.ProcessRecords)
+            .WithOne(x => x.ProductRecord)
+            .HasForeignKey(x => x.ProductRecordId);
     }
+}
+
+/// <summary>
+/// 产品的状态记录
+/// </summary>
+public class ProductRecordDto
+{
+    // 产品条码
+    public string BarCode { get; set; }
+    public string ProductName { get; set; }
+    // 当前工序ID
+    public string CurrentProcessName { get; set; }
+
+    public string Status { get; set; } = "";
+    
+    public List<ProcessRecordDto> ProcessRecords { get; set; }
 }

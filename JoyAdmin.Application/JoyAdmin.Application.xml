@@ -322,7 +322,7 @@
             <param name="processName"></param>
             <returns></returns>
         </member>
-        <member name="M:JoyAdmin.Application.Production.ProcessControlService.CheckBarCode(System.String,System.String)">
+        <member name="M:JoyAdmin.Application.Production.ProcessControlService.CodeVerify(JoyAdmin.Application.Production.Dto.CodeVerifyDto)">
              <summary>
              条码验证
              </summary>
@@ -331,7 +331,7 @@
              <returns></returns>
             
         </member>
-        <member name="M:JoyAdmin.Application.Production.ProcessControlService.DataPass(System.String,System.String)">
+        <member name="M:JoyAdmin.Application.Production.ProcessControlService.DataPass(JoyAdmin.Application.Production.Dto.DataPassDto)">
             <summary>
             数据过站
             </summary>

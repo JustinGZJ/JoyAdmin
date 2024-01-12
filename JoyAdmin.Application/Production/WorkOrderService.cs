@@ -7,6 +7,7 @@ using JoyAdmin.Application.Custom;
 using JoyAdmin.Core.Entities.Custom;
 using JoyAdmin.Core.Entities.Production;
 using JoyAdmin.Core.Entities.Storage;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Base_ProcessLine = JoyAdmin.Core.Entities.Custom.Base_ProcessLine;
 
@@ -39,6 +40,7 @@ public class WorkOrderService : ServiceBase<ProductionWorkOrder>
 /// <summary>
 /// 更新活动工单的数量统计
 /// </summary>
+    [AllowAnonymous]
     public async Task UpdateActiveWorkOrder()
     {
         var orders = await _workorderRepository.Entities.Where(x => x.Status == "进行中").ToListAsync();
@@ -61,7 +63,7 @@ public class WorkOrderService : ServiceBase<ProductionWorkOrder>
     private async Task UpdateWorkOrder(Base_ProcessLine processLine, ProductionWorkOrder order)
     {
         var processLineLists = await _processLineListRepository.Entities
-            .Where(x => x.ProcessLineId == processLine.ProcessLine_Id).OrderBy(x => x.Sequence).ToListAsync();
+            .Where(x => x.ProcessLine_Id == processLine.ProcessLine_Id).OrderBy(x => x.Sequence).ToListAsync();
         // 判断最后的processLineList的
         var lastProcessLineList = processLineLists.LastOrDefault();
         if (lastProcessLineList != null)

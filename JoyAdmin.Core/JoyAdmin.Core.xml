@@ -79,12 +79,22 @@
                 删除标志
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLineListId">
+        <member name="F:JoyAdmin.Core.Entities.Custom.ProcessLineType.工艺路线">
+            <summary>
+                工艺路线
+            </summary>
+        </member>
+        <member name="F:JoyAdmin.Core.Entities.Custom.ProcessLineType.工序">
+            <summary>
+                工序
+            </summary>
+        </member>
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLineList_Id">
             <summary>
                 工艺路线工序列表主键ID
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLineId">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLine_Id">
             <summary>
                 工艺路线
             </summary>
@@ -606,12 +616,12 @@
                 修改人编号
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.ProcessListId">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.ProcessList_Id">
             <summary>
                 工序采集数据主键ID
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.ProcessId">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessList.Process_Id">
             <summary>
                 工序ID
             </summary>
@@ -954,6 +964,11 @@
             </summary>
         </member>
         <member name="T:JoyAdmin.Core.Entities.Production.Production_ProductRecord">
+            <summary>
+            产品的状态记录
+            </summary>
+        </member>
+        <member name="T:JoyAdmin.Core.Entities.Production.ProductRecordDto">
             <summary>
             产品的状态记录
             </summary>

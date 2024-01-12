@@ -13,13 +13,17 @@ namespace JoyAdmin.Core.Entities.Custom;
 
 public class BaseProcessList : IEntity, IEntityTypeBuilder<BaseProcessList>
 {
+    public enum MyEnum
+    {
+        
+    }
     /// <summary>
     ///     工序采集数据主键ID
     /// </summary>
     [Key]
     [Display(Name = "工序采集数据主键ID")]
     [Required(AllowEmptyStrings = false)]
-    public int ProcessListId { get; set; }
+    public int ProcessList_Id { get; set; }
 
     /// <summary>
     ///     工序ID
@@ -27,10 +31,10 @@ public class BaseProcessList : IEntity, IEntityTypeBuilder<BaseProcessList>
     [Display(Name = "工序ID")]
     [Editable(true)]
     [Required(AllowEmptyStrings = false)]
-    public int? ProcessId { get; set; }
+    public int? Process_Id { get; set; }
 
     public Base_Process Process { get; set; }
-    
+
 
     /// <summary>
     ///     类型
@@ -92,6 +96,12 @@ public class BaseProcessList : IEntity, IEntityTypeBuilder<BaseProcessList>
 
     public void Configure(EntityTypeBuilder<BaseProcessList> entityBuilder, DbContext dbContext, Type dbContextLocator)
     {
-        //throw new NotImplementedException();
+        entityBuilder.ToTable("Base_ProcessList");
+
+        entityBuilder.HasKey(k => k.ProcessList_Id);
+
+        entityBuilder.HasOne(x => x.Process)
+            .WithMany().HasForeignKey(x => x.Process_Id).IsRequired(false);
+        entityBuilder.Property(x => x.DataPointType).IsRequired();
     }
 }

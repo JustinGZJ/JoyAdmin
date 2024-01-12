@@ -22,6 +22,8 @@ public class Production_ProcessRecord : EntityBase, IEntityTypeBuilder<Productio
     // 生成数据ID
     public int DataId { get; set; }
 
+    public bool Result { get; set; }
+
     public void Configure(EntityTypeBuilder<Production_ProcessRecord> entityBuilder, DbContext dbContext,
         Type dbContextLocator)
     {
@@ -36,4 +38,14 @@ public class Production_ProcessRecord : EntityBase, IEntityTypeBuilder<Productio
             .WithMany(x => x.ProcessRecords)
             .HasForeignKey(x => x.ProductRecordId);
     }
+}
+
+public class ProcessRecordDto
+{
+    public DateTime EnterTime { get; set; }
+    public DateTime LeaveTime { get; set; }
+    public string ProcessName { get; set; }
+    // 生成数据ID
+    public int DataId { get; set; }
+    public bool Result { get; set; }
 }

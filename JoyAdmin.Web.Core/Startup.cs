@@ -29,6 +29,7 @@ public class Startup : AppStartup
                 options.JsonSerializerOptions.ReadCommentHandling = JsonCommentHandling.Skip;
                 options.JsonSerializerOptions.AllowTrailingCommas = true;
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
+              //  options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
                 options.JsonSerializerOptions.Converters.AddDateFormatString("yyyy-MM-dd HH:mm:ss");
             });
     }
@@ -38,8 +39,6 @@ public class Startup : AppStartup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-
-
         }
         else
         {
