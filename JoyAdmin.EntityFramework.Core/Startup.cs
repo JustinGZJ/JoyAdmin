@@ -21,8 +21,8 @@ public class Startup : AppStartup
             options.CustomizeMultiTenants();
             options.AddDbPool<DefaultDbContext>(DbProvider.Npgsql);
         }, "JoyAdmin.Database.Migrations");
-        
     }
+
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())
@@ -30,9 +30,10 @@ public class Startup : AppStartup
             Scoped.Create((_, scope) =>
             {
                 var context = scope.ServiceProvider.GetRequiredService<DefaultDbContext>();
+                var connectionString = context.Database.GetConnectionString();
+                Console.WriteLine($"connectionString:{connectionString}");
                 context.Database.Migrate();
-            });     
+            });
         }
-
     }
 }

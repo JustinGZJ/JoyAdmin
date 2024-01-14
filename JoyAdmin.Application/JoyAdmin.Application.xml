@@ -668,18 +668,18 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetProductDataByName(JoyAdmin.Application.UploadData.Dtos.QueryDataByNameDto)">
+        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetProductDataByName(JoyAdmin.Application.UploadData.Dtos.UploadDataQueryDto)">
             <summary>
                 根据名称获取数据
             </summary>
             <param name="range"></param>
             <returns></returns>
         </member>
-        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetProductDataByNameNoPage(JoyAdmin.Application.UploadData.Dtos.QueryDataByNameDto)">
+        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetProductDataByNameNoPage(JoyAdmin.Application.UploadData.Dtos.UploadDataQueryDto)">
             <summary>
             根据名称获取生产数据，不分页，用于导出，使用filestream
             </summary>
-            <param name="range"></param>
+            <param name="query"></param>
             <returns></returns>
         </member>
         <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetProductData(JoyAdmin.Application.UploadData.Dtos.TimeSpanDto)">

@@ -1,21 +1,7 @@
 <template>
 
-  <div>
-    <div style="margin-left: 200px">
-      起始时间:
-      <DatePicker class="ivu-date-picker" type="datetime" v-model="headerForm.dtFrom" format="yyyy-MM-dd HH:mm"
-                  placeholder="请选择起始时间" @on-change="dateChange" style="width: 200px"></DatePicker>
-      结束时间
-      <DatePicker type="datetime" v-model="headerForm.dtTo" format="yyyy-MM-dd HH:mm"
-                  placeholder="请选择结束时间" @on-change="dateChange" style="width: 200px"></DatePicker>
-      <Button style="margin: 0 10px;" type="primary" @click="handleQueryClicked">查询</Button>
-      <Button style="margin: 0 10px;" icon="ios-download-outline" @click="exportExcel">导出文件</Button>
-      <!--        选择table字段进行筛选-->
-      <Select v-model="cpkColumn" style="width: 200px">
-        <Option v-for="item in tableConfig.columns" :value="item.key" :key="item.key">{{ item.title }}</Option>
-      </Select>
-      <Button style="margin: 0 10px;" type="primary" @click="handleQueryCpk">CPK计算</Button>
-    </div>
+  <div id="testData">
+
     <layout>
       <sider span="auto" :style="{position: 'relative', height: '100%', left: 0}">
         <Menu active-name:="siderParams.activeName" @on-select="handleStationChanged" title="站位数据" width="auto">
@@ -28,12 +14,51 @@
           </Submenu>
         </Menu>
       </sider>
-      <content>
+      <content id="testDataContent">
         <!-- <Card> -->
+        <div id="testDataOption" style="display: flex; flex-wrap: wrap; gap: 10px;">
+
+          <div>
+            <label>起始时间:</label>
+            <DatePicker class="ivu-date-picker" type="datetime" v-model="headerForm.dtFrom" format="yyyy-MM-dd HH:mm"
+                        placeholder="请选择起始时间" @on-change="dateChange" style="width: 200px"></DatePicker>
+          </div>
+
+          <div>
+            <label>结束时间:</label>
+            <DatePicker type="datetime" v-model="headerForm.dtTo" format="yyyy-MM-dd HH:mm"
+                        placeholder="请选择结束时间" @on-change="dateChange" style="width: 200px"></DatePicker>
+          </div>
+
+          <div>
+            <label>工单号：</label>
+            <Input v-model="headerForm.WorkOrder" style="width: 150px" placeholder="工单号"></Input>
+          </div>
+
+          <div>
+            <label>机种：</label>
+            <Input v-model="headerForm.Model" style="width: 150px" placeholder="机种"></Input>
+          </div>
+
+          <div>
+            <label>选择字段：</label>
+            <Select v-model="cpkColumn" style="width: 200px">
+              <Option v-for="item in tableConfig.columns" :value="item.key" :key="item.key">{{ item.title }}</Option>
+            </Select>
+            <Button type="primary" @click="handleQueryCpk">CPK计算</Button>
+          </div>
+          <div style="display: flex;gap: 10px">
+            <Button type="primary" @click="handleQueryClicked">查询</Button>
+            <Button icon="ios-download-outline" @click="exportExcel">导出文件</Button>
+          </div>
+
+        </div>
+
         <div>
           <tables searchable ref="tables"
                   :loading="tableConfig.loading"
                   :height="tableConfig.height"
+                  :width="tableConfig.width"
                   v-model="tableConfig.tableData"
                   :columns="tableConfig.columns"/>
         </div>
@@ -79,7 +104,8 @@ export default {
         loading: false,
         columns: [],
         tableData: [],
-        height: 600
+        height: 600,
+        width: 600
       },
       siderParams: {
         stations: {},
@@ -87,7 +113,9 @@ export default {
       },
       headerForm: {
         dtFrom: dayjs().add(-1, 'day').startOf('day').toDate(),
-        dtTo: dayjs().endOf('day').toDate()
+        dtTo: dayjs().endOf('day').toDate(),
+        WorkOrder: '',
+        Model: ''
       }
     }
   },
@@ -143,6 +171,8 @@ export default {
       machine_data.GetProductDataByName({
         start: dayjs(this.headerForm.dtFrom).format('YYYY-MM-DD HH:mm:ss'),
         end: dayjs(this.headerForm.dtTo).format('YYYY-MM-DD HH:mm:ss'),
+        WorkOrder: this.headerForm.WorkOrder,
+        Model: this.headerForm.Model,
         name: this.siderParams.activeName,
         page: this.page,
         Size: this.pageSize
@@ -178,7 +208,9 @@ export default {
       GetProductDataByNameNoPage({
         start: dayjs(this.headerForm.dtFrom).format('YYYY-MM-DD HH:mm:ss'),
         end: dayjs(this.headerForm.dtTo).format('YYYY-MM-DD HH:mm:ss'),
-        name: this.siderParams.activeName
+        name: this.siderParams.activeName,
+        Model: this.headerForm.Model,
+        WorkOrder: this.headerForm.WorkOrder
       })
         .then(res => {
           const { Data, Succeeded, Errors } = res.data
@@ -215,8 +247,11 @@ export default {
           })
         })
     },
-    getHeight () {
-      this.tableConfig.height = window.innerHeight - 260
+    resize () {
+      // 设置table的高度window.innerHeight - testdataoption的高度-100
+      this.tableConfig.height = window.innerHeight - document.getElementById('testDataOption').offsetHeight - 250
+      // 设置table的宽度等于父元素的宽度-200
+      this.tableConfig.width = document.getElementById('testData').offsetWidth - 200
     },
     getStations () {
       getStations()
@@ -240,12 +275,12 @@ export default {
     // map时候要使用命名空间
   },
   mounted () {
-    this.getHeight()
+    this.resize()
     this.getStations()
-    window.addEventListener('resize', this.getHeight)
+    window.addEventListener('resize', this.resize)
   },
   destroyed () {
-    window.removeEventListener('resize', this.getHeight)
+    window.removeEventListener('resize', this.resize)
   }
 }
 </script>
@@ -255,7 +290,4 @@ export default {
   background-color: #e6f7ff;
 }
 
-.ivu-date-picker {
-  z-index: 2000;
-}
 </style>
