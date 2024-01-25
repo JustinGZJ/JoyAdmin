@@ -21,3 +21,10 @@ public class TimeSpanDto
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
 }
+
+public class FilterWithWorkOrderDto
+{
+    public DateTime Start { get; set; }
+    public DateTime End { get; set; }
+    public string WorkOrder { get; set; }
+}

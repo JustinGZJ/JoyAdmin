@@ -682,7 +682,7 @@
             <param name="query"></param>
             <returns></returns>
         </member>
-        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetProductData(JoyAdmin.Application.UploadData.Dtos.TimeSpanDto)">
+        <member name="M:JoyAdmin.Application.UploadData.MachineDataService.GetProductData(JoyAdmin.Application.UploadData.Dtos.FilterWithWorkOrderDto)">
             <summary>
                 获取所有生产数据
             </summary>

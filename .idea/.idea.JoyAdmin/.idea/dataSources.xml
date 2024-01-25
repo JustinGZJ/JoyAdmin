@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="admin@43.143.217.150" uuid="8983ea4d-b6ca-42f2-a94f-1289d3c92802">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <configured-by-url>true</configured-by-url>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://43.143.217.150:5432/admin?password=future&amp;user=postgres</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="@localhost" uuid="39eb4d21-fe19-4346-ac88-57a06672fde6">
       <driver-ref>sqlserver.jb</driver-ref>
       <synchronize>true</synchronize>
@@ -16,12 +8,12 @@
       <jdbc-url>Server=localhost</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="admin@43.142.142.86" uuid="32009985-8ac3-4460-802d-e3f71bbb008d">
+    <data-source source="LOCAL" name="admin2@43.142.142.86" uuid="32009985-8ac3-4460-802d-e3f71bbb008d">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <configured-by-url>true</configured-by-url>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://43.142.142.86:15432/admin?password=future&amp;user=postgres</jdbc-url>
+      <jdbc-url>jdbc:postgresql://43.142.142.86:15432/admin2?password=future&amp;user=postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="postgres@localhost" uuid="a79fa373-9e04-4a98-9d78-77b8856a648d">

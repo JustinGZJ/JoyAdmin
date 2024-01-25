@@ -146,12 +146,14 @@ public class MachineDataService : IDynamicApiController
         }
         else
         {
-            queryable=queryable.Where(x => x.Time > range.Start && x.Time < range.End);
+            queryable = queryable.Where(x => x.Time > range.Start && x.Time < range.End);
         }
+
         if (!string.IsNullOrWhiteSpace(range.Model))
         {
             queryable = queryable.Where(x => x.Model == range.Model);
         }
+
         var queryData = await queryable.OrderByDescending(x => x.Time)
             .ToListAsync();
         var groupQuery = queryData
@@ -164,6 +166,7 @@ public class MachineDataService : IDynamicApiController
                 data.Add("日期", x.Last().Time.ToString("g"));
                 data.Add("工单", x.Last().WorkOrder);
                 data.Add("型号", x.Last().Model);
+                data.Add("结果", x.All(x => x.Result == "OK") ? "OK" : "NG");
                 var lookup = x.ToLookup(
                     uploadData => uploadData.Description,
                     uploadData => uploadData.Content).OrderBy(group => group.Key);
@@ -179,12 +182,24 @@ public class MachineDataService : IDynamicApiController
     /// </summary>
     /// <param name="range"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<IDictionary<string, object>>> GetProductData([FromQuery] TimeSpanDto range)
+    public async Task<IEnumerable<IDictionary<string, object>>> GetProductData([FromQuery] FilterWithWorkOrderDto range)
     {
+        List<Core.Entities.Storage.UploadData> data = new List<Core.Entities.Storage.UploadData>();
         // 找出时间段内的所有数据
-        var data = await _uploadDataRepository
-            .Where(x => x.Time > range.Start && x.Time < range.End)
-            .ToListAsync();
+        if (range.WorkOrder.IsNullOrWhiteSpace())
+        {
+            data = await _uploadDataRepository
+                .Where(x => x.Time > range.Start && x.Time < range.End)
+                .ToListAsync();
+        }
+        else
+        {
+            data = await _uploadDataRepository
+                .Where(x => x.WorkOrder == range.WorkOrder)
+                .ToListAsync();
+        }
+
+        
 
         // 找出所有码
         var codes = data.Select(x => x.Code).Distinct().Where(code => !code.IsNullOrWhiteSpace());
@@ -230,6 +245,7 @@ public class MachineDataService : IDynamicApiController
                 .OrderBy(x => x.Order)
                 .ToList();
             expano["时间"] = uploadDatas.LastOrDefault()?.Time ?? DateTime.Now;
+            expano["工单"]= uploadDatas.LastOrDefault()?.WorkOrder;
             if (relations.TryGetValue(code, out var codeBinding))
             {
                 expano["壳体二维码"] = codeBinding.ShellCode;
@@ -264,11 +280,11 @@ public class MachineDataService : IDynamicApiController
                     expano["转子二维码"] = "";
                 }
             }
-
-
-            var lookup = uploadDatas.ToLookup(x => x.Description, x => x.Content);
-            foreach (var item in lookup) expano[item.Key] = item.Last();
-
+            
+           // expano["结果"] = uploadDatas.All(x => x.Result == "OK") ? "OK" : "NG";
+            var lookup = uploadDatas.ToLookup(x => x.Description, x => x);
+            expano["结果"]=lookup.All(x=>x.Last().Result=="OK")?"OK":"NG";
+            foreach (var item in lookup) expano[item.Key] =$"{item.Last().Content}"  ;
             return expano;
         });
 

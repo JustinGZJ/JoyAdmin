@@ -1,8 +1,11 @@
-<template>
+﻿<template>
   <div>
     <Card style="margin-bottom: 10px">
       <!--     <Date-picker type="daterange" :value="date_range"  placeholder="选择日期" style="width: 250px"></Date-picker>-->
       <Date-picker type="datetimerange" v-model="date_range" format="yyyy-MM-dd HH:mm" placeholder="选择日期和时间" style="width: 300px"></Date-picker>
+      <!--工单号：-->
+      工单号：<Input v-model="WorkOrder" placeholder="请输入工单号" style="width: 200px"></Input>
+
       <Button type="primary" @click="query" icon="md-add" style="margin-left:10px ">查询</Button>
       <Button type="primary" @click="exportCsv" icon="ios-download-outline" :loading="exportLoading" style="margin-left:10px ">导出</Button>
     </Card>
@@ -29,6 +32,7 @@ export default {
   data () {
     return {
       date_range: ['2016-01-01', '2016-02-15'],
+      WorkOrder: '',
       tableHeight: 450,
       exportLoading: false,
       tableData: [],
@@ -41,7 +45,8 @@ export default {
       vm.loadingTable = true
       const reqData = {
         Start: dayjs(vm.date_range[0]).format('YYYY-MM-DD HH:mm:ss'),
-        End: dayjs(vm.date_range[1]).format('YYYY-MM-DD HH:mm:ss')
+        End: dayjs(vm.date_range[1]).format('YYYY-MM-DD HH:mm:ss'),
+        WorkOrder: vm.WorkOrder
       }
       GetProductData(reqData).then((res) => {
         vm.loadingTable = false
