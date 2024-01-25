@@ -63,7 +63,7 @@ public class WorkOrderService : ServiceBase<ProductionWorkOrder>
     private async Task UpdateWorkOrder(Base_ProcessLine processLine, ProductionWorkOrder order)
     {
         var processLineLists = await _processLineListRepository.Entities
-            .Where(x => x.ProcessLine_Id == processLine.ProcessLine_Id).OrderBy(x => x.Sequence).ToListAsync();
+            .Where(x => x.ProcessLineId == processLine.ProcessLine_Id).OrderBy(x => x.Sequence).ToListAsync();
         // 判断最后的processLineList的
         var lastProcessLineList = processLineLists.LastOrDefault();
         if (lastProcessLineList != null)

@@ -14,7 +14,7 @@ public static class ProcessLineQueryExtension
     {
         //  queryable.Include(x=>)
         var data = await Db.GetRepository<BaseProcessLineList>().Entities
-            .Where(x => x.ProcessLine_Id == processLine.ProcessLine_Id)
+            .Where(x => x.ProcessLineId == processLine.ProcessLine_Id)
             .OrderBy(x => x.Sequence)
             .Include(x => x.Process)
             .Include(x => x.ProcessLineDown)

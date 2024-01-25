@@ -87,6 +87,6 @@ public class Base_ProcessLine : IEntity,IModelBuilderFilter
         modelBuilder.Entity<Base_ProcessLine>()
             .HasMany(x => x.ProcessLineList)
             .WithOne(x => x.ProcessLine)
-            .HasForeignKey(x => x.ProcessLine_Id);
+            .HasForeignKey(x => x.ProcessLineId);
     }
 }

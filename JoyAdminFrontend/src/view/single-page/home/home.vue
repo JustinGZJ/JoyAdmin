@@ -76,7 +76,7 @@ export default {
     this.getActiveWorkOrder()
     setInterval(() => {
       this.getActiveWorkOrder()
-    }, 1000 * 5)
+    }, 1000 * 60)
   },
   methods: {
     getActiveWorkOrder () {

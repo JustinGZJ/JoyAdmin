@@ -29,7 +29,12 @@ public class ServiceBase<T> : IDynamicApiController where T : class, IPrivateEnt
             query = query.Where(condition, filter.filterValue.ToString());
         }
 
-        if (filter.sortProperty == null) return await query.ToPagedListAsync(filter.page, filter.size);
+        if (filter.sortProperty == null)
+        {
+            var pl= await query.ToPagedListAsync(filter.page, filter.size);
+            return pl;
+        }
+           
         var sortExpression = filter.sortProperty;
         if (filter.desc) sortExpression += " DESC";
         query = query.OrderBy(sortExpression);

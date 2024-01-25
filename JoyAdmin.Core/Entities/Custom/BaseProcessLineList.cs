@@ -34,13 +34,13 @@ public class BaseProcessLineList : IEntity, IEntityTypeBuilder<BaseProcessLineLi
     [Key]
     [Display(Name = "工艺路线工序列表主键ID")]
     [Required(AllowEmptyStrings = false)]
-    public int ProcessLineList_Id { get; set; }
+    public int ProcessLineListId { get; set; }
 
     /// <summary>
     ///     工艺路线
     /// </summary>
     [Display(Name = "工艺路线")]
-    public int? ProcessLine_Id { get; set; }
+    public int? ProcessLineId { get; set; }
 
     public Base_ProcessLine ProcessLine { get; set; }
 

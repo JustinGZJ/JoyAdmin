@@ -32,7 +32,7 @@ public class Startup : AppStartup
                 var context = scope.ServiceProvider.GetRequiredService<DefaultDbContext>();
                 var connectionString = context.Database.GetConnectionString();
                 Console.WriteLine($"connectionString:{connectionString}");
-                context.Database.Migrate();
+               // context.Database.Migrate();
             });
         }
     }

@@ -10,7 +10,7 @@ namespace JoyAdmin.Application.Workers;
 
 public class JobWorker : ISpareTimeWorker
 {
-    [SpareTime(5000, "UpdateWorkOrder", StartNow = true)]
+    [SpareTime(50*1000, "UpdateWorkOrder", StartNow = true)]
     public async Task UpdateWorkOrder(SpareTimer timer, long count)
     {
         using var client = new HttpClient();

@@ -89,12 +89,12 @@
                 工序
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLineList_Id">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLineListId">
             <summary>
                 工艺路线工序列表主键ID
             </summary>
         </member>
-        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLine_Id">
+        <member name="P:JoyAdmin.Core.Entities.Custom.BaseProcessLineList.ProcessLineId">
             <summary>
                 工艺路线
             </summary>
